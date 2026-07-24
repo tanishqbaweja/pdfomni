@@ -1,5 +1,5 @@
-import { useState, useCallback, useRef } from 'react'
-import { Download, Code, Upload, Eye, Trash2 } from 'lucide-react'
+import { useState, useCallback } from 'react'
+import { Download, Code, Upload, Trash2 } from 'lucide-react'
 import FileDropZone from '../Common/FileDropZone'
 import ProgressBar from '../Common/ProgressBar'
 import { useAppStore } from '../../store/appStore'
@@ -13,7 +13,6 @@ export default function HtmlToPdfTool({ toolId, tool }) {
   const [processing, setProcessing] = useState(false)
   const [progress, setProgress] = useState(0)
   const [progressMsg, setProgressMsg] = useState('')
-  const previewRef = useRef(null)
   const addToast = useAppStore((s) => s.addToast)
 
   const handleFileUpload = useCallback(async (files) => {
@@ -42,14 +41,41 @@ export default function HtmlToPdfTool({ toolId, tool }) {
     setProcessing(true)
     setProgress(0)
     setProgressMsg('Capturing browser layout...')
+    let renderFrame = null
     try {
-      if (!previewRef.current) {
-        throw new Error('Preview frame is not available yet.')
-      }
+      const previewSrcdoc = htmlContent.trim().toLowerCase().startsWith('<!doctype')
+        || htmlContent.trim().toLowerCase().startsWith('<html')
+        ? htmlContent
+        : `<!DOCTYPE html><html><head><style>body{font-family:Arial,sans-serif;padding:20px;font-size:14px;line-height:1.6;color:#000;background:#fff;}</style></head><body>${htmlContent}</body></html>`
+
+      renderFrame = document.createElement('iframe')
+      renderFrame.title = 'HTML conversion workspace'
+      renderFrame.setAttribute('aria-hidden', 'true')
+      renderFrame.setAttribute('sandbox', 'allow-same-origin')
+      Object.assign(renderFrame.style, {
+        position: 'fixed',
+        left: '-100000px',
+        top: '0',
+        width: '800px',
+        height: '1000px',
+        opacity: '0',
+        pointerEvents: 'none',
+      })
+      const frameReady = new Promise((resolve, reject) => {
+        const timer = window.setTimeout(() => reject(new Error('HTML conversion workspace timed out.')), 10000)
+        renderFrame.addEventListener('load', () => {
+          window.clearTimeout(timer)
+          resolve()
+        }, { once: true })
+      })
+      renderFrame.srcdoc = previewSrcdoc
+      document.body.appendChild(renderFrame)
+      await frameReady
+      await renderFrame.contentDocument?.fonts?.ready
 
       setProgress(55)
       const { htmlPreviewToSelectablePdfBytes } = await import('../../utils/textPdf')
-      const pdfBytes = await htmlPreviewToSelectablePdfBytes(previewRef.current, fileName || 'HTML Document')
+      const pdfBytes = await htmlPreviewToSelectablePdfBytes(renderFrame, fileName || 'HTML Document')
       setProgress(90)
       setProgressMsg('Downloading PDF...')
       downloadBlob(pdfBytes, `${fileName || 'html-to-pdf'}.pdf`)
@@ -61,6 +87,7 @@ export default function HtmlToPdfTool({ toolId, tool }) {
       console.error('HTML to PDF error:', err)
       addToast({ type: 'error', message: `Conversion failed: ${err.message}` })
     } finally {
+      renderFrame?.remove()
       setProcessing(false)
     }
   }, [htmlContent, fileName, addToast])
@@ -69,12 +96,6 @@ export default function HtmlToPdfTool({ toolId, tool }) {
     setHtmlContent('')
     setFileName('')
   }, [])
-
-  // Build preview srcdoc with safe defaults
-  const previewSrcdoc = htmlContent.trim().toLowerCase().startsWith('<!doctype') ||
-    htmlContent.trim().toLowerCase().startsWith('<html')
-    ? htmlContent
-    : `<!DOCTYPE html><html><head><style>body{font-family:Arial,sans-serif;padding:20px;font-size:14px;line-height:1.6;color:#000;background:#fff;}</style></head><body>${htmlContent}</body></html>`
 
   return (
     <div className="animate-fade-in-up" id="html-to-pdf-tool">
@@ -145,39 +166,6 @@ export default function HtmlToPdfTool({ toolId, tool }) {
             />
           )}
         </div>
-
-        {/* Preview */}
-        {htmlContent && (
-          <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 'var(--space-2)',
-                padding: 'var(--space-3) var(--space-5)',
-                borderBottom: '1px solid var(--color-border)',
-                fontWeight: 600,
-                fontSize: 'var(--text-sm)',
-              }}
-            >
-              <Eye size={16} />
-              Preview
-            </div>
-            <iframe
-              ref={previewRef}
-              srcDoc={previewSrcdoc}
-              title="HTML Preview"
-              style={{
-                width: '100%',
-                height: '400px',
-                border: 'none',
-                background: '#fff',
-              }}
-              sandbox="allow-same-origin"
-              id="html2pdf-preview"
-            />
-          </div>
-        )}
 
         {/* Progress */}
         {processing && <ProgressBar progress={progress} message={progressMsg} />}

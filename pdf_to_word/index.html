@@ -162,11 +162,12 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  padding: 80px 40px;
-  border: 2px dashed rgba(99, 102, 241, 0.4);
-  border-radius: var(--r4);
-  background: rgba(99, 102, 241, 0.03);
+  gap: 16px;
+  min-height: 360px;
+  padding: 40px 32px;
+  border: 2px dashed var(--border);
+  border-radius: 22px;
+  background: var(--bg-panel);
   text-align: center;
   transition: var(--tr);
 }
@@ -178,14 +179,14 @@ html, body {
 }
 
 .drop-icon {
-  width: 72px;
-  height: 72px;
+  width: 64px;
+  height: 64px;
   opacity: .7;
 }
 
 .drop-title {
-  font-size: 26px;
-  font-weight: 800;
+  font-size: 18px;
+  font-weight: 600;
   letter-spacing: -0.02em;
 }
 
@@ -228,6 +229,140 @@ html, body {
   font-size: 12px;
   font-weight: 500;
   margin-top: 10px;
+}
+
+#support-download-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(12px);
+}
+
+#support-download-bg.on {
+  display: flex;
+}
+
+.support-download-modal {
+  width: min(560px, 100%);
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.25);
+  padding: 24px;
+  color: #0f172a;
+  text-align: left;
+}
+
+.support-download-kicker {
+  margin-bottom: 10px;
+  color: #4f46e5;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.support-download-title {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.2;
+  font-weight: 850;
+}
+
+.support-download-copy {
+  margin: 12px 0 0;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.support-download-copy a {
+  color: #db2777;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.support-download-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.support-download-button,
+.support-download-kofi {
+  min-height: 42px;
+  border: 0;
+  border-radius: 10px;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.support-download-button {
+  cursor: pointer;
+}
+
+.support-download-cancel {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.support-download-kofi {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff5f5f, #ff8a00);
+  text-decoration: none;
+  box-shadow: 0 12px 28px rgba(255, 95, 95, 0.28);
+}
+
+.support-download-action {
+  width: 198px;
+  height: 42px;
+  flex: 0 0 198px;
+}
+
+.support-download-continue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #6366f1, #db2777);
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 14px 30px rgba(99, 102, 241, 0.24);
+}
+
+.support-download-continue[aria-disabled="true"] {
+  cursor: wait;
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+@media (max-width: 520px) {
+  .support-download-modal {
+    padding: 20px;
+  }
+
+  .support-download-actions {
+    flex-direction: column-reverse;
+  }
+
+  .support-download-button,
+  .support-download-kofi,
+  .support-download-action {
+    width: 100%;
+  }
 }
 
 /* ══ OPTIONS & PREVIEW WORKSPACE ══ */
@@ -752,6 +887,24 @@ html.pdfomni-embedded .container {
 </div>
 
 <div id="snackbar"><span class="snk-dot"></span><span id="snk-msg"></span></div>
+<div id="support-download-bg" role="dialog" aria-modal="true" aria-labelledby="support-download-title" aria-describedby="support-download-description">
+  <div class="support-download-modal">
+    <div class="support-download-kicker">Independent tools need real hardware</div>
+    <h2 class="support-download-title" id="support-download-title">Keep PDFOmni Free...</h2>
+    <p class="support-download-copy" id="support-download-description">
+      PDFOmni stays free because it is built independently. If this saved you time,
+      <a href="https://ko-fi.com/trebell/goal?g=15" target="_blank" rel="noopener noreferrer">support me</a>
+      on Ko-fi and help fund a new laptop for building the next project. Your download is ready either way.
+    </p>
+    <div class="support-download-actions">
+      <button type="button" class="support-download-button support-download-cancel" id="support-download-cancel">Cancel</button>
+      <a class="support-download-kofi" href="https://ko-fi.com/trebell/goal?g=15" target="_blank" rel="noopener noreferrer">Support on Ko-fi</a>
+      <span class="support-download-action">
+        <a class="support-download-button support-download-continue" id="support-download-continue">Continue &amp; Download</a>
+      </span>
+    </div>
+  </div>
+</div>
 
 <!-- Link to modular app logic, bundled by Vite -->
 <script type="module" src="/embed.js"></script>

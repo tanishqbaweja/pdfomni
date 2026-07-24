@@ -66,12 +66,12 @@ export const UploadZone: React.FC<Props> = ({ onFile }) => {
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}
         className={`
-          relative flex flex-col items-center justify-center gap-5
-          min-h-[300px] rounded-3xl border-2 border-dashed cursor-pointer
+          relative flex flex-col items-center justify-center gap-4 px-8 py-10
+          min-h-[360px] rounded-[22px] border-2 border-dashed cursor-pointer
           transition-all duration-200 select-none
           ${dragging
             ? 'border-violet-400 bg-violet-50/50 drag-active'
-            : 'border-slate-200 bg-white hover:border-violet-400 hover:bg-violet-50/10 shadow-sm'}
+            : 'border-slate-200 bg-white hover:border-violet-400 hover:bg-violet-50/50 shadow-sm'}
         `}
       >
         {/* Hidden file input */}
@@ -85,36 +85,29 @@ export const UploadZone: React.FC<Props> = ({ onFile }) => {
 
         {/* Icon */}
         <div className={`
-          w-20 h-20 rounded-2xl flex items-center justify-center
+          w-16 h-16 rounded-2xl flex items-center justify-center
           transition-all duration-200
           ${dragging ? 'bg-violet-100 scale-110' : 'bg-violet-50'}
         `}>
           {dragging
-            ? <FileText size={38} className="text-violet-600" />
-            : <Upload   size={38} className="text-violet-500" />
+            ? <FileText size={28} className="text-violet-600" />
+            : <Upload   size={28} className="text-violet-500" />
           }
         </div>
 
         {/* Labels */}
         <div className="text-center px-4">
-          <p className="text-xl font-semibold text-slate-800 mb-1">
-            {dragging ? 'Release to upload' : 'Drop your PDF here'}
+          <p className="text-lg font-semibold text-slate-800 mb-1">
+            {dragging ? 'Release to upload' : 'Drop your PDF here to compress'}
           </p>
           <p className="text-sm text-slate-500">
-            or{' '}
-            <span className="text-violet-600 font-medium underline underline-offset-2 hover:text-violet-500 transition-colors">
-              browse files
-            </span>
+            or click to browse
           </p>
         </div>
 
         {/* Hint strip */}
-        <div className="flex gap-6 text-xs text-slate-600 dark:text-slate-300 mt-2">
-          <span>PDF only</span>
-          <span>·</span>
-          <span>Up to {MAX_FILE_SIZE_MB} MB</span>
-          <span>·</span>
-          <span>100% private</span>
+        <div className="text-xs text-slate-600 dark:text-slate-300 mt-2">
+          PDF files only - Max 1 file - {MAX_FILE_SIZE_MB} MB
         </div>
       </div>
 

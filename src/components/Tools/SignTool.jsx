@@ -237,14 +237,29 @@ export default function SignTool() {
         image.onerror = reject
         image.src = dataUrl
       })
-      if (img.naturalWidth > 700 || img.naturalHeight > 700) {
-        addToast({ type: 'error', message: 'Signature image must be 700 x 700 px or smaller.' })
-        return
+      const maxPixelArea = 1000 * 1000
+      const sourceArea = img.naturalWidth * img.naturalHeight
+      const scale = sourceArea > maxPixelArea ? Math.sqrt(maxPixelArea / sourceArea) : 1
+      const normalizedWidth = Math.max(1, Math.round(img.naturalWidth * scale))
+      const normalizedHeight = Math.max(1, Math.round(img.naturalHeight * scale))
+      const isJpeg = file.type.includes('jpeg') || file.type.includes('jpg')
+      const needsNormalization = scale < 1 || file.type.includes('webp')
+      let normalizedDataUrl = dataUrl
+
+      if (needsNormalization) {
+        const canvas = document.createElement('canvas')
+        canvas.width = normalizedWidth
+        canvas.height = normalizedHeight
+        const context = canvas.getContext('2d')
+        if (!context) throw new Error('Unable to prepare the signature image.')
+        context.drawImage(img, 0, 0, normalizedWidth, normalizedHeight)
+        normalizedDataUrl = canvas.toDataURL(isJpeg ? 'image/jpeg' : 'image/png', 0.95)
       }
-      setSigDataUrl(dataUrl)
-      setSigImageType(file.type.includes('jpeg') || file.type.includes('jpg') ? 'jpg' : 'png')
-      const ratio = img.naturalWidth / Math.max(1, img.naturalHeight)
-      setSigPlacedSize({ w: Math.min(220, img.naturalWidth), h: Math.round(Math.min(220, img.naturalWidth) / ratio) })
+
+      setSigDataUrl(normalizedDataUrl)
+      setSigImageType(isJpeg ? 'jpg' : 'png')
+      const ratio = normalizedWidth / Math.max(1, normalizedHeight)
+      setSigPlacedSize({ w: Math.min(220, normalizedWidth), h: Math.round(Math.min(220, normalizedWidth) / ratio) })
       addToast({ type: 'success', message: 'Signature image loaded. Position it on the PDF.' })
     } catch (err) {
       addToast({ type: 'error', message: `Failed to load image: ${err.message}` })
@@ -467,7 +482,7 @@ export default function SignTool() {
                 <ImagePlus size={16} /> Upload Signature Image
               </button>
               <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', marginTop: 'var(--space-2)', textAlign: 'center' }}>
-                PNG, JPG, or WebP, max 700 x 700 px
+                PNG, JPG, or WebP. Images above 1 megapixel are scaled down proportionally.
               </div>
               {sigDataUrl && (
                 <div style={{ marginTop: 'var(--space-3)', background: '#fff', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)', padding: 'var(--space-3)', display: 'flex', justifyContent: 'center' }}>

@@ -170,7 +170,7 @@ export const toolSeo = {
   'excel-to-pdf': {
     h1: 'Convert Excel to PDF Privately',
     intro: 'Turn spreadsheets into PDF documents for sharing, printing, or submitting. The Excel to PDF tool keeps the workflow local while making tabular data easier to distribute.',
-    steps: ['Upload an Excel or CSV file.', 'Preview or prepare the spreadsheet output.', 'Download the finished PDF from your browser.'],
+    steps: ['Upload an Excel or CSV file.', 'Review the file details and prepare the spreadsheet output.', 'Download the finished PDF from your browser.'],
     why: 'Spreadsheets often contain financial, customer, or operational details. Local conversion helps you create PDF copies without sending workbook data to a third-party server.',
     advanced: 'Once the spreadsheet is a PDF, you can compress it, add a watermark, merge it into a report, or open it in the editor for additional markup.',
     useCases: ['Exporting invoices or budgets', 'Sharing read-only spreadsheet reports', 'Preparing tables for email or print'],
@@ -196,7 +196,7 @@ export const toolSeo = {
   'html-to-pdf': {
     h1: 'Convert HTML to PDF in the Browser',
     intro: 'Turn pasted HTML or uploaded HTML files into PDF documents. It is a quick way to save web content, templates, receipts, or simple reports as portable files.',
-    steps: ['Paste HTML content or upload an HTML file.', 'Preview or prepare the document in the browser.', 'Download the generated PDF.'],
+    steps: ['Paste HTML content or upload an HTML file.', 'Review the source and prepare the document in the browser.', 'Download the generated PDF.'],
     why: 'HTML conversion is handled locally, which keeps draft templates and internal content away from server-side converters. It also removes the delay of uploading source files first.',
     advanced: 'The generated PDF can be compressed, merged, signed, watermarked, or reviewed with other PDFOmni tools after conversion.',
     useCases: ['Saving simple web templates as PDFs', 'Creating printable HTML reports', 'Archiving receipts or generated pages'],

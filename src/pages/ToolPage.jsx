@@ -5,6 +5,7 @@ import { getToolById } from '../config/tools'
 import { getToolSeo } from '../config/toolSeo'
 import Seo from '../components/Common/Seo'
 import ToolSeoSection from '../components/Common/ToolSeoSection'
+import ToolUploadPlaceholder from '../components/Common/ToolUploadPlaceholder'
 
 function CompressIframeWrapper() {
   const [frameReady, setFrameReady] = useState(false)
@@ -171,7 +172,7 @@ export default function ToolPage({ forcedToolId }) {
 
   const ToolComponent = toolComponents[toolId]
   const toolContent = ToolComponent ? (
-    <Suspense fallback={<span className="sr-only" role="status">Loading PDF tool</span>}>
+    <Suspense fallback={<ToolUploadPlaceholder />}>
       <ToolComponent toolId={toolId} tool={tool} />
     </Suspense>
   ) : null

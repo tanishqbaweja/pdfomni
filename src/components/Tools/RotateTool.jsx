@@ -231,14 +231,10 @@ export default function RotateTool({ toolId, tool }) {
               <FlipVertical size={16} />
               180°
             </button>
-            {hasRotations && (
-              <>
-                <div style={{ width: 1, height: 24, background: 'var(--color-border)' }} />
-                <button className="btn btn-ghost btn-sm" onClick={handleClearRotations} disabled={processing} id="rotate-clear">
-                  Clear rotations
-                </button>
-              </>
-            )}
+            <div style={{ width: 1, height: 24, background: 'var(--color-border)' }} />
+            <button className="btn btn-ghost btn-sm" onClick={handleClearRotations} disabled={processing || !hasRotations} id="rotate-clear">
+              Clear rotations
+            </button>
           </div>
 
           {/* Info text */}

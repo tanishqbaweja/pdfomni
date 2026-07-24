@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { BookOpen, Moon, Shield, MessageCircle, Sun, Workflow } from 'lucide-react'
+import { BookOpen, Moon, MessageCircle, Sun, Workflow } from 'lucide-react'
 import { useAppStore } from '../../store/appStore'
+import { preloadChatSidebar } from '../AI/chatLoader'
 
 export default function Header() {
   const { toggleChat, chatOpen } = useAppStore()
@@ -56,6 +57,9 @@ export default function Header() {
         <button 
           className={`btn ${chatOpen ? 'btn-primary' : 'btn-ghost'}`}
           onClick={toggleChat}
+          onPointerEnter={preloadChatSidebar}
+          onPointerDown={preloadChatSidebar}
+          onFocus={preloadChatSidebar}
           id="nav-chat"
           aria-label={chatOpen ? 'Close AI chat' : 'Open AI chat'}
           aria-expanded={chatOpen}
@@ -73,10 +77,6 @@ export default function Header() {
         >
           {theme === 'dark' ? <Sun size={18} aria-hidden="true" /> : <Moon size={18} aria-hidden="true" />}
         </button>
-        <div className="footer-privacy" aria-label="100% Private">
-          <Shield size={14} aria-hidden="true" />
-          <span>100% Private</span>
-        </div>
       </nav>
     </header>
   )

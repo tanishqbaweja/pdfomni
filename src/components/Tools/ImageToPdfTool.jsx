@@ -1,9 +1,7 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 import { Download, Trash2, X } from 'lucide-react'
 import FileDropZone from '../Common/FileDropZone'
 import ProgressBar from '../Common/ProgressBar'
-import PdfPagePreview from '../Common/PdfPagePreview'
-import PageNavigator from '../Common/PageNavigator'
 import { imagesToPDF } from '../../engine/pdfEngine'
 import { useAppStore } from '../../store/appStore'
 import { readFileAsArrayBuffer, readFileAsDataURL, formatFileSize, isValidImage } from '../../utils/fileHelpers'
@@ -18,9 +16,6 @@ export default function ImageToPdfTool({ toolId, tool }) {
   const [fitToPage, setFitToPage] = useState(false)
   const [dragIndex, setDragIndex] = useState(null)
   const [dragOverIndex, setDragOverIndex] = useState(null)
-  const [previewBytes, setPreviewBytes] = useState(null)
-  const [previewLoading, setPreviewLoading] = useState(false)
-  const [previewPage, setPreviewPage] = useState(1)
   const addToast = useAppStore((s) => s.addToast)
 
   const handleFiles = useCallback(async (files) => {
@@ -158,45 +153,6 @@ export default function ImageToPdfTool({ toolId, tool }) {
     }
   }, [images, pageSize, fitToPage, addToast])
 
-  useEffect(() => {
-    if (images.length === 0) {
-      setPreviewBytes(null)
-      setPreviewPage(1)
-      return
-    }
-
-    let cancelled = false
-    const timer = setTimeout(async () => {
-      setPreviewLoading(true)
-      try {
-        const bytes = await imagesToPDF(
-          images.map((image) => ({
-            bytes: image.bytes,
-            type: image.type || image.file.type,
-            name: image.name,
-          })),
-          { pageSize, fitToPage }
-        )
-        if (!cancelled) {
-          setPreviewBytes(bytes)
-          setPreviewPage((current) => Math.min(current, images.length))
-        }
-      } catch (err) {
-        if (!cancelled) {
-          setPreviewBytes(null)
-          addToast({ type: 'error', message: `Preview failed: ${err.message}` })
-        }
-      } finally {
-        if (!cancelled) setPreviewLoading(false)
-      }
-    }, 200)
-
-    return () => {
-      cancelled = true
-      clearTimeout(timer)
-    }
-  }, [images, pageSize, fitToPage, addToast])
-
   return (
     <div className="animate-fade-in-up" id="image-to-pdf-tool">
       {images.length === 0 ? (
@@ -246,45 +202,6 @@ export default function ImageToPdfTool({ toolId, tool }) {
                 </span>
               )}
             </div>
-          </div>
-
-          <div className="section-header">
-            <span className="section-label">Preview</span>
-            <div className="section-line" />
-          </div>
-
-          <div className="card" style={{ padding: 'var(--space-4)', display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
-              <div style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)' }}>
-                {pageSize === 'image'
-                  ? 'Previewing exact image-sized pages.'
-                  : 'Previewing the selected fixed page size.'}
-              </div>
-              {images.length > 1 && (
-                <PageNavigator
-                  currentPage={previewPage}
-                  pageCount={images.length}
-                  onChange={setPreviewPage}
-                  compact
-                  idPrefix="img2pdf-preview-page"
-                />
-              )}
-            </div>
-
-            {previewLoading && (
-              <div className="pdf-page-preview-status">
-                <div className="spinner spinner-lg" />
-              </div>
-            )}
-
-            {!previewLoading && previewBytes && (
-              <PdfPagePreview
-                pdfBytes={previewBytes}
-                pageNum={previewPage}
-                scale={1.25}
-                id="img2pdf-preview"
-              />
-            )}
           </div>
 
           {/* Image grid */}

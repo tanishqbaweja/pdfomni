@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Zap, Shield, Cpu, Sparkles, Search } from 'lucide-react'
+import { Zap, Shield, Cpu, Search } from 'lucide-react'
 import { toolCategories, getToolsByCategory } from '../config/tools'
 import Seo from '../components/Common/Seo'
 
@@ -122,13 +122,6 @@ export default function Home() {
 
       <section className="hero home-hero bg-radial-glow" id="hero">
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          <div>
-            <div className="badge badge-accent home-hero-badge">
-              <Sparkles size={14} aria-hidden="true" />
-              100% Client-Side &bull; Zero-Knowledge Architecture
-            </div>
-          </div>
-
           <h1 className="hero-title">
             Every PDF tool you need, <span className="hero-title-gradient">completely private</span>
           </h1>

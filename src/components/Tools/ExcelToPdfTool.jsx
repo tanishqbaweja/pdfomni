@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { Download, FileText, Trash2, Eye, Table } from 'lucide-react'
+import { Download, Trash2, Table } from 'lucide-react'
 import FileDropZone from '../Common/FileDropZone'
 import ProgressBar from '../Common/ProgressBar'
 import { useAppStore } from '../../store/appStore'
@@ -11,24 +11,11 @@ export default function ExcelToPdfTool({ toolId, tool }) {
   const [workbook, setWorkbook] = useState(null)
   const [xlsxApi, setXlsxApi] = useState(null)
   const [sheetNames, setSheetNames] = useState([])
-  const [activeSheet, setActiveSheet] = useState('')
-  const [tableHtml, setTableHtml] = useState('')
   const [processing, setProcessing] = useState(false)
   const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState(0)
   const [progressMsg, setProgressMsg] = useState('')
   const addToast = useAppStore((s) => s.addToast)
-
-  const renderSheet = useCallback((wb, sheetName, api) => {
-    try {
-      const sheet = wb.Sheets[sheetName]
-      const html = api.utils.sheet_to_html(sheet, { id: 'excel-preview-table' })
-      setTableHtml(html)
-      setActiveSheet(sheetName)
-    } catch (err) {
-      addToast({ type: 'error', message: `Failed to render sheet: ${err.message}` })
-    }
-  }, [addToast])
 
   const handleFiles = useCallback(async (files) => {
     const f = files[0]
@@ -53,10 +40,6 @@ export default function ExcelToPdfTool({ toolId, tool }) {
       setSheetNames(wb.SheetNames)
       setFile(f)
 
-      setProgress(70)
-      setProgressMsg('Rendering preview...')
-      renderSheet(wb, wb.SheetNames[0], XLSX)
-
       setProgress(100)
       setProgressMsg('Ready!')
       addToast({ type: 'success', message: `Loaded ${wb.SheetNames.length} sheet${wb.SheetNames.length !== 1 ? 's' : ''}!` })
@@ -66,7 +49,7 @@ export default function ExcelToPdfTool({ toolId, tool }) {
     } finally {
       setLoading(false)
     }
-  }, [addToast, renderSheet])
+  }, [addToast])
 
   const handleConvert = useCallback(async () => {
     if (!workbook || !xlsxApi) return
@@ -102,8 +85,6 @@ export default function ExcelToPdfTool({ toolId, tool }) {
     setWorkbook(null)
     setXlsxApi(null)
     setSheetNames([])
-    setActiveSheet('')
-    setTableHtml('')
   }, [])
 
   return (
@@ -140,75 +121,6 @@ export default function ExcelToPdfTool({ toolId, tool }) {
                 New file
               </button>
             </div>
-            {sheetNames.length > 1 && (
-              <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
-                {sheetNames.map((name) => (
-                  <button
-                    key={name}
-                    className={`btn btn-sm ${activeSheet === name ? 'btn-primary' : 'btn-ghost'}`}
-                    onClick={() => renderSheet(workbook, name, xlsxApi)}
-                    disabled={processing}
-                    id={`excel2pdf-sheet-${name}`}
-                  >
-                    {name}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Table Preview */}
-          <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 'var(--space-2)',
-                padding: 'var(--space-3) var(--space-5)',
-                borderBottom: '1px solid var(--color-border)',
-                fontWeight: 600,
-                fontSize: 'var(--text-sm)',
-              }}
-            >
-              <Eye size={16} />
-              Preview: {activeSheet}
-            </div>
-            <div
-              style={{
-                maxHeight: '85vh',
-                overflowY: 'auto',
-                overflowX: 'auto',
-                background: '#fff',
-                padding: 'var(--space-3)',
-              }}
-            >
-              <style>{`
-                #excel-preview-table {
-                  border-collapse: collapse;
-                  width: 100%;
-                  min-width: 400px;
-                }
-                #excel-preview-table td, #excel-preview-table th {
-                  border: 1px solid #ddd;
-                  padding: 6px 10px;
-                  text-align: left;
-                  font-size: 12px;
-                  color: #333;
-                  white-space: nowrap;
-                }
-                #excel-preview-table tr:nth-child(even) {
-                  background: #f9f9f9;
-                }
-                #excel-preview-table tr:first-child td {
-                  background: #e8e8e8;
-                  font-weight: bold;
-                }
-              `}</style>
-              <div
-                dangerouslySetInnerHTML={{ __html: tableHtml }}
-                id="excel2pdf-table-preview"
-              />
-            </div>
           </div>
 
           {/* Progress */}
@@ -219,7 +131,7 @@ export default function ExcelToPdfTool({ toolId, tool }) {
             <button
               className="btn btn-primary btn-lg"
               onClick={handleConvert}
-              disabled={processing || !tableHtml}
+              disabled={processing || !workbook}
               id="excel2pdf-convert-btn"
             >
               {processing ? (

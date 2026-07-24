@@ -1,5 +1,5 @@
-import { useState, useCallback, useRef } from 'react'
-import { Download, FileText, Trash2, Eye } from 'lucide-react'
+import { useState, useCallback } from 'react'
+import { Download, FileText, Trash2 } from 'lucide-react'
 import FileDropZone from '../Common/FileDropZone'
 import ProgressBar from '../Common/ProgressBar'
 import { useAppStore } from '../../store/appStore'
@@ -13,7 +13,6 @@ export default function WordToPdfTool({ toolId, tool }) {
   const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState(0)
   const [progressMsg, setProgressMsg] = useState('')
-  const previewRef = useRef(null)
   const addToast = useAppStore((s) => s.addToast)
 
   const handleFiles = useCallback(async (files) => {
@@ -39,7 +38,7 @@ export default function WordToPdfTool({ toolId, tool }) {
 
       setProgress(100)
       setProgressMsg('Ready!')
-      addToast({ type: 'success', message: 'Word document loaded! Preview below.' })
+      addToast({ type: 'success', message: 'Word document loaded and ready to convert!' })
     } catch (err) {
       console.error('DOCX load error:', err)
       addToast({ type: 'error', message: `Failed to load document: ${err.message}` })
@@ -112,39 +111,6 @@ export default function WordToPdfTool({ toolId, tool }) {
                 New file
               </button>
             </div>
-          </div>
-
-          {/* HTML Preview */}
-          <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 'var(--space-2)',
-                padding: 'var(--space-3) var(--space-5)',
-                borderBottom: '1px solid var(--color-border)',
-                fontWeight: 600,
-                fontSize: 'var(--text-sm)',
-              }}
-            >
-              <Eye size={16} />
-              Preview
-            </div>
-            <div
-              ref={previewRef}
-              style={{
-                padding: 'var(--space-5)',
-                maxHeight: '85vh',
-                overflowY: 'auto',
-                background: '#fff',
-                color: '#000',
-                fontFamily: 'Arial, Helvetica, sans-serif',
-                fontSize: '14px',
-                lineHeight: 1.6,
-              }}
-              dangerouslySetInnerHTML={{ __html: htmlContent }}
-              id="word2pdf-preview"
-            />
           </div>
 
           {/* Progress */}

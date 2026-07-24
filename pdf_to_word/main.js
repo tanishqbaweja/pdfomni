@@ -46,6 +46,68 @@ const IMAGE_RENDER_SCALE = 4; // Higher raster pass for embedded photos/images o
 const DOCX_TEXT_SCALE = 0.88; // Word renders PDF-positioned text taller/wider than canvas/PDF.js.
 const RASTER_ENCODE_CONCURRENCY = Math.max(3, Math.min(6,
   Math.floor((globalThis.navigator?.hardwareConcurrency || 6) / 2)));
+let activeSupportDownloadPrompt = null;
+
+function confirmSupportDownload(downloadUrl, downloadName) {
+  if (activeSupportDownloadPrompt) return activeSupportDownloadPrompt;
+
+  activeSupportDownloadPrompt = new Promise(resolve => {
+    const overlay = document.getElementById('support-download-bg');
+    const continueLink = document.getElementById('support-download-continue');
+    const cancelButton = document.getElementById('support-download-cancel');
+    const previousFocus = document.activeElement;
+    let settled = false;
+    let ready = false;
+
+    const readyTimer = window.setTimeout(() => {
+      ready = true;
+      continueLink.href = downloadUrl;
+      continueLink.download = downloadName;
+      continueLink.textContent = 'Continue & Download';
+      continueLink.removeAttribute('aria-disabled');
+    }, 4000);
+
+    const cleanup = () => {
+      window.clearTimeout(readyTimer);
+      overlay.classList.remove('on');
+      continueLink.removeAttribute('href');
+      continueLink.removeAttribute('download');
+      continueLink.removeAttribute('aria-disabled');
+      continueLink.textContent = 'Continue & Download';
+      activeSupportDownloadPrompt = null;
+      window.setTimeout(() => previousFocus?.focus?.(), 0);
+    };
+
+    const finish = result => {
+      if (settled) return;
+      settled = true;
+      resolve(result);
+      if (result) window.setTimeout(cleanup, 500);
+      else cleanup();
+    };
+
+    continueLink.textContent = 'Preparing document...';
+    continueLink.setAttribute('aria-disabled', 'true');
+    continueLink.onclick = event => {
+      if (!ready) {
+        event.preventDefault();
+        return;
+      }
+      finish(true);
+    };
+    cancelButton.onclick = () => finish(false);
+    overlay.onkeydown = event => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        finish(false);
+      }
+    };
+    overlay.classList.add('on');
+    cancelButton.focus();
+  });
+
+  return activeSupportDownloadPrompt;
+}
 
 // Timer callbacks are aggressively throttled in background tabs. Use the task
 // queue for conversion yields so processing continues when the tab is hidden,
@@ -13493,14 +13555,14 @@ const app = (() => {
       document.getElementById('success-card').style.display = 'flex';
       
       const btnDownload = document.getElementById('btn-download');
-      btnDownload.onclick = () => {
+      btnDownload.onclick = async () => {
         const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = uploadedFile.name.replace(/\.pdf$/i, '.docx');
-        a.click();
+        const downloaded = await confirmSupportDownload(
+          url,
+          uploadedFile.name.replace(/\.pdf$/i, '.docx')
+        );
         setTimeout(() => URL.revokeObjectURL(url), 10000);
-        snack('Downloaded successfully!', 'success');
+        if (downloaded) snack('Downloaded successfully!', 'success');
       };
       
     } catch (e) {

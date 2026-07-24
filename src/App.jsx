@@ -9,6 +9,8 @@ const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'))
 const TermsOfService = lazy(() => import('./pages/TermsOfService'))
 const ContactPage = lazy(() => import('./pages/ContactPage'))
 const AboutPage = lazy(() => import('./pages/AboutPage'))
+const GuidesPage = lazy(() => import('./pages/GuidesPage'))
+const GuidePage = lazy(() => import('./pages/GuidePage'))
 const ErrorPage = lazy(() => import('./pages/ErrorPage'))
 
 function RouteLoader() {
@@ -46,7 +48,7 @@ export default function App() {
     const toolPagePaths = new Set([
       '/merge', '/split', '/reorder', '/compress', '/rotate', '/page-numbers',
       '/word-to-pdf', '/excel-to-pdf', '/image-to-pdf', '/html-to-pdf',
-      '/pdf-to-image', '/pdf-to-text', '/watermark', '/redact', '/crop',
+      '/pdf-to-image', '/pdf-to-word', '/pdf-to-text', '/watermark', '/redact', '/crop',
       '/protect', '/unlock', '/sign', '/batch', '/wcag-check',
     ])
     const shouldFocusToolHeader = toolPagePaths.has(location.pathname) || location.pathname.startsWith('/tool/')
@@ -93,6 +95,7 @@ export default function App() {
           <Route path="/image-to-pdf" element={<ToolPage forcedToolId="image-to-pdf" />} />
           <Route path="/html-to-pdf" element={<ToolPage forcedToolId="html-to-pdf" />} />
           <Route path="/pdf-to-image" element={<ToolPage forcedToolId="pdf-to-image" />} />
+          <Route path="/pdf-to-word" element={<ToolPage forcedToolId="pdf-to-word" />} />
           <Route path="/pdf-to-text" element={<ToolPage forcedToolId="pdf-to-text" />} />
           <Route path="/edit-pdf" element={<ToolPage forcedToolId="edit" />} />
           <Route path="/watermark" element={<ToolPage forcedToolId="watermark" />} />
@@ -108,6 +111,8 @@ export default function App() {
           <Route path="/terms" element={<TermsOfService />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/guides" element={<GuidesPage />} />
+          <Route path="/guides/:guideSlug" element={<GuidePage />} />
           <Route path="/500" element={<ErrorPage status={500} />} />
           <Route path="*" element={<ErrorPage status={404} />} />
         </Routes>

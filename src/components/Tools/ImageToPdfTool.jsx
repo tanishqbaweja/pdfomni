@@ -205,7 +205,7 @@ export default function ImageToPdfTool({ toolId, tool }) {
           accept=".jpg,.jpeg,.png,.webp,.bmp"
           multiple={true}
           label="Drop your images here to convert to PDF"
-          sublabel="or click to browse — JPG, PNG, WebP, BMP"
+          sublabel="or click to browse (JPG, PNG, WebP, or BMP)"
           id="image-to-pdf-dropzone"
         />
       ) : (
@@ -299,7 +299,7 @@ export default function ImageToPdfTool({ toolId, tool }) {
               }}
             >
               <span style={{ fontWeight: 600, fontSize: 'var(--text-sm)' }}>
-                {images.length} image{images.length !== 1 ? 's' : ''} — drag to reorder
+                {images.length} image{images.length !== 1 ? 's' : ''}. Drag to reorder.
               </span>
               <button
                 className="btn btn-ghost btn-sm"

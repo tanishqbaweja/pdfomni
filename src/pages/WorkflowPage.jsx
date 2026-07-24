@@ -1536,24 +1536,24 @@ export default function WorkflowPage() {
 
       <div className="tool-seo-copy">
         <div>
-          <h3>Batch PDF Tasks Without a Cloud Queue</h3>
+          <h3>Repeated PDF Tasks Without a Cloud Queue</h3>
           <p>
-            Many people searching for a PDF batch processor want simple jobs like a Batch PDF converter, Batch PDF merger, combine PDFs in bulk, Bulk PDF compressor, reduce PDF size batch, bulk PDF to JPG, or Extract pages from PDF in bulk. PDFOmni uses the workflow page to make those repeated steps visual. Instead of uploading files into a server queue, supported operations run in the browser and the finished output is prepared locally.
+            Repeated work often includes the same few jobs: combine a group of files, rotate scanned pages, add a watermark, prepare a preview, and save the result. PDFOmni makes those steps visual. Supported operations run in the browser, and the finished output is prepared locally instead of waiting in a document-processing queue.
           </p>
           <p>
             This matters for invoices, class packets, client reports, scanned records, internal forms, and drafts that should not leave the device unless the user chooses to share them. The 500 MB per-file limit gives the page a clear boundary, while lazy previews keep large PDFs from forcing every page into memory at once.
           </p>
         </div>
         <div>
-          <h3>PDFOmni vs iLovePDF Workflows</h3>
+          <h3>When a Local Workflow Makes Sense</h3>
           <p>
-            iLovePDF is a well-known online PDF service, and it can be convenient when a cloud workflow is acceptable. Its official pricing describes free use as limited document processing, with Premium offering unlimited processing and an ad-free experience. PDFOmni is aimed at a different need: private local workflows, no account requirement for the core tools, and browser-based PDF processing.
+            A local workflow makes sense when the files should stay on the device and the required actions can run in a modern browser. A cloud service may be more suitable when a team needs shared storage, account approvals, server automation, or another feature that depends on remote infrastructure.
           </p>
           <p>
-            Choose PDFOmni when the priority is keeping files on your device, repeating common document steps, and reviewing the exported result yourself. Choose a cloud workflow when you specifically need server-side accounts, storage, team features, or processing that cannot reasonably happen in a browser.
+            Use PDFOmni when the priority is keeping files on your device, repeating common document steps, and reviewing the exported result yourself. Test a saved workflow on a few sample files before using it on a large set because PDFs that look similar can contain different fonts, forms, scans, and permissions.
           </p>
           <p>
-            Compared with single-action PDF sites, PDFOmni's visual builder is designed to be one of the best local workflow options for chaining several document steps without writing code. It combines reusable nodes, private browser processing, and direct output control in one workspace.
+            The visual builder is useful when several actions belong together and you expect to repeat them. A one-step job is usually simpler on the dedicated tool page. Automation should remove repeated clicks, while a person still checks privacy, layout, accessibility, and the final downloaded files.
           </p>
         </div>
       </div>

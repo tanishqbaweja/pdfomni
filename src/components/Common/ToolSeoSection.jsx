@@ -1,10 +1,11 @@
+import { Link } from 'react-router-dom'
+
 export default function ToolSeoSection({ tool, seo, headingLevel = 2 }) {
-  const mainTerm = tool.name
   const Heading = headingLevel === 1 ? 'h1' : 'h2'
 
   return (
     <section className="tool-seo-section" aria-labelledby="tool-seo-heading">
-      <div className="tool-seo-kicker">Private PDF workflow</div>
+      <div className="tool-seo-kicker">How this PDF tool works</div>
       <Heading id="tool-seo-heading">{seo.h1}</Heading>
       <p className="tool-seo-lead">{seo.intro}</p>
 
@@ -19,85 +20,84 @@ export default function ToolSeoSection({ tool, seo, headingLevel = 2 }) {
 
       <div className="tool-seo-copy">
         <div>
-          <h3>Why Use This Tool?</h3>
+          <h3>When This Tool Is Useful</h3>
           <p>{seo.why}</p>
           <p>
-            PDFOmni is built around zero-knowledge document handling: the browser does the work, and your original file stays on your device. That means fewer waiting screens, fewer privacy tradeoffs, and a faster path from upload area to finished download.
-          </p>
-          <p>
-            Since the workflow does not depend on uploading the PDF first, performance is tied mostly to your device and browser instead of server queues, account limits, or network speed. That is especially useful for large PDFs, confidential files, and repeated document tasks.
-          </p>
-          <p>
-            The result is a practical private PDF tool page with enough context to choose the right workflow and a fast interface for people who just want to finish the document.
+            You do not need to create an account before starting. Choose the source file, make the change, and download a new copy. Keep the original until you have opened the export and checked that every important page still looks and works the way you expect.
           </p>
         </div>
         <div>
-          <h3>Advanced Capabilities</h3>
-          <p>{seo.advanced}</p>
+          <h3>What Happens to Your File</h3>
           <p>
-            This makes the tool useful as a standalone utility and as part of a larger document workflow when you need to prepare PDFs for email, storage, printing, review, or secure sharing.
+            The supported document work happens in the browser. Your device reads the file and prepares the output, so PDFOmni does not need to send the source to a document-processing server. Normal website resources, analytics, ads, and optional online features can still make internet requests, as explained in the <Link to="/privacy">Privacy Policy</Link>.
           </p>
-          <h3>Compared with Other PDF Tools</h3>
-          <p>{seo.positioning}</p>
+          <p>
+            Local processing also means that speed depends on the device. A short text PDF can finish quickly, while a large scan with high-resolution images may use much more memory. The 500 MB per-file limit is an upper boundary, and complicated files can still take longer on an older phone or laptop.
+          </p>
         </div>
       </div>
 
       <div className="tool-seo-use-cases">
         <h3>Common Use Cases</h3>
         <ul>
-          {seo.useCases.map((useCase) => (
-            <li key={useCase}>{useCase}</li>
-          ))}
+          {seo.useCases.map((useCase) => <li key={useCase}>{useCase}</li>)}
         </ul>
       </div>
 
       <div className="tool-seo-copy tool-seo-expanded">
         <div>
-          <h3>{mainTerm} Without the Upload Tradeoff</h3>
+          <h3>Before You Start</h3>
+          {seo.notes.map((note) => <p key={note}>{note}</p>)}
+        </div>
+        <div>
+          <h3>Tips for a Reliable Export</h3>
+          <p>{seo.advanced}</p>
           <p>
-            Many PDF tasks are simple in theory but frustrating in practice: upload the file, wait for a remote queue, create an account, then download the result. PDFOmni keeps the {mainTerm.toLowerCase()} workflow focused on the document itself. You choose the file, the browser reads it, and the result is produced on your device.
+            Save the result with a name that separates it from the source. Reopen the downloaded file, compare the page count, and inspect the parts that changed. If the PDF is being submitted for school, work, taxes, or an official form, compare it with the receiving instructions before uploading it.
           </p>
           <p>
-            That matters for everyday files as much as it matters for confidential documents. A student preparing assignments, a freelancer handling client paperwork, a family member cleaning scanned records, or a business user working with contracts may all need a fast PDF tool, but they may not want those files copied to someone else's server.
+            PDFs can store text, images, forms, annotations, fonts, and security settings in very different ways. A preview is helpful, but it cannot replace a final check of the downloaded file. Use another PDF reader for an important document when you want an extra compatibility check.
           </p>
           <p>
-            The page is also designed around larger files. PDFOmni sets a clear 500 MB per-file limit for browser tools, while actual speed still depends on your device, available memory, browser, and the complexity of the PDF. If you are working with scanned documents, image-heavy pages, or long reports, local processing avoids upload time and can feel more predictable than waiting for a remote queue.
+            Check the page count and move through the full document. Pay extra attention to small text, page boundaries, forms, links, signatures, unusual fonts, and pages made from scans. A successful download only confirms that a file was created. It does not confirm that the result meets the rules of the person or service receiving it.
+          </p>
+          <p>
+            Keep the original and final copies until the work is accepted. If a setting did not produce the right result, return to the source rather than repeatedly processing an already compressed or converted output. Clear filenames make it easier to tell which version was reviewed and which version was actually submitted.
+          </p>
+        </div>
+      </div>
+
+      {seo.searchLanguage?.length > 0 && (
+        <div className="tool-seo-copy tool-seo-search-language">
+          <div>
+            <h3>Understanding PDF to Word Search Terms</h3>
+            {seo.searchLanguage.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+          </div>
+        </div>
+      )}
+
+      <div className="tool-seo-copy">
+        <div>
+          <h3>Choose the Right Source File</h3>
+          <p>
+            Start from the clearest and most complete copy you have. Repeatedly converting or compressing an already processed PDF can lower image quality and make text harder to edit or extract. If the original came from Word, Excel, or another authoring program, keep that source because it is usually the easiest place to make large content changes.
           </p>
         </div>
         <div>
-          <h3>PDFOmni vs iLovePDF</h3>
+          <h3>Keep Your Versions Clear</h3>
           <p>
-            iLovePDF is a well-known online PDF toolkit, but its web product is built around cloud processing, account tiers, and premium upgrades. PDFOmni is different: it focuses on browser-side work, privacy, and free access. The important question is not only which button exists. It is where your file goes, what limit applies, and whether a subscription is needed for your normal workflow.
+            Use names that explain the document status, such as report-original.pdf, report-review.pdf, and report-submitted.pdf. Avoid overwriting the only copy or filling a folder with names like final2 and final-new. A clear name makes it easier to reopen the exact output you checked and prevents an older version from being sent by mistake.
           </p>
-          <div className="tool-compare-checklist" role="table" aria-label={`PDFOmni compared with iLovePDF for ${mainTerm}`}>
-            <div role="row">
-              <span role="columnheader">Feature</span>
-              <span role="columnheader">PDFOmni</span>
-              <span role="columnheader">iLovePDF web</span>
-            </div>
-            <div role="row">
-              <span role="rowheader">Privacy Focused</span>
-              <span role="cell" className="compare-mark compare-yes" aria-label="Yes" />
-              <span role="cell" className="compare-mark compare-no" aria-label="No" />
-            </div>
-            <div role="row">
-              <span role="rowheader">500 MB File Size Limit</span>
-              <span role="cell" className="compare-mark compare-yes" aria-label="Yes" />
-              <span role="cell" className="compare-mark compare-no" aria-label="No" />
-            </div>
-            <div role="row">
-              <span role="rowheader">Totally Free</span>
-              <span role="cell" className="compare-mark compare-yes" aria-label="Yes" />
-              <span role="cell" className="compare-mark compare-no" aria-label="No" />
-            </div>
-            <div role="row">
-              <span role="rowheader">No Rate Limits</span>
-              <span role="cell" className="compare-mark compare-yes" aria-label="Yes" />
-              <span role="cell" className="compare-mark compare-no" aria-label="No" />
-            </div>
-          </div>
         </div>
       </div>
+
+      <nav className="tool-seo-related" aria-labelledby="tool-related-heading">
+        <h3 id="tool-related-heading">Useful Next Steps</h3>
+        <p>Continue only when the document needs another change. Each link opens a focused PDFOmni tool or guide.</p>
+        <div>
+          {seo.related.map((item) => <Link key={item.href} to={item.href}>{item.label}</Link>)}
+        </div>
+      </nav>
 
       <div className="tool-seo-faq">
         <h3>Frequently Asked Questions</h3>

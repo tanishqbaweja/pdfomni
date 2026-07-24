@@ -31,13 +31,14 @@ export default function Footer() {
               &copy; {new Date().getFullYear()} PDFOmni - Free PDF Toolkit
             </div>
             <div className="footer-text">
-              Built to deliver world-class local PDF processing, including true browser-based PDF stream editing.
+              Local PDF tools built for practical document work without an unnecessary upload step.
             </div>
             <div className="footer-links">
               <Link to="/privacy">Privacy Policy</Link>
               <Link to="/terms">Terms of Service</Link>
               <Link to="/contact">Contact</Link>
               <Link to="/about">About Us</Link>
+              <Link to="/guides">Guides</Link>
             </div>
           </div>
           <div className="footer-end">

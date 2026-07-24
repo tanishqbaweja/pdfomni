@@ -13,6 +13,7 @@ export default defineConfig([
     'public/ocr/**',
     'compress_pdf/dist/**',
     'compress_pdf/node_modules/**',
+    'pdf_to_word/**',
   ]),
   {
     files: ['**/*.{js,jsx}'],

@@ -42,7 +42,7 @@ export default function ReorderTool({ toolId, tool }) {
         setFile(f)
         setPageOrder(Array.from({ length: count }, (_, i) => i))
         setRemovedPages(new Set())
-        addToast({ type: 'success', message: `Loaded "${f.name}" — ${count} pages` })
+        addToast({ type: 'success', message: `Loaded "${f.name}": ${count} pages` })
       } catch (err) {
         addToast({ type: 'error', message: `Failed to load PDF: ${err.message}` })
       } finally {
@@ -307,7 +307,7 @@ export default function ReorderTool({ toolId, tool }) {
                       onClick={() => handleRestorePage(origIndex)}
                       disabled={processing}
                     >
-                      Page {origIndex + 1} — Restore
+                      Page {origIndex + 1}. Restore
                     </button>
                   ))}
               </div>

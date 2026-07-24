@@ -43,9 +43,10 @@ const largeFileOptions = {
 const protectedNamePatterns = [
   /^assets\/app-(?:ai|core|engine|tools|ui|workflow)-.+\.(?:js|mjs)$/i,
   /^assets\/(?:main|editpdf)-.+\.(?:js|mjs)$/i,
-  /^assets\/(?:AboutPage|ChatSidebar|ContactPage|ErrorPage|PrivacyPolicy|TermsOfService|ToolPage|WorkflowPage)-.+\.(?:js|mjs)$/i,
+  /^assets\/(?:AboutPage|ChatSidebar|ContactPage|ErrorPage|GuidePage|GuidesPage|PrivacyPolicy|TermsOfService|ToolPage|WorkflowPage|guides)-.+\.(?:js|mjs)$/i,
   /^assets\/embeddingWorker-.+\.(?:js|mjs)$/i,
   /^compress\/app\/assets\/(?:index|compressionWorker)-.+\.(?:js|mjs)$/i,
+  /^pdf-to-word\/app\/assets\/(?:index|main|embed)-.+\.(?:js|mjs)$/i,
   /^functions\/.+\.(?:js|mjs)$/i,
   /^_worker\.(?:js|mjs)$/i,
 ]
@@ -60,6 +61,7 @@ const vendorNamePatterns = [
   /(?:^|\/)pdf\.worker/i,
   /(?:^|\/)assets\/(?:ai-runtime|browserRunner|content-libs|copy|download|html2canvas|index\.es|jspdf|lucide-react|mammoth|modulepreload-polyfill|pdf|pdf-lib|pdfjs-dist|preload-helper|purify\.es|qpdf|rolldown-runtime|src|tesseract|vendor|worker|xlsx)-/i,
   /(?:^|\/)compress\/app\/assets\/(?:browserRunner|lucide-react|pdf-lib|pdfjs-dist|qpdf|rolldown-runtime|src|vendor|worker)-/i,
+  /(?:^|\/)pdf-to-word\/app\/assets\/(?:docx|jszip|pdfjs-dist|vendor)-/i,
   /\.min\.(?:js|mjs)$/i,
 ]
 
@@ -160,8 +162,8 @@ const report = [
   ...(unclassifiedFiles.length ? unclassifiedFiles.map(file => `- ${relative(file)}`) : ['- none']),
   '',
   'Notes:',
-  '- The standalone PDF editor, React application chunks, AI embedding worker, compressor application/worker, and Cloudflare functions are protected.',
-  '- PDF.js, qpdf, OCR, framework/runtime chunks, WASM loaders, and minified vendor libraries are intentionally skipped.',
+  '- The standalone PDF editor, React application chunks, AI embedding worker, compressor application/worker, PDF-to-Word application code, and Cloudflare functions are protected.',
+  '- PDF.js, DOCX, JSZip, qpdf, OCR, framework/runtime chunks, WASM loaders, and minified vendor libraries are intentionally skipped.',
   '- Every obfuscated JavaScript file is syntax-checked after transformation.',
   '- Obfuscation is a copying deterrent, not a security boundary.',
 ].join('\n')

@@ -62,7 +62,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     {
-      name: 'serve-compress',
+      name: 'serve-built-sub-apps',
       configureServer(server) {
         server.middlewares.use((req, res, next) => {
           const url = req.url.split('?')[0]; // strip query params
@@ -75,12 +75,17 @@ export default defineConfig(({ mode }) => {
               return
             }
           }
-          if (url.startsWith('/compress')) {
-            let relativePath = url.replace(/^\/compress/, '');
+          const subApp = url.startsWith('/compress')
+            ? { route: '/compress', output: 'dist/compress' }
+            : url.startsWith('/pdf-to-word/app')
+              ? { route: '/pdf-to-word/app', output: 'dist/pdf-to-word/app' }
+              : null
+          if (subApp) {
+            let relativePath = url.replace(subApp.route, '');
             if (relativePath === '/' || relativePath === '') {
               relativePath = '/index.html';
             }
-            const filePath = path.resolve('dist/compress' + relativePath);
+            const filePath = path.resolve(subApp.output + relativePath);
             if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
               const ext = path.extname(filePath);
               const contentType = {

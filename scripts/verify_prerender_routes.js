@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import tools from '../src/config/tools.js'
+import { guides } from '../src/config/guides.js'
 
 const outDir = process.argv[2] || 'dist'
 const rootDir = process.cwd()
@@ -14,6 +15,8 @@ const routes = [
   '/terms',
   '/contact',
   '/about',
+  '/guides',
+  ...guides.map((guide) => `/guides/${guide.slug}`),
   '/404',
   '/500',
 ]
@@ -37,7 +40,41 @@ function textLength(html) {
     .trim().length
 }
 
+function wordCount(html) {
+  const text = html
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&[a-z0-9#]+;/gi, ' ')
+  return text.match(/[A-Za-z0-9']+/g)?.length || 0
+}
+
 const failures = []
+const publicTools = tools.filter((tool) => tool.canonicalPath && !tool.hiddenOnHome)
+const sitemap = fs.readFileSync(path.join(rootDir, 'public', 'sitemap.xml'), 'utf8')
+
+for (const tool of publicTools) {
+  const matches = guides.filter((guide) => guide.toolId === tool.id)
+  if (matches.length !== 1) failures.push(`${tool.canonicalPath}: expected exactly one dedicated tool guide, found ${matches.length}`)
+}
+
+for (const guide of guides) {
+  const route = `/guides/${guide.slug}`
+  if (!sitemap.includes(`<loc>https://pdfomni.com${route}</loc>`)) {
+    failures.push(`${route}: missing from public/sitemap.xml`)
+  }
+  if (/—|â€”/.test(JSON.stringify(guide))) failures.push(`${route}: contains an em dash`)
+  if (guide.toolId) {
+    const primaryTool = publicTools.find((tool) => tool.id === guide.toolId)
+    const otherToolLinks = new Set(
+      guide.related
+        .map((item) => item.href)
+        .filter((href) => publicTools.some((tool) => tool.canonicalPath === href) && href !== primaryTool?.canonicalPath),
+    )
+    if (otherToolLinks.size < 2) failures.push(`${route}: needs links to at least two other tools`)
+    if (!guide.intro.includes(`href="${primaryTool?.canonicalPath}"`)) failures.push(`${route}: primary tool is not linked in the introduction`)
+  }
+}
 
 for (const route of routes) {
   const files = [routeFile(route), routeHtmlFile(route)].filter(Boolean)
@@ -51,6 +88,7 @@ for (const route of routes) {
     const seoIndex = html.indexOf('class="prerendered-seo"')
     const rootIndex = html.indexOf('id="root"')
     const isToolRoute = tools.some((tool) => tool.canonicalPath === route && !tool.hiddenOnHome)
+    const isGuideArticle = guides.some((guide) => `/guides/${guide.slug}` === route)
 
     const checks = [
       ['title', /<title>[^<]{8,}<\/title>/i.test(html)],
@@ -62,6 +100,7 @@ for (const route of routes) {
       ['root after crawler body', rootIndex > seoIndex],
       ['not noscript-only', !html.includes('<noscript>')],
       ['body text', textLength(html) > (isToolRoute ? 1800 : 80)],
+      ['minimum word count', wordCount(html) >= (isGuideArticle ? 1000 : isToolRoute ? 800 : 20)],
     ]
 
     if (isToolRoute) {

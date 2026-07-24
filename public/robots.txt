@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Allow: /guides/
+Allow: /pdf-to-word
 
 Sitemap: https://pdfomni.com/sitemap.xml

@@ -7,29 +7,66 @@ const defaults = {
   },
 }
 
+const categoryNotes = {
+  organize: [
+    'Page organization changes the structure of a document, so it helps to keep the original and export a new copy. Check the page count before and after the change. A missing attachment or an extra blank scan is easier to catch when you know the expected total.',
+    'Use page thumbnails to plan the order, then open the downloaded file at normal size. Thumbnails can hide sideways text, clipped margins, duplicated forms, and pages that look almost identical. Review every boundary where one source document ends and another begins.',
+    'If the final PDF is going to a portal, check its page and file-size rules before adding extra material. A clear packet contains what the recipient needs in an order they can follow. More pages do not automatically make a submission more complete.',
+  ],
+  'convert-to': [
+    'A conversion creates a PDF view of the source, not another fully editable copy of the original format. Keep the Word file, spreadsheet, image, or HTML source because it is usually the best place to make later content changes.',
+    'Compare headings, page breaks, tables, links, images, and special characters after export. Fonts and browser layout rules can change wrapping, especially when the source uses uncommon fonts or a page size that does not match the PDF settings.',
+    'For an official submission, reopen the downloaded PDF in a normal reader instead of relying only on the preview. Check the filename, page count, orientation, and smallest text. The converted file should be judged by what the recipient will actually open.',
+  ],
+  'convert-from': [
+    'Extraction changes how the document can be reused. Images preserve the look of a page but not its selectable text. Plain text is easy to search and quote but does not preserve columns, spacing, or the visual meaning of a layout.',
+    'Scanned pages may not contain stored text at all. If extraction returns an empty or confused result, the PDF may need optical character recognition. Compare important names, numbers, and quotations with the page image before relying on the output.',
+    'Use the smallest output that fits the next job. A PNG can be useful for a sharp diagram, a JPG can be smaller for a photograph, and plain text works well for notes. Keep the original PDF as the reference when layout or evidence matters.',
+  ],
+  edit: [
+    'PDF editing is different from editing the source document that created the PDF. Text may be split into small objects, fonts can be embedded with unusual character maps, and a scanned page may only be an image. Keep the original and expect complicated files to need a closer review.',
+    'When removing private information, use a real redaction workflow instead of covering it with a shape or changing the text color. When cropping, check that the operation removes only the intended page area and does not hide information that another person still needs.',
+    'Inspect the exported copy at high zoom around every changed area. Check nearby lines, table borders, word spacing, image quality, and selectable text. The editing canvas is a working view, while the downloaded PDF is the result that matters.',
+  ],
+  security: [
+    'Security tools should be used only on documents you own or have permission to handle. Unlocking is not a way to bypass access you were never given, and placing a visual signature is not automatically the same as a certificate-based digital signature.',
+    'A password-protected PDF is only as safe as its password and delivery method. Use a long, unique passphrase, store it in a password manager, and send it through a different channel from the document. PDFOmni cannot recover a password that everyone loses.',
+    'Review the final file before sharing it. Confirm that protection opens with the intended password, redacted information cannot be searched or copied, and the signature appears on the correct page. Follow the receiving organization\'s rules when a legal or official process requires a specific kind of security.',
+  ],
+  advanced: [
+    'Automated checks and batch actions are most useful for repeated mechanical work. They do not replace human decisions about privacy, accessibility, layout, or whether a document is ready to publish. Use the output as a starting point for review.',
+    'Test a workflow on copies of a few representative files before running a large group. PDFs that look similar can contain different fonts, forms, scans, or permissions. A small test makes it easier to notice a setting that does not fit every document.',
+    'Keep a record of the settings that worked and inspect the downloaded files. For accessibility, combine automated findings with keyboard and screen-reader testing. For batch work, compare file counts and open samples from the beginning, middle, and end of the output set.',
+  ],
+}
+
+const relatedTools = {
+  merge: [{ href: '/reorder', label: 'Reorder the merged pages' }, { href: '/compress', label: 'Compress the finished packet' }, { href: '/page-numbers', label: 'Add page numbers' }],
+  split: [{ href: '/merge', label: 'Merge selected documents' }, { href: '/compress', label: 'Compress extracted pages' }, { href: '/redact', label: 'Redact before sharing' }],
+  reorder: [{ href: '/merge', label: 'Merge more documents' }, { href: '/rotate', label: 'Rotate sideways pages' }, { href: '/page-numbers', label: 'Number the final order' }],
+  compress: [{ href: '/split', label: 'Remove unneeded pages' }, { href: '/merge', label: 'Build one packet' }, { href: '/sign', label: 'Sign the final copy' }],
+  rotate: [{ href: '/reorder', label: 'Reorder corrected pages' }, { href: '/crop', label: 'Crop scan borders' }, { href: '/pdf-to-text', label: 'Extract stored text' }],
+  'page-numbers': [{ href: '/reorder', label: 'Fix the page order first' }, { href: '/watermark', label: 'Add a watermark' }, { href: '/sign', label: 'Sign the document' }],
+  'word-to-pdf': [{ href: '/merge', label: 'Merge supporting files' }, { href: '/compress', label: 'Reduce the PDF size' }, { href: '/edit-pdf', label: 'Edit the converted PDF' }],
+  'excel-to-pdf': [{ href: '/crop', label: 'Trim extra margins' }, { href: '/merge', label: 'Add the PDF to a report' }, { href: '/watermark', label: 'Watermark a review copy' }],
+  'image-to-pdf': [{ href: '/rotate', label: 'Correct page orientation' }, { href: '/crop', label: 'Remove scan borders' }, { href: '/compress', label: 'Reduce scan size' }],
+  'html-to-pdf': [{ href: '/edit-pdf', label: 'Edit the generated PDF' }, { href: '/compress', label: 'Compress it for sharing' }, { href: '/merge', label: 'Add it to another document' }],
+  'pdf-to-image': [{ href: '/image-to-pdf', label: 'Build a PDF from images' }, { href: '/pdf-to-text', label: 'Extract the text instead' }, { href: '/crop', label: 'Crop page margins' }],
+  'pdf-to-word': [{ href: '/word-to-pdf', label: 'Convert Word back to PDF' }, { href: '/pdf-to-text', label: 'Extract plain PDF text' }, { href: '/guides/how-to-convert-pdf-to-word', label: 'Read the PDF to Word guide' }],
+  'pdf-to-text': [{ href: '/wcag-check', label: 'Review accessibility' }, { href: '/edit-pdf', label: 'Edit PDF text' }, { href: '/guides/work-with-scanned-pdfs-and-ocr', label: 'Learn about scans and OCR' }],
+  edit: [{ href: '/redact', label: 'Redact private content' }, { href: '/sign', label: 'Add a signature' }, { href: '/compress', label: 'Compress the edited copy' }],
+  watermark: [{ href: '/sign', label: 'Sign the document' }, { href: '/page-numbers', label: 'Add page numbers' }, { href: '/protect', label: 'Protect the shared copy' }],
+  redact: [{ href: '/split', label: 'Share only needed pages' }, { href: '/protect', label: 'Protect the redacted copy' }, { href: '/guides/redact-a-pdf-safely', label: 'Read the redaction guide' }],
+  crop: [{ href: '/rotate', label: 'Rotate scanned pages' }, { href: '/compress', label: 'Compress the cropped PDF' }, { href: '/pdf-to-image', label: 'Export pages as images' }],
+  encrypt: [{ href: '/sign', label: 'Sign before protecting' }, { href: '/redact', label: 'Remove private details' }, { href: '/guides/password-protect-and-share-pdfs', label: 'Read the safe sharing guide' }],
+  decrypt: [{ href: '/merge', label: 'Merge the working copy' }, { href: '/compress', label: 'Compress the unlocked copy' }, { href: '/protect', label: 'Protect a final version' }],
+  sign: [{ href: '/protect', label: 'Protect the signed PDF' }, { href: '/merge', label: 'Add supporting documents' }, { href: '/compress', label: 'Reduce the final size' }],
+  batch: [{ href: '/workflow', label: 'Build a reusable workflow' }, { href: '/compress', label: 'Compress one PDF' }, { href: '/guides/build-a-better-pdf-workflow', label: 'Plan a better workflow' }],
+  wcag: [{ href: '/edit-pdf', label: 'Edit the document' }, { href: '/pdf-to-text', label: 'Inspect extracted text' }, { href: '/guides/make-pdfs-wcag-accessible', label: 'Read the accessibility guide' }],
+}
+
 function getCompetitivePositioning(tool) {
-  const name = tool.name
-
-  if (tool.id === 'edit') {
-    return 'Compared with privacy-focused editors that only place overlays or flatten pages into images, PDFOmni offers world-class Edit PDF technology with true PDF stream editing within your browser. It can work with selectable text, embedded-font glyphs, images, and page objects, making it one of the best local choices for practical PDF editing while preserving useful document structure.'
-  }
-
-  switch (tool.category) {
-    case 'organize':
-      return `Compared with upload-first PDF organizers, ${name} removes the transfer step and keeps document processing on your device. Free access, a clear 500 MB per-file limit, no artificial rate limits, and direct browser output make PDFOmni one of the best fits for privacy-sensitive page organization and optimization.`
-    case 'convert-to':
-      return `Compared with cloud converters, ${name} is designed for people who want the convenience of an online tool without handing the source file to a remote processing service. PDFOmni aims to be one of the best local conversion choices by combining private browser processing, free access, and a workflow that can continue into editing, compression, signing, or page organization.`
-    case 'convert-from':
-      return `Compared with upload-first extraction services, ${name} keeps the source PDF in the browser while producing reusable output on your device. That local model makes PDFOmni one of the best choices for private conversion work when document control matters as much as speed and convenience.`
-    case 'edit':
-      return `Compared with simple overlay tools, ${name} is part of a deeper local document workflow that preserves useful PDF structure wherever the format allows it. PDFOmni is built to be one of the best privacy-focused choices for practical PDF changes, with browser-side processing, free access, and no artificial rate limits.`
-    case 'security':
-      return `Compared with cloud security tools, ${name} avoids uploading the unprotected source document before the requested change can begin. That privacy model, combined with free local processing and a clear workflow, makes PDFOmni one of the best fits for sensitive PDFs that should remain under the user's control.`
-    case 'advanced':
-      return `Compared with basic one-action PDF sites, ${name} is designed for more demanding local document work without forcing files into a server queue. PDFOmni aims to offer one of the best browser-based experiences for users who value privacy, repeatable workflows, and direct control over the final output.`
-    default:
-      return `Compared with upload-first PDF services, ${name} keeps processing in the browser and the source file on your device. PDFOmni is designed to be one of the best privacy-focused choices for practical local PDF work.`
-  }
+  return `${tool.name} runs as a local browser workflow. This avoids an unnecessary document upload, while leaving the user responsible for checking the downloaded result and following any rules that apply to the file.`
 }
 
 export const toolSeo = {
@@ -176,6 +213,44 @@ export const toolSeo = {
       { question: 'What image formats are supported?', answer: 'PDFOmni supports common browser image output formats such as PNG or JPG where available in the tool.' },
     ],
   },
+  'pdf-to-word': {
+    h1: 'Convert PDF to Word Online for Free in Your Browser',
+    intro: 'Convert PDF into Word as an editable DOCX file without sending the document to a conversion server. This free PDF to Word converter analyzes text, fonts, images, links, tables, and page geometry locally in the browser, then builds a Word document that keeps the original layout as closely as the format allows.',
+    steps: [
+      'Choose a PDF from your device or drop it into the converter.',
+      'Review the filename, page count, text type, and page previews before starting.',
+      'Convert PDF to Word online while the browser processes each page locally.',
+      'Download the DOCX file, open it in Word or another compatible editor, and inspect every important page.',
+    ],
+    why: 'A PDF is designed to preserve a finished page, while Word is designed for editing. PDFOmni reconstructs the page as Word content instead of sending the file to a remote PDF converter to Word service. It is useful for reports, course notes, resumes, forms, research papers, manuals, and older documents when the original DOCX is no longer available.',
+    advanced: 'For the best result, start with a digital PDF that contains selectable text. The converter places editable text, images, links, detected tables, and visual page elements into a DOCX package. Complex equations, unusual fonts, layered artwork, and scans may need selective image-based fallbacks because Word and PDF describe pages in very different ways. After reviewing the DOCX, use Word to PDF if you need a new fixed-layout copy.',
+    useCases: [
+      'Recovering an editable draft when only the PDF remains',
+      'Updating a resume, report, assignment, or letter',
+      'Reusing tables, text, images, and links from an owned document',
+      'Preparing a PDF for comments or revision in Microsoft Word',
+    ],
+    notes: [
+      'A PDF to DOCX conversion is a reconstruction, not a return to the original authoring file. The PDF may store each line, glyph, image, and drawing at a fixed coordinate without recording paragraphs or styles. PDFOmni reads those objects and rebuilds a Word page with editable elements where it can. Keep the PDF beside the DOCX so you can compare line wrapping, columns, headers, footnotes, tables, and page breaks.',
+      'Digital PDFs usually produce more editable text than scans. An image-only scan does not contain ordinary characters, so a PDF to Word converter can preserve that page as an image unless reliable text recognition is available. A visual fallback keeps the page readable, but words inside the image are not automatically editable. If editing every sentence matters, use a clean source scan and expect to proofread OCR results.',
+      'Fonts affect both appearance and geometry. When embedded font data is available, the converter carries it into the Word package when possible. If Word substitutes another font, character widths can change and a line may wrap differently. Open the downloaded file on the computer where it will be edited, check mathematical symbols and small labels, and confirm that no substituted font has moved content outside its page area.',
+    ],
+    searchLanguage: [
+      'The basic job is often described as “convert pdf into word,” “convert to word,” “pdf word,” “pdf convert to word,” or simply “convert pdf to word.” A useful pdf to word converter should explain which Word format it creates and how much of the result stays editable.',
+      'People looking for a browser option may type “pdf to word online converter,” “convert pdf to word online,” or “pdf converter to word.” Here, online describes a tool opened from a website. The document conversion itself still runs on the user’s device.',
+      'Cost-focused searches include “pdf to word free converter,” “free pdf to word converter,” “free pdf converter,” “pdf to word free,” “pdf to word converter free,” and “convert pdf to word free.” PDFOmni does not require an account or a per-download payment for this conversion.',
+      'The output format also changes the wording. “pdf to doc,” “pdf to docx,” and “pdf a word” all refer to a Word document, but DOC and DOCX are not the same file type. PDFOmni creates DOCX, which is the current XML-based Word format. International searches such as “pdf en word” and “converter pdf em word” describe the same conversion in Spanish or Portuguese wording.',
+      'Some searches include another product name, including “pdf to word converter ilovepdf,” “pdf a word ilovepdf,” “pdf to word i love pdf,” “pdf to word ilovepdf,” and “ilovepdf pdf to word.” PDFOmni is independent and is not affiliated with iLovePDF. These phrases are mentioned only to clarify that the document task is the same, while PDFOmni uses its own local browser conversion system.',
+    ],
+    faqs: [
+      { question: 'Is this a free PDF to Word converter?', answer: 'Yes. PDFOmni lets you convert PDF to Word free in the browser without creating an account or paying for each download.' },
+      { question: 'Does PDFOmni upload my PDF?', answer: 'The core conversion runs locally in your browser. The selected document is not sent to a PDFOmni document-processing server, although normal website files, analytics, ads, and optional online features can still make internet requests.' },
+      { question: 'Can I convert a PDF to DOC or DOCX?', answer: 'The converter creates a DOCX file, which is the current Word document format. It does not create the older binary DOC format.' },
+      { question: 'Will the Word document look exactly like the PDF?', answer: 'The converter aims to preserve page geometry, text, images, links, fonts, tables, and visual elements, but identical output cannot be guaranteed. PDF and Word use different layout systems, and office programs can render the same DOCX differently.' },
+      { question: 'Can scanned PDFs become editable Word files?', answer: 'Scanned pages can be preserved visually. If a page has no usable text layer, it may be placed into Word as an image, so its words will not be fully editable without OCR.' },
+      { question: 'What should I check after conversion?', answer: 'Compare the DOCX with the PDF page by page. Check page count, columns, small text, equations, tables, links, images, fonts, headers, footers, and any page that uses an unusual layout.' },
+    ],
+  },
   'pdf-to-text': {
     h1: 'Extract Text from PDF Files Privately',
     intro: 'Copy text out of PDF files without sending the document to an extraction service. This is useful for notes, quotes, reports, research, and quick content reuse.',
@@ -190,8 +265,8 @@ export const toolSeo = {
     ],
   },
   edit: {
-    h1: 'World-Class Edit PDF Files Locally - Free Online PDF Editor',
-    intro: 'Edit PDF files directly in your browser with PDFOmni’s world-class local editor. Modify text, move content, adjust images, add shapes, place signatures, and export a private PDF without uploading the source document to a server.',
+    h1: 'Edit PDF Files Locally in Your Browser',
+    intro: 'Edit PDF files directly in your browser. Modify text, move content, adjust images, add shapes, place signatures, and export a new PDF without sending the source document to a processing server.',
     steps: ['Open your PDF in the browser-based editor.', 'Edit PDF text, images, shapes, signatures, or annotations locally.', 'Export the edited PDF from your device.'],
     why: 'PDF editing often involves contracts, forms, invoices, resumes, IDs, business drafts, or personal records. PDFOmni keeps the workflow local while still offering true PDF stream editing, embedded-font handling, selectable text preservation, and practical page object editing in the browser.',
     advanced: 'After editing, you can continue into compression, redaction, signing, page organization, conversion, or AI Copilot document review without switching to an upload-first PDF service.',
@@ -199,7 +274,7 @@ export const toolSeo = {
     faqs: [
       { question: 'Is it safe to edit my PDF here?', answer: 'Yes. PDFOmni edits PDF content locally in your browser instead of uploading the file for server-side processing.' },
       { question: 'Can I edit PDF text for free?', answer: 'Yes. The PDFOmni editor supports free PDF editing for practical text, image, shape, and signature changes.' },
-      { question: 'Is PDFOmni a world-class online PDF editor?', answer: 'Yes. It runs in the browser like an online PDF editor, while focusing on world-class local PDF stream editing and private document handling.' },
+      { question: 'Can the editor change existing PDF text?', answer: 'It can edit many selectable text objects and can also add new text. PDFs use many different font and encoding systems, so always check the exported file after changing existing content.' },
     ],
   },
   watermark: {
@@ -322,5 +397,7 @@ export function getToolSeo(id, tool) {
   return {
     ...seo,
     positioning: seo.positioning || getCompetitivePositioning(tool),
+    notes: seo.notes || categoryNotes[tool.category] || categoryNotes.organize,
+    related: relatedTools[id] || [{ href: '/guides', label: 'Read PDF guides' }],
   }
 }

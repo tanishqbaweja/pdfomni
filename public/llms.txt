@@ -20,6 +20,7 @@ PDFOmni is a privacy-first web-based toolkit that executes all PDF operations lo
 - **Compress PDF** (`/compress`): Compress and optimize PDF file sizes locally.
 - **Rotate Pages** (`/rotate`): Rotate specific pages or entire documents.
 - **Page Numbers** (`/page-numbers`): Stamp page numbering onto PDF sheets.
+- **PDF to Word** (`/pdf-to-word`): Reconstruct PDF pages as editable DOCX documents locally in the browser.
 - **Edit PDF** (`/edit-pdf`): Full-featured browser-based editor for modifying text, images, shapes, and drawing on sheets.
 - **Add Watermark** (`/watermark`): Overlay custom text stamps on pages.
 - **Redact PDF** (`/redact`): Safely black out sensitive text/images locally.
@@ -30,6 +31,7 @@ PDFOmni is a privacy-first web-based toolkit that executes all PDF operations lo
 - **Batch Process** (`/batch`): Bulk process multiple PDFs simultaneously.
 - **WCAG Check** (`/wcag-check`): Audit PDFs for WCAG accessibility guidelines.
 - **Workflow Builder** (`/workflow`): Advanced node-based workflow editor to chain multiple PDF actions together client-side.
+- **Guides** (`/guides`): Long-form tool and document guides, including the PDF to Word conversion guide at `/guides/how-to-convert-pdf-to-word`.
 - **About PDFOmni** (`/about`): Project background, local-processing goals, and student-built product notes.
 - **Contact** (`/contact`): Support and feedback contact page.
 - **Privacy Policy** (`/privacy`): Privacy notes for local PDF processing, ads, AI, and browser-side tools.

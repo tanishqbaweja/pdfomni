@@ -3,14 +3,24 @@
   <head>
     <script>
       (function () {
+        if (new URLSearchParams(window.location.search).get('embedded') === '1') {
+          document.documentElement.classList.add('pdfomni-embedded');
+        }
         function apply(theme) {
           document.documentElement.dataset.theme = theme || 'light';
         }
+        var initialTheme = null;
         try {
-          apply(localStorage.getItem('pdfomni_theme') || 'light');
-        } catch (_) {
-          apply('light');
+          if (window.parent !== window) {
+            initialTheme = window.parent.document.documentElement.dataset.theme;
+          }
+        } catch (_) {}
+        if (initialTheme !== 'light' && initialTheme !== 'dark') {
+          try {
+            initialTheme = localStorage.getItem('pdfomni_theme');
+          } catch (_) {}
         }
+        apply(initialTheme === 'dark' ? 'dark' : 'light');
         window.addEventListener('message', function (event) {
           if (event.origin !== window.location.origin || !event.data || event.data.type !== 'pdfomni-theme') return;
           apply(event.data.theme);

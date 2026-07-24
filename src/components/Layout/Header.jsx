@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Moon, Shield, MessageCircle, Sun, Workflow } from 'lucide-react'
+import { BookOpen, Moon, Shield, MessageCircle, Sun, Workflow } from 'lucide-react'
 import { useAppStore } from '../../store/appStore'
 
 export default function Header() {
@@ -45,6 +45,10 @@ export default function Header() {
       </Link>
       
       <nav className="header-nav">
+        <Link to="/guides" className="btn btn-ghost" id="nav-guides">
+          <BookOpen size={18} />
+          <span>Guides</span>
+        </Link>
         <Link to="/workflow" className="btn btn-ghost" id="nav-workflow">
           <Workflow size={18} />
           <span>Workflow</span>

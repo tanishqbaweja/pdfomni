@@ -33,11 +33,18 @@
         window.parent.postMessage({ type: 'pdfomni-theme', theme: next }, window.location.origin);
       }
     };
+    var initialTheme = null;
     try {
-      apply(localStorage.getItem('pdfomni_theme') || 'light');
-    } catch (_) {
-      apply('light');
+      if (window.parent !== window) {
+        initialTheme = window.parent.document.documentElement.dataset.theme;
+      }
+    } catch (_) {}
+    if (initialTheme !== 'light' && initialTheme !== 'dark') {
+      try {
+        initialTheme = localStorage.getItem('pdfomni_theme');
+      } catch (_) {}
     }
+    apply(initialTheme === 'dark' ? 'dark' : 'light');
     window.addEventListener('message', function (event) {
       if (event.origin !== window.location.origin || !event.data || event.data.type !== 'pdfomni-theme') return;
       apply(event.data.theme);
@@ -659,7 +666,7 @@ html[data-theme="dark"] .color-rgb-input {
     <div class="drop-inner">
       <svg class="drop-icon" viewBox="0 0 72 72" fill="none"><rect x="10" y="6" width="36" height="48" rx="4" fill="url(#dpg)" opacity=".3"/><rect x="16" y="12" width="36" height="48" rx="4" fill="url(#dpg)" opacity=".5"/><rect x="22" y="18" width="36" height="48" rx="4" fill="url(#dpg)"/><path d="M32 36v10M28 42l4 4 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="dpg" x1="22" y1="18" x2="58" y2="66" gradientUnits="userSpaceOnUse"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#db2777"/></linearGradient></defs></svg>
       <div class="drop-title">Open a PDF to edit</div>
-      <div class="drop-sub">Drag &amp; drop your PDF here, or click below.<br>Everything stays on your device — no uploads, ever.</div>
+      <div class="drop-sub">Drag and drop your PDF here, or click below.<br>Everything stays on your device. No document upload is needed.</div>
       <label class="drop-btn">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 5v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M8 10V2M5.5 4.5L8 2l2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Browse PDF
@@ -667,15 +674,15 @@ html[data-theme="dark"] .color-rgb-input {
       </label>
       <div class="priv-badge">
         <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1L2 3v3.5C2 9.5 4 11.8 6.5 12.5 9 11.8 11 9.5 11 6.5V3L6.5 1Z" stroke="currentColor" stroke-width="1.3"/><path d="M4.5 6.5l1.5 1.5 2.5-2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        100% local — your PDF never leaves this browser tab
+        100% local. Your PDF never leaves this browser tab.
       </div>
       
     </div>
     <section class="editor-seo" aria-labelledby="editor-seo-title">
-      <div class="editor-seo-kicker">World-class private PDF editing</div>
-      <h1 id="editor-seo-title">Edit PDF Files Locally - World-Class Free Online PDF Editor</h1>
+      <div class="editor-seo-kicker">Private PDF editing in your browser</div>
+      <h1 id="editor-seo-title">Edit PDF Files Locally in Your Browser</h1>
       <p>
-        PDFOmni's world-class editor lets you edit PDF files directly in your browser. Open a document, add or move text, place images, draw rectangles or ellipses, mark up pages, and export the finished PDF without sending the original file to a server. It is built for people who want a practical Online PDF editor without the usual upload-first workflow.
+        PDFOmni lets you edit PDF files directly in your browser. Open a document, add or move text, place images, draw rectangles or ellipses, mark up pages, and export the finished PDF without sending the original file to a processing server.
       </p>
       <div class="editor-seo-grid" aria-label="How to edit a PDF">
         <div class="editor-seo-card"><strong>1. Open your PDF</strong><p>Choose a file from your device or drag it into the upload area. The editor prepares the document locally.</p></div>
@@ -687,20 +694,20 @@ html[data-theme="dark"] .color-rgb-input {
         Editing a PDF often means handling contracts, forms, invoices, IDs, or internal drafts. PDFOmni uses a zero-knowledge workflow for the editor: your file is processed on your own device, and the editing surface appears after the document is ready so the experience stays smooth.
       </p>
       <p>
-        If you are searching for how to edit PDF files, the important question is not only whether a page has an edit button. It is also where your document goes. Many tools that advertise edit PDF online or edit PDF online free still require the file to be uploaded before anything happens. PDFOmni keeps the world-class Edit PDF workflow local, so you can edit PDF text, adjust visual elements, add shapes, or place a signature while the original file stays in your browser tab.
+        The important question is not only whether a page has an edit button. It is also where the document goes. PDFOmni keeps the supported editing work local, so you can change text, adjust visual elements, add shapes, or place a signature while the original file stays in the browser tab.
       </p>
       <p>
-        This local approach is useful on Windows, macOS, iPhone, and other devices that can run a modern browser. People often look for how to edit PDF on Mac, how to edit PDF on Mac free, or how to edit PDF on iPhone because they need a quick correction without installing a heavy desktop app. PDFOmni is not trying to replace a full publishing suite; it gives you a Free PDF editor for everyday changes such as correcting text, adding a note, placing an image, drawing attention to an area, or preparing a file before sharing.
+        This local approach works on devices that can run a modern browser. PDFOmni is not trying to replace the source document or a full publishing suite. It is meant for everyday changes such as correcting a label, adding a note, placing an image, drawing attention to an area, or preparing a file before sharing.
       </p>
       <p>
-        PDFOmni is different from upload-first editors because the world-class editing work happens in the browser. That matters when the file contains names, addresses, invoices, resumes, business drafts, classroom material, or private forms. The 500 MB per-file limit gives the editor a clear boundary, and the page prepares the visible page first so users are not forced to wait for every page in a large document before seeing progress.
+        Browser processing matters when a file contains names, addresses, invoices, resumes, business drafts, classroom material, or private forms. The 500 MB per-file limit gives the editor a clear boundary. The visible page is prepared first so a large document can become usable without rendering every page at the same time.
       </p>
       <h2>True PDF Stream Editing Within Your Browser</h2>
       <p>
-        Compared with privacy-focused editors that only draw an overlay or flatten every page into an image, PDFOmni's world-class editor works with PDF text streams, selectable text, embedded-font glyphs, images, and page objects directly in the browser. That deeper approach is designed to preserve useful document structure instead of treating every edit like a screenshot.
+        PDFOmni can work with PDF text streams, selectable text, embedded-font glyphs, images, and page objects directly in the browser. This can preserve useful document structure instead of turning every edited page into a screenshot.
       </p>
       <p>
-        This is why PDFOmni aims to be one of the best local PDF editors available in a browser. The editor can reuse font information from across a document, keep text selectable, and export practical changes without uploading the source file. PDFs can contain unusual encodings and custom structures, and PDFOmni is built to solve more than the basic annotation-only case.
+        The editor can reuse font information from across a document, keep text selectable, and export practical changes without uploading the source file. PDFs can contain unusual encodings and custom structures, so the exported copy should always be checked around every changed area.
       </p>
       <h2>Advanced Editing Capabilities</h2>
       <p>
@@ -709,45 +716,21 @@ html[data-theme="dark"] .color-rgb-input {
       <p>
         The editor is best for practical document cleanup. Use it when you need to edit PDF for free, update a label, move a text block, add a missing image, insert a visible signature, draw a box around important content, or make a PDF easier to understand before sending it. Because the upload area remains first on the page, users can start editing immediately while the longer SEO explanation stays below the tool interface.
       </p>
-      <h2>PDFOmni vs iLovePDF for Editing PDFs</h2>
+      <h2>What to Check Before Sharing</h2>
       <p>
-        Compared with iLovePDF, PDFOmni is aimed at a more private local workflow. iLovePDF is a popular online PDF service, and its official pricing describes free use as limited document processing while Premium offers unlimited processing and an ad-free experience. PDFOmni focuses on free browser-based editing, local file handling, and a clear privacy story for users who do not want to upload a PDF just to make a small correction.
+        Open the downloaded PDF and inspect the parts you changed. Check nearby text, table lines, word spacing, image quality, page count, and any form values. A preview is useful while working, but the downloaded copy is the file another person will receive.
       </p>
-      <div class="editor-compare-checklist" role="table" aria-label="PDFOmni compared with iLovePDF for editing PDFs">
-        <div class="editor-compare-row" role="row">
-          <span role="columnheader">Feature</span>
-          <span role="columnheader">PDFOmni</span>
-          <span role="columnheader">iLovePDF web</span>
-        </div>
-        <div class="editor-compare-row" role="row">
-          <span role="rowheader">Privacy Focused</span>
-          <span class="editor-compare-mark editor-compare-yes" aria-label="Yes">&#10003;</span>
-          <span class="editor-compare-mark editor-compare-no" aria-label="No">&times;</span>
-        </div>
-        <div class="editor-compare-row" role="row">
-          <span role="rowheader">500 MB File Size Limit</span>
-          <span class="editor-compare-mark editor-compare-yes" aria-label="Yes">&#10003;</span>
-          <span class="editor-compare-mark editor-compare-no" aria-label="No">&times;</span>
-        </div>
-        <div class="editor-compare-row" role="row">
-          <span role="rowheader">Totally Free</span>
-          <span class="editor-compare-mark editor-compare-yes" aria-label="Yes">&#10003;</span>
-          <span class="editor-compare-mark editor-compare-no" aria-label="No">&times;</span>
-        </div>
-        <div class="editor-compare-row" role="row">
-          <span role="rowheader">No Rate Limits</span>
-          <span class="editor-compare-mark editor-compare-yes" aria-label="Yes">&#10003;</span>
-          <span class="editor-compare-mark editor-compare-no" aria-label="No">&times;</span>
-        </div>
-      </div>
       <p>
-        If you need to edit PDF free for a normal correction, PDFOmni gives you a direct path: open the file, change what you need, and export. If you need enterprise collaboration, server storage, or account-based team features, a cloud product may still make sense. For private files, class notes, applications, client drafts, invoices, or simple forms, PDFOmni's local model is usually the cleaner choice.
+        Keep the original until the edited version has been accepted. If the file uses unusual fonts, scans, signatures, or official formatting, open it in another PDF reader for an extra compatibility check.
+      </p>
+      <p>
+        For a normal correction, open the file, change what you need, and export a new copy. A cloud product may still make sense when a team needs shared storage, account approvals, or server automation. A local editor is useful when the document can be handled on the device and the user wants to avoid an unnecessary upload.
       </p>
       <p>
         Use the editor for practical changes rather than rebuilding a complex design from scratch. It is useful for moving a text block, placing an image, drawing a rectangle or ellipse, adding a signature image, annotating a page, or preparing a PDF before compression, redaction, protection, unlocking, or sharing. Always inspect the exported PDF before sending it, especially if the original document uses unusual fonts, scanned images, forms, signatures, or official formatting.
       </p>
       <p>
-        If the file is very large, the editor prioritizes the current page and nearby pages so the workspace becomes usable sooner. That keeps the mobile experience lighter while preserving the privacy-first local editing model. The same page can also help users who search for free edit PDF, edit PDF free online, how to edit PDF for free, or how to edit PDF file, because those phrases point to the same intent: make a PDF change quickly without giving up control of the document.
+        If the file is very large, the editor prioritizes the current page and nearby pages so the workspace becomes usable sooner. This keeps the mobile experience lighter while preserving the local editing model. Performance still depends on the device, browser, page count, fonts, images, and structure of the PDF.
       </p>
       <h2>Common Use Cases</h2>
       <ul>
@@ -765,7 +748,7 @@ html[data-theme="dark"] .color-rgb-input {
       <div class="editor-footer-map" aria-label="PDF tool links">
         <nav aria-label="Organize and optimize tools"><h3>Organize &amp; Optimize</h3><a href="/merge">Merge PDF</a><a href="/split">Split PDF</a><a href="/reorder">Reorder Pages</a><a href="/compress">Compress PDF</a><a href="/rotate">Rotate Pages</a><a href="/page-numbers">Page Numbers</a></nav>
         <nav aria-label="Convert to PDF tools"><h3>Convert to PDF</h3><a href="/word-to-pdf">Word to PDF</a><a href="/excel-to-pdf">Excel to PDF</a><a href="/image-to-pdf">Image to PDF</a><a href="/html-to-pdf">HTML to PDF</a></nav>
-        <nav aria-label="Convert from PDF tools"><h3>Convert from PDF</h3><a href="/pdf-to-image">PDF to Image</a><a href="/pdf-to-text">PDF to Text</a></nav>
+        <nav aria-label="Convert from PDF tools"><h3>Convert from PDF</h3><a href="/pdf-to-image">PDF to Image</a><a href="/pdf-to-word">PDF to Word</a><a href="/pdf-to-text">PDF to Text</a></nav>
         <nav aria-label="Edit and annotate tools"><h3>Edit &amp; Annotate</h3><a href="/edit-pdf">Edit PDF</a><a href="/watermark">Watermark PDF</a><a href="/redact">Redact PDF</a><a href="/crop">Crop PDF</a></nav>
         <nav aria-label="Security tools"><h3>Security</h3><a href="/protect">Protect PDF</a><a href="/unlock">Unlock PDF</a><a href="/sign">Sign PDF</a></nav>
         <nav aria-label="Advanced tools"><h3>Advanced</h3><a href="/batch">Batch Process</a><a href="/wcag-check">WCAG Checker</a><a href="/workflow">Workflow Builder</a></nav>
@@ -773,7 +756,7 @@ html[data-theme="dark"] .color-rgb-input {
       <div class="editor-footer-bottom">
         <div class="editor-footer-summary">
           <span>&copy; 2026 PDFOmni - Free PDF Toolkit</span>
-          <span>Built to deliver world-class local PDF processing, including true browser-based PDF stream editing.</span>
+          <span>Local PDF tools built for practical document work without an unnecessary upload step.</span>
           <span class="editor-footer-links"><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a><a href="/contact">Contact</a><a href="/about">About Us</a></span>
         </div>
         <div class="editor-footer-end">
@@ -4759,7 +4742,7 @@ const app=(()=>{
       showProg('Building layout…','',20);
       await _buildShells(firstDim);      // create DOM shells (no render yet)
       _fitCanvasToMobile();
-      snack(`Opened "${file.name}" — ${pc} page${pc>1?'s':''}`,'success');
+      snack(`Opened "${file.name}": ${pc} page${pc>1?'s':''}`,'success');
       document.documentElement.classList.add('document-open');
       if(window.parent!==window){
         window.parent.postMessage({type:'pdfomni-editor-workspace'},window.location.origin);

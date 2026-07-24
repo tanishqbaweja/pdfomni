@@ -92,6 +92,7 @@ temp/
 .cloudflare/
 .vercel/
 .netlify/
+.playwright-cli/
 
 # IDE and operating-system files
 .idea/

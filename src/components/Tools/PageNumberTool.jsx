@@ -68,7 +68,7 @@ export default function PageNumberTool({ toolId, tool }) {
         setFile(f)
         setPreviewBytes(null)
         setShowPreview(false)
-        addToast({ type: 'success', message: `Loaded "${f.name}" — ${count} pages` })
+        addToast({ type: 'success', message: `Loaded "${f.name}": ${count} pages` })
       } catch (err) {
         addToast({ type: 'error', message: `Failed to load PDF: ${err.message}` })
       } finally {

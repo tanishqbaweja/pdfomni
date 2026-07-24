@@ -88,7 +88,7 @@ export default function WordToPdfTool({ toolId, tool }) {
             accept=".docx"
             multiple={false}
             label="Drop your Word document here"
-            sublabel="or click to browse — .docx files only"
+            sublabel="or click to browse (.docx files only)"
             id="word-to-pdf-dropzone"
             maxFiles={1}
           />

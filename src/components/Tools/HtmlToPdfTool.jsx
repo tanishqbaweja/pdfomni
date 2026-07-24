@@ -139,7 +139,7 @@ export default function HtmlToPdfTool({ toolId, tool }) {
               accept=".html,.htm"
               multiple={false}
               label="Drop your HTML file here"
-              sublabel="or click to browse — .html, .htm"
+              sublabel="or click to browse (.html or .htm)"
               id="html2pdf-file-dropzone"
               maxFiles={1}
             />

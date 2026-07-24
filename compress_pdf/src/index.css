@@ -170,3 +170,9 @@ html[data-theme="dark"] input[type="range"]::-webkit-slider-thumb {
   border-color: #0f172a;
   box-shadow: 0 0 0 2px #818cf8, 0 0 18px rgba(34, 211, 238, 0.22);
 }
+
+html.pdfomni-embedded,
+html.pdfomni-embedded body,
+html.pdfomni-embedded #root {
+  background: transparent !important;
+}

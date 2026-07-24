@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Convert PDF to Word Locally - Free Online PDF to DOCX | PDFOmni</title>
+<meta name="description" content="Convert PDF to Word (.docx) files locally in your browser. PDFOmni provides a secure, private, client-side PDF to Word converter without server uploads."/>
+<meta name="robots" content="noindex,follow"/>
+<link rel="canonical" href="https://pdfomni.com/pdf-to-word"/>
+<script>
+if (new URLSearchParams(window.location.search).get('embedded') === '1') {
+  document.documentElement.classList.add('pdfomni-embedded');
+  try {
+    const parentTheme = window.parent.document.documentElement.dataset.theme;
+    if (parentTheme === 'light' || parentTheme === 'dark') {
+      document.documentElement.dataset.theme = parentTheme;
+    }
+  } catch {
+    // The parent also sends its theme after the embedded app loads.
+  }
+}
+</script>
+
+<style>
+/* ══ DESIGN TOKENS (Reused from editpdf.html) ══ */
+:root {
+  --bg-base: #f8fafc;
+  --bg-panel: #ffffff;
+  --bg-surface: #f1f5f9;
+  --bg-hover: #f1f5f9;
+  --bg-active: #e2e8f0;
+  
+  --accent: #6366f1;
+  --accent-soft: #4f46e5;
+  --accent-glow: rgba(99, 102, 241, 0.08);
+  --accent2: #db2777;
+  --success: #16a34a;
+  --warn: #d97706;
+  
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  
+  --border: #e2e8f0;
+  --border-focus: rgba(99, 102, 241, 0.5);
+  
+  --r1: 6px;
+  --r2: 10px;
+  --r3: 14px;
+  --r4: 20px;
+  
+  --sh1: 0 1px 2px rgba(0, 0, 0, 0.15);
+  --sh2: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --tr: all .18s cubic-bezier(.4,0,.2,1);
+  --gradient-accent: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
+}
+
+html[data-theme="dark"] {
+  --bg-base: #050817;
+  --bg-panel: #0a1022;
+  --bg-surface: #121b33;
+  --bg-hover: #1a2645;
+  --bg-active: #26365d;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border: rgba(148, 163, 184, 0.2);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+/* ══ HEADER ══ */
+#topbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 24px;
+  height: 56px;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  position: sticky;
+  top: 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.logo svg {
+  width: 26px;
+  height: 26px;
+}
+
+.logo-text {
+  background: linear-gradient(135deg, #6c63ff, #ff6584);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tb-sep {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+  margin: 0 12px;
+}
+
+.tb-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: var(--r1);
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--tr);
+}
+
+.tb-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+/* ══ MAIN APP CONTAINER ══ */
+.container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* ══ DROP ZONE (Adapted from editpdf.html) ══ */
+#drop-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 80px 40px;
+  border: 2px dashed rgba(99, 102, 241, 0.4);
+  border-radius: var(--r4);
+  background: rgba(99, 102, 241, 0.03);
+  text-align: center;
+  transition: var(--tr);
+}
+
+#drop-zone.dragover {
+  border-color: var(--accent);
+  background: rgba(99, 102, 241, 0.08);
+  transform: scale(1.01);
+}
+
+.drop-icon {
+  width: 72px;
+  height: 72px;
+  opacity: .7;
+}
+
+.drop-title {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.drop-sub {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.drop-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: var(--r2);
+  background: linear-gradient(135deg, var(--accent), #db2777);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: var(--tr);
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+}
+
+.drop-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.45);
+}
+
+.priv-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--r2);
+  background: rgba(22, 163, 74, 0.08);
+  border: 1px solid rgba(22, 163, 74, 0.15);
+  color: var(--success);
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+/* ══ OPTIONS & PREVIEW WORKSPACE ══ */
+.workspace {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+@media (max-width: 900px) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: var(--r3);
+  padding: 24px;
+  box-shadow: var(--sh1);
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Preview / File Info Card */
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border);
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.info-value {
+  color: var(--text-primary);
+  font-weight: 600;
+  max-width: 180px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Page Thumbnail List (Reused from editpdf.html) */
+.preview-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  margin: 20px 0 8px 0;
+}
+
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  gap: 8px;
+  max-height: 250px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  padding: 8px;
+  border-radius: var(--r1);
+  background: var(--bg-base);
+}
+
+.thumb-item {
+  border-radius: var(--r1);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #fff;
+  position: relative;
+  aspect-ratio: 0.77;
+}
+
+.thumb-item canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.thumb-skeleton {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-hover);
+  position: relative;
+  overflow: hidden;
+}
+
+.thumb-skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) }
+  100% { transform: translateX(100%) }
+}
+
+/* ══ CONVERT TRIGGER BUTTONS ══ */
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  border-radius: var(--r2);
+  background: var(--gradient-accent);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: var(--tr);
+  margin-top: 16px;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.action-btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.action-btn.sec {
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  box-shadow: none;
+  border: 1px solid var(--border);
+  margin-top: 8px;
+}
+
+.action-btn.sec:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  transform: none;
+}
+
+/* ══ PROGRESS / STATUS OVERLAY ══ */
+#prog {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(248, 250, 252, 0.94);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+  padding: 20px;
+}
+
+#prog.on {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.prog-title {
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.prog-sub {
+  font-size: 13px;
+  color: var(--text-secondary);
+  min-height: 20px;
+  text-align: center;
+}
+
+.prog-timer {
+  font-variant-numeric: tabular-nums;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  min-height: 22px;
+}
+
+.conversion-time-result {
+  font-variant-numeric: tabular-nums;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  background: var(--bg-hover);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+
+.prog-track {
+  width: min(320px, 90vw);
+  height: 6px;
+  background: var(--bg-hover);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.prog-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #a78bfa);
+  border-radius: 4px;
+  transition: width .2s ease;
+  width: 0%;
+}
+
+/* ══ SUCCESS PANEL ══ */
+#success-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 40px;
+  text-align: center;
+}
+
+.success-icon {
+  width: 64px;
+  height: 64px;
+  background: rgba(22, 163, 74, 0.1);
+  color: var(--success);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 700;
+  animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ══ SNACKBAR ══ */
+#snackbar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 12px 20px;
+  border-radius: var(--r2);
+  box-shadow: var(--sh2);
+  z-index: 9999;
+  transition: transform .3s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 90%;
+  min-width: 280px;
+}
+
+#snackbar.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+.snk-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+#snackbar.success .snk-dot { background: var(--success); }
+#snackbar.warn .snk-dot { background: var(--warn); }
+#snackbar.error .snk-dot { background: var(--accent2); }
+#snackbar.info .snk-dot { background: var(--accent); }
+
+/* ══ SEO ══ */
+.seo-section {
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+
+.seo-section h1 {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.seo-section h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 24px;
+  margin-bottom: 10px;
+}
+
+.seo-section p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.seo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.seo-card {
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  background: var(--bg-panel);
+}
+
+.seo-card strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.seo-card p {
+  font-size: 12.5px;
+  margin-bottom: 0;
+}
+
+html.pdfomni-embedded #topbar,
+html.pdfomni-embedded .seo-section {
+  display: none;
+}
+
+html.pdfomni-embedded,
+html.pdfomni-embedded body {
+  height: auto;
+  min-height: 0;
+  overflow-y: hidden;
+  background: var(--bg-base);
+}
+
+html.pdfomni-embedded .container {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+</style>
+</head>
+<body>
+
+<header id="topbar">
+  <div class="logo" onclick="window.top.location.href='/'">
+    <svg width="28" height="28" viewBox="0 0 64 64" fill="none">
+      <defs>
+        <linearGradient id="logoG" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#6366f1"/>
+          <stop offset="50%" stop-color="#a855f7"/>
+          <stop offset="100%" stop-color="#ec4899"/>
+        </linearGradient>
+      </defs>
+      <rect width="64" height="64" rx="14" fill="url(#logoG)"/>
+      <path d="M18 14h18a8 8 0 0 1 8 8v4a8 8 0 0 1-8 8H26v16h-8V14z" fill="white" opacity="0.95"/>
+    </svg>
+    <span class="logo-text" style="font-weight: 800; font-size: 16px; background: linear-gradient(135deg, #6366f1, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">PDFOmni</span>
+  </div>
+  <a href="/" target="_top" class="tb-btn">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3L5 8l6 5"/></svg>
+    All Tools
+  </a>
+  <div class="tb-sep"></div>
+  <div style="font-size: 13px; font-weight: 600; color: var(--text-secondary);">PDF to Word</div>
+</header>
+
+<div class="container">
+  <!-- DROP ZONE -->
+  <div id="drop-zone">
+    <svg class="drop-icon" viewBox="0 0 72 72" fill="none">
+      <rect x="10" y="6" width="36" height="48" rx="4" fill="url(#dpg)" opacity=".3"/>
+      <rect x="16" y="12" width="36" height="48" rx="4" fill="url(#dpg)" opacity=".5"/>
+      <rect x="22" y="18" width="36" height="48" rx="4" fill="url(#dpg)"/>
+      <path d="M38 32v12M32 38l6 6 6-6" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <defs>
+        <linearGradient id="dpg" x1="22" y1="18" x2="58" y2="66" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#6366f1"/>
+          <stop offset="1" stop-color="#db2777"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div class="drop-title">Convert PDF to Word</div>
+    <div class="drop-sub">Drag &amp; drop your PDF here, or click browse to choose a file.<br>Processing runs locally in your browser. Your file is not uploaded to a PDFOmni conversion server.</div>
+    <label class="drop-btn">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 5v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M8 10V2M5.5 4.5L8 2l2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Browse PDF
+      <input type="file" accept=".pdf,application/pdf" style="display:none" id="file-input" onchange="app.loadFile(this.files[0])"/>
+    </label>
+    <div class="priv-badge">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1L2 3v3.5C2 9.5 4 11.8 6.5 12.5 9 11.8 11 9.5 11 6.5V3L6.5 1Z" stroke="currentColor" stroke-width="1.3"/><path d="M4.5 6.5l1.5 1.5 2.5-2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Private client-side conversion
+    </div>
+  </div>
+
+  <!-- CONVERSION WORKSPACE -->
+  <div id="conversion-panel" class="workspace" style="display: none;">
+    <!-- LEFT PANEL -->
+    <div class="card" id="options-card">
+      <h2 class="card-title">
+        <svg width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="8" r="7"/><path d="M8 5v6M5 8h6" stroke-linecap="round"/></svg>
+        Ready to Convert
+      </h2>
+      <p class="drop-sub" style="text-align: left; margin-bottom: 20px;">Your PDF will be converted into an editable Word document while preserving the original page layout, fonts, images, and visual decoration as closely as the browser runtime allows.</p>
+      <button class="action-btn" id="btn-convert" onclick="app.startConversion()">Convert PDF to Word</button>
+      <button class="action-btn sec" onclick="app.reset()">Choose Another PDF</button>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="card" id="info-card">
+      <h2 class="card-title">Document Details</h2>
+      <div class="info-row">
+        <span class="info-label">File Name</span>
+        <span class="info-value" id="info-filename">-</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">File Size</span>
+        <span class="info-value" id="info-filesize">-</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Total Pages</span>
+        <span class="info-value" id="info-pages">-</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Text Type</span>
+        <span class="info-value" id="info-type">-</span>
+      </div>
+
+      <div class="preview-title">Page Previews</div>
+      <div class="preview-grid" id="preview-grid"></div>
+    </div>
+  </div>
+
+  <!-- SUCCESS PANEL -->
+  <div class="card" id="success-card" style="display: none; flex-direction: column; align-items: center;">
+    <div class="success-icon">✓</div>
+    <h2 class="drop-title">Conversion Complete</h2>
+    <p class="drop-sub" style="margin-bottom: 20px;">Your PDF was successfully converted and is ready for download.<br>Everything was processed locally, so your document stayed on your machine.</p>
+    <div class="conversion-time-result" id="conversion-time-result" style="display: none;"></div>
+    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; width: 100%; max-width: 580px; margin-bottom: 20px;">
+      <button class="drop-btn" id="btn-download" style="flex: 1; min-width: 200px;">Download .docx File</button>
+      <button class="action-btn sec" onclick="app.reset()" style="flex: 1; min-width: 200px; margin-top: 0;">Convert Another PDF</button>
+    </div>
+  </div>
+
+  <!-- SEO EXPLANATION -->
+  <section class="seo-section" aria-labelledby="seo-title">
+    <h1 id="seo-title">Convert PDF to Word Offline - Free Client-Side PDF Converter</h1>
+    <p>
+      PDFOmni's PDF to Word converter changes PDF documents into editable Word (.docx) documents entirely in your browser. Unlike traditional converters that require you to upload your files to a remote server, PDFOmni handles all file loading, page analysis, text rendering, and document assembly locally on your device.
+    </p>
+    <p>
+      This zero-upload approach is ideal for people working with sensitive contracts, private resumes, internal financial statements, client records, or personal documentation. Since the files never leave your device, your private data remains completely private.
+    </p>
+    
+    <h2>Preserving PDF Layouts and Editability</h2>
+    <p>
+      PDF files are visual formats built to lock design layouts, while Word documents are structured flowing formats built for editing. Reconciling these differences is the core challenge of any PDF to Word converter. PDFOmni uses a single high-fidelity reconstruction path that keeps pages visually aligned while preserving editable text, extracted images, embedded font data, and browser-rendered decoration.
+    </p>
+    <div class="seo-grid">
+      <div class="seo-card">
+        <strong>Editable Text</strong>
+        <p>Text is extracted as text, grouped by visual lines, and placed into page-aligned Word textboxes instead of being flattened into a page screenshot.</p>
+      </div>
+      <div class="seo-card">
+        <strong>Native Images</strong>
+        <p>Detected raster images are rebuilt as positioned Word image objects, with non-text page artwork retained behind the editable layer for visual completeness.</p>
+      </div>
+      <div class="seo-card">
+        <strong>Embedded Fonts</strong>
+        <p>When a PDF exposes embedded font bytes, PDFOmni carries those fonts into the DOCX package so the preview and downloaded document can use the same glyph shapes.</p>
+      </div>
+    </div>
+    
+    <h2>Frequently Asked Questions</h2>
+    <details style="border-bottom: 1px solid var(--border);"><summary style="padding: 12px 0; cursor: pointer; font-weight: 700;">Is my document uploaded to any server?</summary><p style="padding-bottom: 12px; font-size: 13.5px; color: var(--text-secondary);">No. PDFOmni uses advanced browser-compatible JavaScript libraries (PDF.js and docx.js) to perform all processing in your browser tab. Your document is never transmitted across the network.</p></details>
+    <details style="border-bottom: 1px solid var(--border);"><summary style="padding: 12px 0; cursor: pointer; font-weight: 700;">Does it support scanned PDFs?</summary><p style="padding-bottom: 12px; font-size: 13.5px; color: var(--text-secondary);">Yes. If a page has no extractable text, PDFOmni falls back to image-based rendering, inserting a high-resolution replica of the page into the Word file. This ensures your scanned documents remain visually complete.</p></details>
+    <details style="border-bottom: 1px solid var(--border);"><summary style="padding: 12px 0; cursor: pointer; font-weight: 700;">How large of a file can I convert?</summary><p style="padding-bottom: 12px; font-size: 13.5px; color: var(--text-secondary);">We support files up to 500 MB. For very large PDFs, the page handles processing incrementally page-by-page to prevent the browser from running out of memory.</p></details>
+  </section>
+</div>
+
+<!-- OVERLAYS -->
+<div id="prog">
+  <div class="prog-title" id="prog-title">Analyzing Document...</div>
+  <div class="prog-sub" id="prog-sub">Preparing layout...</div>
+  <div class="prog-timer" id="prog-timer" style="display: none;">Elapsed: 00:00.0</div>
+  <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
+</div>
+
+<div id="snackbar"><span class="snk-dot"></span><span id="snk-msg"></span></div>
+
+<!-- Link to modular app logic, bundled by Vite -->
+<script type="module" src="/embed.js"></script>
+<script type="module" src="/main.js"></script>
+</body>
+</html>

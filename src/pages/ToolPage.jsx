@@ -20,6 +20,7 @@ import DecryptTool from '../components/Tools/DecryptTool'
 import SignTool from '../components/Tools/SignTool'
 import ImageToPdfTool from '../components/Tools/ImageToPdfTool'
 import PdfToImageTool from '../components/Tools/PdfToImageTool'
+import PdfToWordTool from '../components/Tools/PdfToWordTool'
 import PdfToTextTool from '../components/Tools/PdfToTextTool'
 import WordToPdfTool from '../components/Tools/WordToPdfTool'
 import ExcelToPdfTool from '../components/Tools/ExcelToPdfTool'
@@ -28,6 +29,8 @@ import BatchTool from '../components/Tools/BatchTool'
 import WcagTool from '../components/Tools/WcagTool'
 
 function CompressIframeWrapper() {
+  const [frameReady, setFrameReady] = useState(false)
+
   const applyTheme = (event) => {
     const theme = document.documentElement.dataset.theme || 'light'
     const frameWindow = event.currentTarget.contentWindow
@@ -37,24 +40,18 @@ function CompressIframeWrapper() {
       // The iframe is same-origin in normal builds, but posting is harmless if direct access fails.
     }
     frameWindow?.postMessage({ type: 'pdfomni-theme', theme }, window.location.origin)
+    setFrameReady(true)
   }
 
   return (
-    <iframe
-      src="/compress/app/index.html"
-      onLoad={applyTheme}
-      style={{
-        width: '100%',
-        height: '820px',
-        border: 'none',
-        display: 'block',
-        background: 'transparent',
-        margin: 0,
-        padding: 0,
-        overflow: 'hidden',
-      }}
-      title="PDF Compressor"
-    />
+    <div className={`compress-frame-shell${frameReady ? ' is-ready' : ''}`}>
+      <iframe
+        src="/compress/app/index.html?embedded=1"
+        onLoad={applyTheme}
+        className="compress-frame"
+        title="PDF Compressor"
+      />
+    </div>
   )
 }
 
@@ -62,6 +59,7 @@ function EditPdfIframe() {
   const frameRef = useRef(null)
   const [workspaceOpen, setWorkspaceOpen] = useState(false)
   const [landingTab, setLandingTab] = useState('pages')
+  const [frameReady, setFrameReady] = useState(false)
   const isIOSWebKit = /iP(?:ad|hone|od)/.test(navigator.userAgent)
     || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
 
@@ -102,11 +100,11 @@ function EditPdfIframe() {
   }, [workspaceOpen])
 
   if (isIOSWebKit) {
-    return <div className="edit-pdf-frame-loading"><div className="spinner" aria-label="Loading PDF editor" /></div>
+    return null
   }
 
   return (
-    <div className={`edit-pdf-frame-shell${workspaceOpen ? ' workspace-open' : ''}`}>
+    <div className={`edit-pdf-frame-shell${workspaceOpen ? ' workspace-open' : ''}${frameReady ? ' is-ready' : ''}`}>
       <iframe
         ref={frameRef}
         src="/editpdf.html?embedded=1"
@@ -118,9 +116,10 @@ function EditPdfIframe() {
             { type: 'pdfomni-theme', theme },
             window.location.origin,
           )
+          setFrameReady(true)
         }}
       />
-      {!workspaceOpen && (
+      {frameReady && !workspaceOpen && (
         <aside className="edit-pdf-landing-sidebar" aria-label="PDF editor navigation">
           <div className="edit-pdf-landing-sidebar-top">
             <Link to="/" className="edit-pdf-landing-brand" aria-label="PDFOmni home">
@@ -172,6 +171,7 @@ const toolComponents = {
   'sign': SignTool,
   'image-to-pdf': ImageToPdfTool,
   'pdf-to-image': PdfToImageTool,
+  'pdf-to-word': PdfToWordTool,
   'pdf-to-text': PdfToTextTool,
   'word-to-pdf': WordToPdfTool,
   'excel-to-pdf': ExcelToPdfTool,
@@ -180,7 +180,7 @@ const toolComponents = {
   'wcag': WcagTool,
 }
 
-const wideLayoutTools = new Set(['watermark', 'crop', 'redact', 'sign', 'batch', 'word-to-pdf', 'excel-to-pdf'])
+const wideLayoutTools = new Set(['watermark', 'crop', 'redact', 'sign', 'batch', 'word-to-pdf', 'excel-to-pdf', 'pdf-to-word'])
 
 export default function ToolPage({ forcedToolId }) {
   const params = useParams()

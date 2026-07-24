@@ -1,0 +1,21 @@
+{
+  "name": "pdfomni-pdf-to-word",
+  "version": "1.0.0",
+  "description": "Local PDF to Word converter for PDFOmni",
+  "type": "module",
+  "scripts": {
+    "dev": "node ./node_modules/vite/bin/vite.js --port 8082 --host",
+    "build": "vite build",
+    "build:protected": "vite build --mode protected",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "docx": "^8.5.0",
+    "jszip": "^3.10.1",
+    "pdfjs-dist": "^4.0.379"
+  },
+  "devDependencies": {
+    "playwright-chromium": "^1.60.0",
+    "vite": "^5.2.11"
+  }
+}

@@ -1,25 +1,26 @@
 PDFOmni protected build obfuscation report
 
 Obfuscated first-party files/chunks:
-- assets/app-ai-B1CHE4Cj.js (584189 bytes, d99256ee1dc2 -> f7508bc85797)
-- assets/app-core-ORs3c7xc.js (38245 bytes, 3f66b7912b2d -> e4709e513cc2)
-- assets/app-engine-CuJnUI4Y.js (1619888 bytes, cc11240d63b7 -> 4e0ad3ada2e5)
-- assets/app-tools-kKnYlAAU.js (528357 bytes, e045e73e4b48 -> 41f40b942ac1)
-- assets/app-ui-CmMtO61U.js (82000 bytes, 184f9205c4d3 -> 239772a0d5ed)
-- assets/app-workflow-4xACJX_d.js (214969 bytes, f6f80f4f41a3 -> fbbd49a9fd16)
-- assets/editpdf-CUxSl5rG.js (2430 bytes, 607d52c5eea5 -> 66bb44170077)
-- assets/embeddingWorker-CGdUKviD.js (806896 bytes, f0c58764d016 -> 07f967ee1443)
-- assets/main-BlEeVMGm.js (5445 bytes, b4e9d9395d22 -> eac255df0b4a)
-- compress/app/assets/compressionWorker-MPMFb5sx.js (428513 bytes, 9b868008fec3 -> 4fb946e30b79)
-- compress/app/assets/index-D_iDfQBH.js (27692 bytes, 5d30eb658f34 -> 0d41406415b7)
-- editpdf.html inline editor script (327439 bytes, 784f77ef9b7c -> f56bf08f4ce2)
+- assets/app-ai-B1CHE4Cj.js (584189 bytes, d99256ee1dc2 -> ff535cb3ee97)
+- assets/app-core-BX6CHOPO.js (169340 bytes, 2bcc10323dc5 -> 2ee0094ff08a)
+- assets/app-engine-BOW189V3.js (1619888 bytes, 6b7042807afb -> 3c396ea15d7e)
+- assets/app-tools-Bnc0_bVh.js (529357 bytes, 2ff74c293bb3 -> 3f69f837a41a)
+- assets/app-ui-h_fi_GaM.js (98482 bytes, 7acd2c6f907f -> b751f81ff929)
+- assets/app-workflow-DYacO4wZ.js (214576 bytes, 857645063515 -> c7d3c761bcbc)
+- assets/editpdf-CA7SUWSG.js (2430 bytes, c44f1ee36cfe -> b424fd268e59)
+- assets/embeddingWorker-CGdUKviD.js (806896 bytes, f0c58764d016 -> 01d677977ea8)
+- assets/main-B0ith1E8.js (5859 bytes, 030f69e93741 -> 099de522d674)
+- compress/app/assets/compressionWorker-MPMFb5sx.js (428513 bytes, 9b868008fec3 -> ebc8ab14c589)
+- compress/app/assets/index-B9wv8gVQ.js (27692 bytes, 5d30eb658f34 -> b71158db7e1a)
+- pdf-to-word/app/assets/index-31EPgdXS.js (294612 bytes, 7aa482353f28 -> b0501d4ebb89)
+- editpdf.html inline editor script (327438 bytes, 50b49e1001de -> 007d9f892d7d)
 
 Skipped vendor/runtime files:
 - assets/modulepreload-polyfill-Cf3xff8G.js
 - assets/pdf.worker.min-Dr1KORA9.mjs
 - assets/qpdf-Cz4tslog.js
 - assets/rolldown-runtime-DzIHmmIB.js
-- assets/vendor-DcJY0JX0.js
+- assets/vendor-DsrZPgkk.js
 - assets/worker-DvPKoZue.js
 - compress/app/assets/browserRunner-CiRFPrNM.js
 - compress/app/assets/lucide-react-BziyVGRa.js
@@ -45,6 +46,10 @@ Skipped vendor/runtime files:
 - ocr/core/tesseract-core.js
 - ocr/core/tesseract-core.wasm.js
 - ocr/worker.min.js
+- pdf-to-word/app/assets/docx-Dy85NzkZ.js
+- pdf-to-word/app/assets/jszip-529iNPX7.js
+- pdf-to-word/app/assets/pdf.worker-BgryrOlp.mjs
+- pdf-to-word/app/assets/pdfjs-dist-CZwT40vx.js
 - pdf.worker.polyfilled.mjs
 - pdfjs-wasm/jbig2_nowasm_fallback.js
 - pdfjs-wasm/openjpeg_nowasm_fallback.js
@@ -54,7 +59,7 @@ Unclassified shipped JavaScript (review when adding new entry points):
 - none
 
 Notes:
-- The standalone PDF editor, React application chunks, AI embedding worker, compressor application/worker, and Cloudflare functions are protected.
-- PDF.js, qpdf, OCR, framework/runtime chunks, WASM loaders, and minified vendor libraries are intentionally skipped.
+- The standalone PDF editor, React application chunks, AI embedding worker, compressor application/worker, PDF-to-Word application code, and Cloudflare functions are protected.
+- PDF.js, DOCX, JSZip, qpdf, OCR, framework/runtime chunks, WASM loaders, and minified vendor libraries are intentionally skipped.
 - Every obfuscated JavaScript file is syntax-checked after transformation.
 - Obfuscation is a copying deterrent, not a security boundary.

@@ -12,6 +12,7 @@
 /tool/image-to-pdf /image-to-pdf 301
 /tool/html-to-pdf /html-to-pdf 301
 /tool/pdf-to-image /pdf-to-image 301
+/tool/pdf-to-word /pdf-to-word 301
 /tool/pdf-to-text /pdf-to-text 301
 /tool/watermark /watermark 301
 /tool/redact /redact 301

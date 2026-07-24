@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Seo from '../components/Common/Seo'
 
-const CONTACT_EMAIL = 'a4q1d6wn@anonaddy.me'
+const CONTACT_EMAIL = 'pdfomni@gmail.com'
 
 export default function ContactPage() {
   const [name, setName] = useState('')
@@ -13,23 +13,31 @@ export default function ContactPage() {
   return (
     <div className="tool-page" id="contact-page">
       <Seo
-        title="Contact | PDFOmni"
-        description="Contact PDFOmni for privacy, support, and indexing questions through the on-site contact page."
+        title="Contact PDFOmni"
+        description="Contact PDFOmni about support, privacy, bugs, accessibility, feedback, or questions about the browser-based PDF tools."
         canonicalPath="/contact"
       />
       <div className="container">
         <div className="tool-page-header">
-          <h1 className="tool-page-title">Contact</h1>
-          <p className="tool-page-desc">Use the local form below to prepare a support email without sending your documents anywhere.</p>
+          <h1 className="tool-page-title">Contact PDFOmni</h1>
+          <p className="tool-page-desc">Send a question, bug report, or suggestion to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
         </div>
         <div className="card legal-card">
+          <h2>Before Sending a Bug Report</h2>
+          <p>
+            Include the name of the tool, your browser and device, the approximate file size, and the steps that led to the problem. A screenshot is useful for layout or export issues. Please do not attach a private document unless you have removed sensitive information and are comfortable sharing the sample.
+          </p>
+          <p>
+            The form below prepares a message in your email app. It does not upload your message or document to PDFOmni by itself. You can also write directly to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+          </p>
+
           <div className="input-group">
             <label className="input-label" htmlFor="contact-name">Name</label>
-            <input id="contact-name" className="input" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your name" />
+            <input id="contact-name" className="input" value={name} onChange={(event) => setName(event.target.value)} placeholder="Your name" />
           </div>
           <div className="input-group">
             <label className="input-label" htmlFor="contact-subject">Subject</label>
-            <input id="contact-subject" className="input" value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Support request" />
+            <input id="contact-subject" className="input" value={subject} onChange={(event) => setSubject(event.target.value)} placeholder="Support request" />
           </div>
           <div className="input-group">
             <label className="input-label" htmlFor="contact-message">Message</label>
@@ -37,8 +45,8 @@ export default function ContactPage() {
               id="contact-message"
               className="input"
               value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Describe your issue or question"
+              onChange={(event) => setMessage(event.target.value)}
+              placeholder="Describe the problem or question"
               style={{ minHeight: 180, resize: 'vertical' }}
             />
           </div>

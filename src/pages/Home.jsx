@@ -219,21 +219,21 @@ export default function Home() {
             <div>
               <span className="section-label">Why People Use PDFOmni</span>
               <h2 style={{ fontSize: 'var(--text-2xl)', marginTop: 'var(--space-2)' }}>
-                Built to set a higher standard for local PDF processing
+                Useful PDF tools with a clear privacy model
               </h2>
             </div>
             <div className="seo-grid">
               <div>
-                <h3>Compared with upload-first tools</h3>
-                <p>PDFOmni keeps core document processing in the browser, making it one of the best choices for users who want capable PDF tools without sending sensitive files to a remote server.</p>
+                <h3>Files stay on your device</h3>
+                <p>PDFOmni keeps supported document processing in the browser. You can finish common PDF jobs without sending the source file to a separate processing server.</p>
               </div>
               <div>
-                <h3>World-class Edit PDF</h3>
-                <p>The world-class editor goes beyond simple annotations and page screenshots. It works with PDF text streams, embedded font data, images, and selectable content directly within your browser.</p>
+                <h3>Edit more than a screenshot</h3>
+                <p>The editor can work with PDF text streams, embedded font data, images, and selectable content. Complicated PDFs still need a careful export check because files can store these objects in very different ways.</p>
               </div>
               <div>
-                <h3>A world-class local toolkit</h3>
-                <p>PDFOmni is built to compete with the best PDF software while staying free, private, and practical across editing, compression, conversion, signing, security, and repeatable workflows.</p>
+                <h3>One place for the next step</h3>
+                <p>After one task, you can move into compression, conversion, signing, security, or a saved workflow. Use only the steps the document actually needs.</p>
               </div>
             </div>
           </div>

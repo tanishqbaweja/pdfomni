@@ -41,7 +41,7 @@ export default function SplitTool({ toolId, tool }) {
         setFile(f)
         setRangeInput('')
         setSelectedPages(new Set())
-        addToast({ type: 'success', message: `Loaded "${f.name}" — ${count} pages` })
+        addToast({ type: 'success', message: `Loaded "${f.name}": ${count} pages` })
       } catch (err) {
         addToast({ type: 'error', message: `Failed to load PDF: ${err.message}` })
       } finally {

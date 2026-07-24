@@ -109,7 +109,7 @@ export default function ExcelToPdfTool({ toolId, tool }) {
             accept=".xlsx,.xls,.csv"
             multiple={false}
             label="Drop your spreadsheet here"
-            sublabel="or click to browse — .xlsx, .xls, .csv"
+            sublabel="or click to browse (.xlsx, .xls, or .csv)"
             id="excel-to-pdf-dropzone"
             maxFiles={1}
           />
@@ -164,7 +164,7 @@ export default function ExcelToPdfTool({ toolId, tool }) {
               }}
             >
               <Eye size={16} />
-              Preview — {activeSheet}
+              Preview: {activeSheet}
             </div>
             <div
               style={{

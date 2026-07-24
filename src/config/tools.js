@@ -113,6 +113,15 @@ const tools = [
     color: '#ec4899',
   },
   {
+    id: 'pdf-to-word',
+    name: 'PDF to Word',
+    description: 'Convert PDF files into editable DOCX documents',
+    canonicalPath: '/pdf-to-word',
+    icon: FileText,
+    category: 'convert-from',
+    color: '#2563eb',
+  },
+  {
     id: 'pdf-to-text',
     name: 'PDF to Text',
     description: 'Extract all text content',
@@ -126,7 +135,7 @@ const tools = [
   {
     id: 'edit',
     name: 'Edit PDF',
-    description: 'World-class text and image editing',
+    description: 'Edit text, images, and page objects',
     canonicalPath: '/edit-pdf',
     icon: Type,
     category: 'edit',

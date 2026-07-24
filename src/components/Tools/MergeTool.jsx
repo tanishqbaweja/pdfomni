@@ -119,7 +119,7 @@ export default function MergeTool({ toolId, tool }) {
           onFiles={handleFiles}
           multiple={true}
           label="Drop your PDF files here to merge"
-          sublabel="or click to browse — add 2 or more files"
+          sublabel="or click to browse and add 2 or more files"
           id="merge-dropzone"
         />
       ) : (
@@ -136,7 +136,7 @@ export default function MergeTool({ toolId, tool }) {
               }}
             >
               <span style={{ fontWeight: 600, fontSize: 'var(--text-sm)' }}>
-                {files.length} file{files.length !== 1 ? 's' : ''} — drag to reorder
+                {files.length} file{files.length !== 1 ? 's' : ''}. Drag to reorder.
               </span>
               <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
                 <button

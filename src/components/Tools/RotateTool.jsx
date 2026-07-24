@@ -40,7 +40,7 @@ export default function RotateTool({ toolId, tool }) {
         setFile(f)
         setSelectedPages(new Set())
         setRotationMap({})
-        addToast({ type: 'success', message: `Loaded "${f.name}" — ${count} pages` })
+        addToast({ type: 'success', message: `Loaded "${f.name}": ${count} pages` })
       } catch (err) {
         addToast({ type: 'error', message: `Failed to load PDF: ${err.message}` })
       } finally {
@@ -248,8 +248,8 @@ export default function RotateTool({ toolId, tool }) {
             textAlign: 'center',
           }}>
             {selectedPages.size > 0
-              ? `${selectedPages.size} page(s) selected — rotation will apply to selected pages`
-              : 'No pages selected — rotation will apply to all pages'}
+              ? `${selectedPages.size} page(s) selected. Rotation will apply to selected pages.`
+              : 'No pages selected. Rotation will apply to all pages.'}
           </div>
 
           {/* Page grid */}

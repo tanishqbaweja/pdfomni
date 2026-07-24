@@ -68,11 +68,11 @@ export default function ToolSeoSection({ tool, seo, headingLevel = 2 }) {
         </div>
       </div>
 
-      {seo.searchLanguage?.length > 0 && (
-        <div className="tool-seo-copy tool-seo-search-language">
+      {seo.formatGuidance?.length > 0 && (
+        <div className="tool-seo-copy tool-seo-format-guidance">
           <div>
-            <Subheading className="tool-seo-subheading">Understanding PDF to Word Search Terms</Subheading>
-            {seo.searchLanguage.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            <Subheading className="tool-seo-subheading">What to Expect in the Word File</Subheading>
+            {seo.formatGuidance.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
           </div>
         </div>
       )}
@@ -81,13 +81,22 @@ export default function ToolSeoSection({ tool, seo, headingLevel = 2 }) {
         <div>
           <Subheading className="tool-seo-subheading">Choose the Right Source File</Subheading>
           <p>
-            Start from the clearest and most complete copy you have. Repeatedly converting or compressing an already processed PDF can lower image quality and make text harder to edit or extract. If the original came from Word, Excel, or another authoring program, keep that source because it is usually the easiest place to make large content changes.
+            Start from the clearest and most complete copy you have. Repeatedly converting or compressing an already processed PDF can lower image quality and make text harder to edit or extract. If the original came from Word, Excel, or another authoring program, keep that source because it is usually the easiest place to make large content changes. A clean source also gives you a reliable page to compare with the result.
           </p>
         </div>
         <div>
           <Subheading className="tool-seo-subheading">Keep Your Versions Clear</Subheading>
           <p>
             Use names that explain the document status, such as report-original.pdf, report-review.pdf, and report-submitted.pdf. Avoid overwriting the only copy or filling a folder with names like final2 and final-new. A clear name makes it easier to reopen the exact output you checked and prevents an older version from being sent by mistake.
+          </p>
+        </div>
+      </div>
+
+      <div className="tool-seo-copy">
+        <div>
+          <Subheading className="tool-seo-subheading">Check the Delivery Requirements</Subheading>
+          <p>
+            Look at the instructions from the person, class, company, or portal receiving the file. They may require a particular filename, page size, file-size limit, signature method, color setting, or accessibility standard. Finish the document first, then compare the downloaded copy with that list. Open it in the program the recipient is likely to use when possible. If the file will be printed, check margins and small text on paper or in print preview. If it will be uploaded, confirm that the portal accepts the format before deleting any working copies. A technically successful export can still be the wrong submission when one of these practical requirements is missed.
           </p>
         </div>
       </div>

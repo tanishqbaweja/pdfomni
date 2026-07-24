@@ -49,6 +49,10 @@ function wordCount(html) {
   return text.match(/[A-Za-z0-9']+/g)?.length || 0
 }
 
+function prerenderedBody(html) {
+  return html.match(/<!-- PDFOMNI_PRERENDER_BODY_START -->([\s\S]*?)<!-- PDFOMNI_PRERENDER_BODY_END -->/)?.[1] || ''
+}
+
 const failures = []
 const publicTools = tools.filter((tool) => tool.canonicalPath && !tool.hiddenOnHome)
 const sitemap = fs.readFileSync(path.join(rootDir, 'public', 'sitemap.xml'), 'utf8')
@@ -88,7 +92,7 @@ for (const route of routes) {
     const seoIndex = html.indexOf('class="prerendered-seo"')
     const rootIndex = html.indexOf('id="root"')
     const isToolRoute = tools.some((tool) => tool.canonicalPath === route && !tool.hiddenOnHome)
-    const isGuideArticle = guides.some((guide) => `/guides/${guide.slug}` === route)
+    const isIndexedContentRoute = route !== '/' && !['/404', '/500'].includes(route)
 
     const checks = [
       ['title', /<title>[^<]{8,}<\/title>/i.test(html)],
@@ -100,7 +104,10 @@ for (const route of routes) {
       ['root after crawler body', rootIndex > seoIndex],
       ['not noscript-only', !html.includes('<noscript>')],
       ['body text', textLength(html) > (isToolRoute ? 1800 : 80)],
-      ['minimum word count', wordCount(html) >= (isGuideArticle ? 1000 : isToolRoute ? 800 : 20)],
+      ['minimum word count', wordCount(prerenderedBody(html)) >= (isIndexedContentRoute ? 1000 : 20)],
+      ['no em dashes', !/—|â€”|Ã¢â‚¬â€/.test(prerenderedBody(html))],
+      ['no search-term stuffing section', !/search terms|searches include|people (?:looking|searching) for|cost-focused searches/i.test(html)],
+      ['no competitor keyword block', !/ilovepdf|i love pdf/i.test(html)],
     ]
 
     if (isToolRoute) {

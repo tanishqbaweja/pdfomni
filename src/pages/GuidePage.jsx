@@ -94,6 +94,9 @@ export default function GuidePage() {
 
             <aside className="guide-related" aria-labelledby="guide-related-title">
               <h2 id="guide-related-title">Related PDFOmni pages</h2>
+              <p>
+                Use these pages when you are ready to apply the ideas from the guide to a document. Open the source in the tool that matches the next task, keep the original nearby, and review the new download before moving to another step. The links are options, not a required sequence.
+              </p>
               <div>
                 {guide.related.map((item) => (
                   <Link key={item.href} to={item.href}>{item.label}</Link>

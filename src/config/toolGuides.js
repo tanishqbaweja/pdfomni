@@ -224,13 +224,13 @@ function buildToolGuide(profile) {
     description: profile.description,
     published: profile.published || '2026-07-22',
     readTime: '10 min read',
-    intro: `${toolLink} handles a focused document job inside the browser. This guide explains when to use it, how to prepare the source, which choices matter, and how to review the exported copy before sending it to someone else.`,
+    intro: `${toolLink} handles a focused document job inside the browser. This guide explains when that job makes sense, how to prepare the source, which choices matter, and how to review the exported copy before sending it to someone else.`,
     sections: [
       {
         title: `When ${tool.name} is useful`,
         paragraphs: [
           profile.situation,
-          `Use ${toolLink} when the task matches that purpose and the source file is in your control. A focused tool is usually easier to understand than a long workflow with steps the document does not need. Write down the expected result before opening the file, including the page count, filename, size limit, and any instructions from the recipient.`,
+          'Use the browser tool when the task matches that purpose and the source file is in your control. A focused action is usually easier to understand than a long workflow with steps the document does not need. Write down the expected result before opening the file, including the page count, filename, size limit, and any instructions from the recipient.',
         ],
       },
       {
@@ -238,7 +238,7 @@ function buildToolGuide(profile) {
         paragraphs: [
           profile.preparation,
           'Keep the original in a separate folder and work on a copy. Open the source in a normal PDF reader, move through the full document, and note anything unusual such as scans, forms, comments, signatures, mixed page sizes, or uncommon fonts. This first check gives you something reliable to compare with the output.',
-          `Load the working copy into ${toolLink} only after the source check. Browser processing means the supported document operation happens on your device. The file does not need to be sent to a PDFOmni processing server, although normal website resources, analytics, ads, and optional online features can still use internet requests.`,
+          'Load the working copy only after the source check. Browser processing means the supported document operation happens on your device. The file does not need to be sent to a PDFOmni processing server, although normal website resources, analytics, ads, and optional online features can still use internet requests.',
         ],
       },
       {
@@ -246,7 +246,7 @@ function buildToolGuide(profile) {
         paragraphs: [
           profile.decisions,
           'Use settings that match the final destination rather than choosing the strongest or fastest option automatically. A school portal, office archive, printed packet, and phone-readable copy can have different needs. The correct result is the one that remains clear and meets the instructions, not the one with the most dramatic setting.',
-          `Complete the change in ${toolLink} and export a new file. Give it a name that explains its status, such as review or submitted, instead of final2. Do not delete the source or overwrite the only copy. If the result is wrong, return to the clean source rather than repeatedly processing an already changed output.`,
+          'Complete the change and export a new file. Give it a name that explains its status, such as review or submitted, instead of final2. Do not delete the source or overwrite the only copy. If the result is wrong, return to the clean source rather than repeatedly processing an already changed output.',
         ],
       },
       {
@@ -264,7 +264,7 @@ function buildToolGuide(profile) {
       {
         title: 'Privacy and device limits',
         paragraphs: [
-          `The core ${toolLink} operation runs locally in the browser. That can be useful for private school records, applications, invoices, contracts, and personal documents because an unnecessary server copy is removed from the workflow. Local processing does not protect a file from an unsafe computer, an untrusted browser extension, or a recipient who should not have received it.`,
+          'The core document operation runs locally in the browser. That can be useful for private school records, applications, invoices, contracts, and personal documents because an unnecessary server copy is removed from the workflow. Local processing does not protect a file from an unsafe computer, an untrusted browser extension, or a recipient who should not have received it.',
           'Large and complicated PDFs use the memory and processor of the device in front of you. A short digital report may finish quickly, while a high-resolution scan with hundreds of pages can take longer or exceed the practical limits of an older phone. Close other demanding tabs, keep a backup, and use approved offline software when school or workplace policy requires it.',
         ],
       },
@@ -273,7 +273,13 @@ function buildToolGuide(profile) {
         paragraphs: profile.review || [
           'Close the working preview and reopen the downloaded PDF. Confirm the filename, page count, order, orientation, smallest text, images, forms, links, and any area changed by the tool. Check at normal zoom and high zoom. Open the file in a second reader when it is going to an official portal or another important destination.',
           'Compare the export with the source and the written goal from the beginning. A successful download only proves that a file was created. It does not prove that a signature is on the right page, a redaction removed its text, a table stayed readable, or a page range contains every required sheet. The final review is part of the task, not an optional extra.',
-          `Keep the source and reviewed output until the recipient accepts the document. If another change is needed, choose the relevant linked tool and start from the best available version. The purpose of ${toolLink} is to make one PDF job simpler while leaving you in control of the document and its versions.`,
+          'Keep the source and reviewed output until the recipient accepts the document. If another change is needed, choose the relevant linked tool and start from the best available version. The purpose of a focused browser action is to make one PDF job simpler while leaving you in control of the document and its versions.',
+        ],
+      },
+      {
+        title: 'Leave a clear handoff for the next person',
+        paragraphs: [
+          'A reviewed file is easier to trust when the next person can tell what changed. Keep the final filename plain, record the date, and add a short note when pages were removed, reordered, compressed, converted, or protected. The note does not need to become a formal report. One or two sentences can explain the source used, the action completed, and any part that still deserves attention. This is especially useful for group assignments, office packets, family records, and documents that move through several reviewers. It prevents someone from reopening an older copy and repeating work that was already checked. Do not place passwords or private details in the note. Store those through the approved channel, and keep the handoff focused on the document version and the review that was completed.',
         ],
       },
     ],

@@ -491,7 +491,7 @@ function SidebarCategory({ category, onAddNode }) {
 
 // ─── Workflow Execution Engine ───
 async function executeWorkflow(nodes, edges, updateNode, addToast) {
-  // Build adjacency — map nodeId -> [connected target nodeIds]
+  // Build adjacency: map nodeId -> [connected target nodeIds]
   const adjacency = {}
   for (const edge of edges) {
     if (!adjacency[edge.source]) adjacency[edge.source] = []
@@ -1564,6 +1564,33 @@ export default function WorkflowPage() {
         <details><summary>Are workflow files uploaded to a server?</summary><p>No. PDFOmni is designed around client-side processing, so core PDF workflow operations happen in your browser.</p></details>
         <details><summary>Can I save and reuse workflows?</summary><p>Yes. You can save a workflow locally and load it again when you need to repeat the same PDF process.</p></details>
         <details><summary>Who is the workflow builder for?</summary><p>It is for people who repeatedly split, rotate, watermark, number, preview, or export PDFs and want one visual process instead of many manual steps.</p></details>
+      </div>
+
+      <div className="tool-seo-copy">
+        <div>
+          <h2 className="tool-seo-subheading">Plan the Pipeline Before Adding Nodes</h2>
+          <p>
+            Write the starting files and required output in one sentence before building anything. Then list only the changes needed to move between them. This keeps the canvas from becoming a collection of actions that do not serve the final document. Put structural changes such as merging, splitting, rotating, and reordering before labels or finishing steps. Add a download node at the end so the reviewed result has a clear destination.
+          </p>
+          <p>
+            Think about failure points while choosing the order. A page range can become wrong after an earlier split, and page numbers can become misleading if pages move afterward. Redaction, conversion, signatures, and strong compression deserve a review near the step where they happen. Finding a problem early is easier than deciding which of several later actions caused it.
+          </p>
+        </div>
+        <div>
+          <h2 className="tool-seo-subheading">Test With a Small and Varied Sample</h2>
+          <p>
+            Run a saved workflow on copies of a few representative files before using a large set. Include a short digital PDF, a scan, and any unusual form or page size that appears in the real group. Compare input and output counts, open the downloaded files, and check pages from the beginning, middle, and end. Similar thumbnails do not guarantee that PDFs have the same fonts, permissions, forms, or image structure.
+          </p>
+          <p>
+            Keep the source folder unchanged and send output to a separate location with traceable names. Record the workflow settings and the date of the run when another person will review or receive the files. Automation should make a repeated job easier to check. It should not make it harder to identify which source created an output or where an unexpected change began.
+          </p>
+          <p>
+            Before saving the pipeline for later, remove unused nodes and give it a name that describes the real task. A clear name and a short process are easier to understand when the workflow is opened again after several weeks.
+          </p>
+          <p>
+            When the sample passes review, note which files were tested and which checks were completed. That record gives the next run a useful starting point instead of relying on memory.
+          </p>
+        </div>
       </div>
     </section>
     </>

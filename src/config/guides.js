@@ -582,7 +582,7 @@ const editorialGuides = [
         title: 'Create quality checks at useful points',
         paragraphs: [
           'Do not wait until the end to discover that the first conversion broke the layout. Check after a risky step such as office conversion, OCR, redaction, or strong compression. Quick checks during the workflow can focus on representative pages. The final check must cover the exact exported file from beginning to end.',
-          'Record objective details such as page count, file size, required pages, search terms, and whether the PDF opens in another reader. For accessibility, use an automated check and manual navigation. For privacy, search and extract text after redaction. For a submission, compare the finished filename and size with the portal instructions before uploading.',
+          'Record objective details such as page count, file size, required pages, phrases checked with document search, and whether the PDF opens in another reader. For accessibility, use an automated check and manual navigation. For privacy, search and extract text after redaction. For a submission, compare the finished filename and size with the portal instructions before uploading.',
         ],
       },
       {
@@ -724,7 +724,7 @@ const guideChecklists = {
     'Check after risky steps such as OCR, office conversion, redaction, and strong compression instead of waiting until the end.',
     'Use dedicated tools for one-off jobs and automate only repeated steps whose correct result can be described clearly.',
     'Keep human review for privacy, accessibility, layout, and meaning because those decisions depend on the actual document.',
-    'Record page counts, file sizes, search terms, and submission requirements so checks have objective pass or fail results.',
+    'Record page counts, file sizes, phrases checked with document search, and submission requirements so checks have objective pass or fail results.',
     'Give one person ownership of the current version when a team is collaborating and document each important handoff.',
     'Review the exact downloaded file in another reader before delivery, then preserve the version that was actually approved.',
     'Update the checklist after a repeated project so the next run fixes the real source of mistakes instead of adding busywork.',

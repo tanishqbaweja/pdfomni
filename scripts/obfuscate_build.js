@@ -41,9 +41,11 @@ const largeFileOptions = {
 // Vite builds or copied into the deployment. Keep this explicit so new shipped
 // code appears as unclassified in the report instead of being silently missed.
 const protectedNamePatterns = [
-  /^assets\/app-(?:ai|core|engine|tools|ui|workflow)-.+\.(?:js|mjs)$/i,
   /^assets\/(?:main|editpdf)-.+\.(?:js|mjs)$/i,
   /^assets\/(?:AboutPage|ChatSidebar|ContactPage|ErrorPage|GuidePage|GuidesPage|PrivacyPolicy|TermsOfService|ToolPage|WorkflowPage|guides)-.+\.(?:js|mjs)$/i,
+  /^assets\/(?:BatchTool|CropTool|DecryptTool|EncryptTool|ExcelToPdfTool|HtmlToPdfTool|ImageToPdfTool|MergeTool|PageNumberTool|PdfToImageTool|PdfToTextTool|PdfToWordTool|RedactTool|ReorderTool|RotateTool|SignTool|SplitTool|WatermarkTool|WcagTool|WordToPdfTool)-.+\.(?:js|mjs)$/i,
+  /^assets\/(?:FileDropZone|PageNavigator|PageThumbnail|PdfPagePreview|ProgressBar)-.+\.(?:js|mjs)$/i,
+  /^assets\/(?:download|fileHelpers|ocrEngine|pdfEngine|pdfRenderer|qpdfNormalize|textPdf)-.+\.(?:js|mjs)$/i,
   /^assets\/embeddingWorker-.+\.(?:js|mjs)$/i,
   /^compress\/app\/assets\/(?:index|compressionWorker)-.+\.(?:js|mjs)$/i,
   /^pdf-to-word\/app\/assets\/(?:index|main|embed)-.+\.(?:js|mjs)$/i,
@@ -59,7 +61,9 @@ const vendorNamePatterns = [
   /(?:^|\/)ocr\//i,
   /(?:^|\/)pdfjs-wasm\//i,
   /(?:^|\/)pdf\.worker/i,
-  /(?:^|\/)assets\/(?:ai-runtime|browserRunner|content-libs|copy|download|html2canvas|index\.es|jspdf|lucide-react|mammoth|modulepreload-polyfill|pdf|pdf-lib|pdfjs-dist|preload-helper|purify\.es|qpdf|rolldown-runtime|src|tesseract|vendor|worker|xlsx)-/i,
+  /(?:^|\/)assets\/(?:ai-runtime|browserRunner|content-libs|copy|html2canvas|index\.es|jspdf(?:\.es\.min)?|lucide-react|mammoth|modulepreload-polyfill|pdf|pdf-lib|pdfjs-dist|preload-helper|purify\.es|qpdf|rolldown-runtime|src|tesseract|vendor|worker|xlsx)-/i,
+  /(?:^|\/)assets\/(?:framework|jszip(?:\.min)?|lib)-/i,
+  /(?:^|\/)assets\/(?:arrow-left|check|chevron-right|circle-check|eye|eye-off|grip-vertical|loader-circle|rotate-ccw|trash-2|triangle-alert|undo-2)-/i,
   /(?:^|\/)compress\/app\/assets\/(?:browserRunner|lucide-react|pdf-lib|pdfjs-dist|qpdf|rolldown-runtime|src|vendor|worker)-/i,
   /(?:^|\/)pdf-to-word\/app\/assets\/(?:docx|jszip|pdfjs-dist|vendor)-/i,
   /\.min\.(?:js|mjs)$/i,

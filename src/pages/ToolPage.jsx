@@ -1,32 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import { getToolById } from '../config/tools'
 import { getToolSeo } from '../config/toolSeo'
 import Seo from '../components/Common/Seo'
 import ToolSeoSection from '../components/Common/ToolSeoSection'
-
-// Tool components
-import MergeTool from '../components/Tools/MergeTool'
-import SplitTool from '../components/Tools/SplitTool'
-import ReorderTool from '../components/Tools/ReorderTool'
-import RotateTool from '../components/Tools/RotateTool'
-import PageNumberTool from '../components/Tools/PageNumberTool'
-import WatermarkTool from '../components/Tools/WatermarkTool'
-import RedactTool from '../components/Tools/RedactTool'
-import CropTool from '../components/Tools/CropTool'
-import EncryptTool from '../components/Tools/EncryptTool'
-import DecryptTool from '../components/Tools/DecryptTool'
-import SignTool from '../components/Tools/SignTool'
-import ImageToPdfTool from '../components/Tools/ImageToPdfTool'
-import PdfToImageTool from '../components/Tools/PdfToImageTool'
-import PdfToWordTool from '../components/Tools/PdfToWordTool'
-import PdfToTextTool from '../components/Tools/PdfToTextTool'
-import WordToPdfTool from '../components/Tools/WordToPdfTool'
-import ExcelToPdfTool from '../components/Tools/ExcelToPdfTool'
-import HtmlToPdfTool from '../components/Tools/HtmlToPdfTool'
-import BatchTool from '../components/Tools/BatchTool'
-import WcagTool from '../components/Tools/WcagTool'
 
 function CompressIframeWrapper() {
   const [frameReady, setFrameReady] = useState(false)
@@ -157,27 +135,27 @@ function EditPdfIframe() {
 
 const toolComponents = {
   'edit': EditPdfIframe,
-  'merge': MergeTool,
-  'split': SplitTool,
-  'reorder': ReorderTool,
+  'merge': lazy(() => import('../components/Tools/MergeTool')),
+  'split': lazy(() => import('../components/Tools/SplitTool')),
+  'reorder': lazy(() => import('../components/Tools/ReorderTool')),
   'compress': CompressIframeWrapper,
-  'rotate': RotateTool,
-  'page-numbers': PageNumberTool,
-  'watermark': WatermarkTool,
-  'redact': RedactTool,
-  'crop': CropTool,
-  'encrypt': EncryptTool,
-  'decrypt': DecryptTool,
-  'sign': SignTool,
-  'image-to-pdf': ImageToPdfTool,
-  'pdf-to-image': PdfToImageTool,
-  'pdf-to-word': PdfToWordTool,
-  'pdf-to-text': PdfToTextTool,
-  'word-to-pdf': WordToPdfTool,
-  'excel-to-pdf': ExcelToPdfTool,
-  'html-to-pdf': HtmlToPdfTool,
-  'batch': BatchTool,
-  'wcag': WcagTool,
+  'rotate': lazy(() => import('../components/Tools/RotateTool')),
+  'page-numbers': lazy(() => import('../components/Tools/PageNumberTool')),
+  'watermark': lazy(() => import('../components/Tools/WatermarkTool')),
+  'redact': lazy(() => import('../components/Tools/RedactTool')),
+  'crop': lazy(() => import('../components/Tools/CropTool')),
+  'encrypt': lazy(() => import('../components/Tools/EncryptTool')),
+  'decrypt': lazy(() => import('../components/Tools/DecryptTool')),
+  'sign': lazy(() => import('../components/Tools/SignTool')),
+  'image-to-pdf': lazy(() => import('../components/Tools/ImageToPdfTool')),
+  'pdf-to-image': lazy(() => import('../components/Tools/PdfToImageTool')),
+  'pdf-to-word': lazy(() => import('../components/Tools/PdfToWordTool')),
+  'pdf-to-text': lazy(() => import('../components/Tools/PdfToTextTool')),
+  'word-to-pdf': lazy(() => import('../components/Tools/WordToPdfTool')),
+  'excel-to-pdf': lazy(() => import('../components/Tools/ExcelToPdfTool')),
+  'html-to-pdf': lazy(() => import('../components/Tools/HtmlToPdfTool')),
+  'batch': lazy(() => import('../components/Tools/BatchTool')),
+  'wcag': lazy(() => import('../components/Tools/WcagTool')),
 }
 
 const wideLayoutTools = new Set(['watermark', 'crop', 'redact', 'sign', 'batch', 'word-to-pdf', 'excel-to-pdf', 'pdf-to-word'])
@@ -192,6 +170,11 @@ export default function ToolPage({ forcedToolId }) {
   }
 
   const ToolComponent = toolComponents[toolId]
+  const toolContent = ToolComponent ? (
+    <Suspense fallback={<span className="sr-only" role="status">Loading PDF tool</span>}>
+      <ToolComponent toolId={toolId} tool={tool} />
+    </Suspense>
+  ) : null
 
   if (!tool || !ToolComponent) {
     return (
@@ -263,7 +246,7 @@ export default function ToolPage({ forcedToolId }) {
     return (
       <div className="tool-page edit-pdf-page" id="tool-page-edit">
         {seoMetadata}
-        <ToolComponent toolId={toolId} tool={tool} />
+        {toolContent}
         <div className="edit-pdf-seo-flow">
           <ToolSeoSection tool={tool} seo={seo} headingLevel={1} />
         </div>
@@ -298,7 +281,7 @@ export default function ToolPage({ forcedToolId }) {
         </div>
 
         <div className={`tool-page-content ${wideLayoutTools.has(toolId) ? 'tool-page-content-wide' : ''}`}>
-          <ToolComponent toolId={toolId} tool={tool} />
+          {toolContent}
         </div>
 
         <ToolSeoSection tool={tool} seo={seo} />

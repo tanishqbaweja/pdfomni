@@ -109,7 +109,7 @@ export const UploadZone: React.FC<Props> = ({ onFile }) => {
         </div>
 
         {/* Hint strip */}
-        <div className="flex gap-6 text-xs text-slate-400 mt-2">
+        <div className="flex gap-6 text-xs text-slate-600 dark:text-slate-300 mt-2">
           <span>PDF only</span>
           <span>·</span>
           <span>Up to {MAX_FILE_SIZE_MB} MB</span>

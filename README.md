@@ -169,6 +169,12 @@ npm run build:protected
 ```
 This creates a separate deployment in `obfuscated_dist/`, obfuscates the explicitly classified first-party application and worker code, syntax-checks every transformed file, and then prerenders and verifies the routes. Its report lists protected, vendor/runtime, and unclassified JavaScript so newly shipped entry points cannot be silently missed. The protected build is a copying deterrent, not a security boundary.
 
+### Bundle Analysis and Source Maps
+```bash
+npm run build:analyze
+```
+This writes a local treemap and raw module graph to `output/` and creates source maps in the ignored `analysis_dist/` directory. Production builds intentionally do not publish source maps because PDFOmni's first-party editor and processing code is protected. The private analysis build provides module-level debugging and bundle attribution without adding source files or `.map` files to `dist/`, `obfuscated_dist/`, or the Cloudflare manifests.
+
 ---
 
 ## 🧪 Testing

@@ -7,7 +7,14 @@ export default function ToastContainer() {
   if (toasts.length === 0) return null
 
   return (
-    <div className="toast-container" id="toast-container">
+    <div
+      className="toast-container"
+      id="toast-container"
+      role="status"
+      aria-live="polite"
+      aria-atomic="false"
+      aria-label="PDFOmni notifications"
+    >
       {toasts.map(toast => (
         <div key={toast.id} className={`toast toast-${toast.type || 'info'}`}>
           <div style={{ flex: 1 }}>
@@ -25,8 +32,9 @@ export default function ToastContainer() {
             onClick={() => removeToast(toast.id)}
             style={{ flexShrink: 0 }}
             aria-label="Dismiss"
+            type="button"
           >
-            <X size={16} />
+            <X size={16} aria-hidden="true" />
           </button>
         </div>
       ))}

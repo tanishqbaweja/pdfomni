@@ -4,13 +4,12 @@ import FileDropZone from '../Common/FileDropZone'
 import ProgressBar from '../Common/ProgressBar'
 import { useAppStore } from '../../store/appStore'
 import { readFileAsArrayBuffer, formatFileSize } from '../../utils/fileHelpers'
-import * as XLSX from 'xlsx'
-import { workbookToSelectablePdfBytes } from '../../utils/textPdf'
 import { downloadBlob } from '../../utils/download'
 
 export default function ExcelToPdfTool({ toolId, tool }) {
   const [file, setFile] = useState(null)
   const [workbook, setWorkbook] = useState(null)
+  const [xlsxApi, setXlsxApi] = useState(null)
   const [sheetNames, setSheetNames] = useState([])
   const [activeSheet, setActiveSheet] = useState('')
   const [tableHtml, setTableHtml] = useState('')
@@ -20,10 +19,10 @@ export default function ExcelToPdfTool({ toolId, tool }) {
   const [progressMsg, setProgressMsg] = useState('')
   const addToast = useAppStore((s) => s.addToast)
 
-  const renderSheet = useCallback((wb, sheetName) => {
+  const renderSheet = useCallback((wb, sheetName, api) => {
     try {
       const sheet = wb.Sheets[sheetName]
-      const html = XLSX.utils.sheet_to_html(sheet, { id: 'excel-preview-table' })
+      const html = api.utils.sheet_to_html(sheet, { id: 'excel-preview-table' })
       setTableHtml(html)
       setActiveSheet(sheetName)
     } catch (err) {
@@ -47,14 +46,16 @@ export default function ExcelToPdfTool({ toolId, tool }) {
       setProgress(40)
       setProgressMsg('Parsing data...')
 
+      const XLSX = await import('xlsx')
       const wb = XLSX.read(bytes, { type: 'array' })
+      setXlsxApi(XLSX)
       setWorkbook(wb)
       setSheetNames(wb.SheetNames)
       setFile(f)
 
       setProgress(70)
       setProgressMsg('Rendering preview...')
-      renderSheet(wb, wb.SheetNames[0])
+      renderSheet(wb, wb.SheetNames[0], XLSX)
 
       setProgress(100)
       setProgressMsg('Ready!')
@@ -68,13 +69,18 @@ export default function ExcelToPdfTool({ toolId, tool }) {
   }, [addToast, renderSheet])
 
   const handleConvert = useCallback(async () => {
-    if (!workbook) return
+    if (!workbook || !xlsxApi) return
     setProcessing(true)
     setProgress(0)
     setProgressMsg('Creating selectable spreadsheet PDF...')
     try {
       setProgress(70)
-      const pdfBytes = workbookToSelectablePdfBytes(workbook, sheetNames)
+      const { workbookToSelectablePdfBytes } = await import('../../utils/textPdf')
+      const pdfBytes = workbookToSelectablePdfBytes(
+        workbook,
+        sheetNames,
+        (sheet) => xlsxApi.utils.sheet_to_json(sheet, { header: 1, raw: false }),
+      )
       setProgress(90)
       setProgressMsg('Downloading PDF...')
       const pdfName = file ? file.name.replace(/\.(xlsx|xls|csv)$/i, '.pdf') : 'spreadsheet.pdf'
@@ -89,11 +95,12 @@ export default function ExcelToPdfTool({ toolId, tool }) {
     } finally {
       setProcessing(false)
     }
-  }, [workbook, sheetNames, file, addToast])
+  }, [workbook, xlsxApi, sheetNames, file, addToast])
 
   const handleReset = useCallback(() => {
     setFile(null)
     setWorkbook(null)
+    setXlsxApi(null)
     setSheetNames([])
     setActiveSheet('')
     setTableHtml('')
@@ -139,7 +146,7 @@ export default function ExcelToPdfTool({ toolId, tool }) {
                   <button
                     key={name}
                     className={`btn btn-sm ${activeSheet === name ? 'btn-primary' : 'btn-ghost'}`}
-                    onClick={() => renderSheet(workbook, name)}
+                    onClick={() => renderSheet(workbook, name, xlsxApi)}
                     disabled={processing}
                     id={`excel2pdf-sheet-${name}`}
                   >

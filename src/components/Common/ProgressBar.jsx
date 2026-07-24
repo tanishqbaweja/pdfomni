@@ -1,6 +1,15 @@
 export default function ProgressBar({ progress = 0, message = '', showPercentage = true }) {
+  const boundedProgress = Math.min(100, Math.max(0, progress))
+
   return (
-    <div style={{ width: '100%' }} id="progress-bar-wrapper">
+    <div
+      style={{ width: '100%' }}
+      role="progressbar"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.round(boundedProgress)}
+      aria-label={message || 'PDF processing progress'}
+    >
       <div style={{ 
         display: 'flex', 
         justifyContent: 'space-between', 
@@ -16,16 +25,19 @@ export default function ProgressBar({ progress = 0, message = '', showPercentage
             fontFamily: 'var(--font-mono)',
             fontSize: 'var(--text-xs)',
           }}>
-            {Math.round(progress)}%
+            {Math.round(boundedProgress)}%
           </span>
         )}
       </div>
       <div className="progress-bar">
         <div 
           className="progress-bar-fill" 
-          style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
+          style={{ width: `${boundedProgress}%` }}
         />
       </div>
+      <span className="sr-only" role="status" aria-live="polite">
+        {message ? `${message} ` : ''}{Math.round(boundedProgress)}%
+      </span>
     </div>
   )
 }

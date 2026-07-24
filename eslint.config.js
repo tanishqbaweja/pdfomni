@@ -7,6 +7,7 @@ import { defineConfig, globalIgnores } from 'eslint/config'
 export default defineConfig([
   globalIgnores([
     'dist/**',
+    'analysis_dist/**',
     'obfuscated_dist/**',
     'node_modules/**',
     'public/lib/**',

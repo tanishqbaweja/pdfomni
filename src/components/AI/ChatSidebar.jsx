@@ -438,9 +438,10 @@ You can help with:
 
   return (
     <>
-      <div
+      <aside
         className={`sidebar chat-sidebar ${chatOpen ? 'open' : ''}`}
         id="chat-sidebar"
+        aria-label="AI Copilot"
         style={{ display: chatOpen ? 'flex' : 'none' }}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
@@ -455,7 +456,7 @@ You can help with:
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-            <Sparkles size={18} style={{ color: 'var(--color-accent)' }} />
+            <Sparkles size={18} style={{ color: 'var(--color-accent)' }} aria-hidden="true" />
             <span style={{ fontWeight: 700, fontSize: 'var(--text-base)' }}>AI Copilot</span>
           </div>
           <div style={{ display: 'flex', gap: 'var(--space-1)' }}>
@@ -463,14 +464,15 @@ You can help with:
               className="btn btn-ghost btn-icon btn-sm"
               onClick={() => setShowContextModal(true)}
               title="View Last AI Context"
+              aria-label="View last AI context"
               id="chat-context-btn"
               disabled={!lastAiRequest}
             >
-              <FileText size={14} />
+              <FileText size={14} aria-hidden="true" />
             </button>
-            <button className="btn btn-ghost btn-icon btn-sm" onClick={() => setShowKeyModal(true)} title="AI Copilot Settings" id="chat-key-btn"><Key size={14} /></button>
-            <button className="btn btn-ghost btn-icon btn-sm" onClick={handleNewChat} title="New Chat" id="chat-clear-btn"><SquarePen size={14} /></button>
-            <button className="btn btn-ghost btn-icon btn-sm" onClick={() => setChatOpen(false)} aria-label="Close chat" id="chat-close-btn"><X size={16} /></button>
+            <button className="btn btn-ghost btn-icon btn-sm" onClick={() => setShowKeyModal(true)} title="AI Copilot Settings" aria-label="AI Copilot settings" id="chat-key-btn"><Key size={14} aria-hidden="true" /></button>
+            <button className="btn btn-ghost btn-icon btn-sm" onClick={handleNewChat} title="New Chat" aria-label="Start a new chat" id="chat-clear-btn"><SquarePen size={14} aria-hidden="true" /></button>
+            <button className="btn btn-ghost btn-icon btn-sm" onClick={() => setChatOpen(false)} aria-label="Close chat" id="chat-close-btn"><X size={16} aria-hidden="true" /></button>
           </div>
         </div>
 
@@ -516,8 +518,8 @@ You can help with:
                 <span>Use in AI</span>
               </label>
               <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{doc.name}</span>
-              <button onClick={() => removeDoc(index)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', padding: 0, lineHeight: 1 }}>
-                <X size={10} />
+              <button aria-label={`Remove ${doc.name}`} onClick={() => removeDoc(index)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', padding: 0, lineHeight: 1 }}>
+                <X size={10} aria-hidden="true" />
               </button>
             </div>
           ))}
@@ -601,6 +603,7 @@ You can help with:
         <div className="chat-input-area">
           <input
             className="input chat-input"
+            aria-label="Chat message"
             placeholder={apiKey ? (chatDocs.some((doc) => doc.useInAi) ? 'Ask about your PDFs...' : 'Ask anything about PDFs...') : 'Set API key first...'}
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -612,7 +615,7 @@ You can help with:
             <Send size={16} />
           </button>
         </div>
-      </div>
+      </aside>
 
       <Modal
         isOpen={showKeyModal}

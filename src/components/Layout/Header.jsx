@@ -29,8 +29,8 @@ export default function Header() {
 
   return (
     <header className="header" id="header">
-      <Link to="/" className="header-logo">
-        <svg width="32" height="32" viewBox="0 0 64 64" fill="none">
+      <Link to="/" className="header-logo" aria-label="PDFOmni home">
+        <svg width="32" height="32" viewBox="0 0 64 64" fill="none" aria-hidden="true">
           <defs>
             <linearGradient id="logoG" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
               <stop offset="0%" stopColor="#6366f1"/>
@@ -44,21 +44,24 @@ export default function Header() {
         <span className="header-logo-text">PDFOmni</span>
       </Link>
       
-      <nav className="header-nav">
-        <Link to="/guides" className="btn btn-ghost" id="nav-guides">
-          <BookOpen size={18} />
+      <nav className="header-nav" aria-label="Primary navigation">
+        <Link to="/guides" className="btn btn-ghost" id="nav-guides" aria-label="PDF guides">
+          <BookOpen size={18} aria-hidden="true" />
           <span>Guides</span>
         </Link>
-        <Link to="/workflow" className="btn btn-ghost" id="nav-workflow">
-          <Workflow size={18} />
+        <Link to="/workflow" className="btn btn-ghost" id="nav-workflow" aria-label="Workflow builder">
+          <Workflow size={18} aria-hidden="true" />
           <span>Workflow</span>
         </Link>
         <button 
           className={`btn ${chatOpen ? 'btn-primary' : 'btn-ghost'}`}
           onClick={toggleChat}
           id="nav-chat"
+          aria-label={chatOpen ? 'Close AI chat' : 'Open AI chat'}
+          aria-expanded={chatOpen}
+          type="button"
         >
-          <MessageCircle size={18} />
+          <MessageCircle size={18} aria-hidden="true" />
           <span>AI Chat</span>
         </button>
         <button
@@ -68,10 +71,10 @@ export default function Header() {
           title={`Switch to ${nextTheme} mode`}
           type="button"
         >
-          {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+          {theme === 'dark' ? <Sun size={18} aria-hidden="true" /> : <Moon size={18} aria-hidden="true" />}
         </button>
         <div className="footer-privacy" aria-label="100% Private">
-          <Shield size={14} />
+          <Shield size={14} aria-hidden="true" />
           <span>100% Private</span>
         </div>
       </nav>

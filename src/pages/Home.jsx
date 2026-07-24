@@ -17,6 +17,7 @@ function ToolCard({ tool }) {
       to={tool.canonicalPath || `/tool/${tool.id}`}
       style={{ textDecoration: 'none' }}
       id={`tool-card-${tool.id}`}
+      aria-label={`${tool.name}: ${tool.description}`}
     >
       <div
         className="tool-card tooltip"
@@ -61,7 +62,7 @@ function ToolSections({ selectedCategory, searchQuery }) {
     return (
       <div className="home-tool-section">
         <div className="section-header">
-          <span className="section-label">Search Results</span>
+          <h2 className="section-label">Search Results</h2>
           <div className="section-line" />
         </div>
         {searchMatches.length > 0 ? (
@@ -84,7 +85,7 @@ function ToolSections({ selectedCategory, searchQuery }) {
         return (
           <div key={category.id} className="home-tool-section">
             <div className="section-header">
-              <span className="section-label">{category.label}</span>
+              <h2 className="section-label">{category.label}</h2>
               <div className="section-line" />
             </div>
 
@@ -121,18 +122,18 @@ export default function Home() {
 
       <section className="hero home-hero bg-radial-glow" id="hero">
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          <div className="animate-fade-in-up">
+          <div>
             <div className="badge badge-accent home-hero-badge">
-              <Sparkles size={14} />
+              <Sparkles size={14} aria-hidden="true" />
               100% Client-Side &bull; Zero-Knowledge Architecture
             </div>
           </div>
 
-          <h1 className="hero-title animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+          <h1 className="hero-title">
             Every PDF tool you need, <span className="hero-title-gradient">completely private</span>
           </h1>
 
-          <p className="hero-subtitle animate-fade-in-up" style={{ animationDelay: '200ms' }}>
+          <p className="hero-subtitle">
             Merge, split, compress, convert, edit, and sign PDFs - all processing happens in your browser. Your files never leave your device.
           </p>
         </div>
@@ -141,11 +142,12 @@ export default function Home() {
       <div className="home-main">
         <section className="container home-tools" id="tools">
           <div className="home-tool-controls" aria-label="Tool filters">
-            <div className="home-category-tabs" role="list">
+            <div className="home-category-tabs" role="group" aria-label="Filter tools by category">
               <button
                 className={`home-category-tab ${selectedCategory === 'all' ? 'active' : ''}`}
                 onClick={() => setSelectedCategory('all')}
                 type="button"
+                aria-pressed={selectedCategory === 'all'}
               >
                 All Tools
               </button>
@@ -155,6 +157,7 @@ export default function Home() {
                   className={`home-category-tab ${selectedCategory === category.id ? 'active' : ''}`}
                   onClick={() => setSelectedCategory(category.id)}
                   type="button"
+                  aria-pressed={selectedCategory === category.id}
                 >
                   {category.label}
                 </button>
@@ -162,7 +165,7 @@ export default function Home() {
             </div>
 
             <label className="home-tool-search">
-              <Search size={18} />
+              <Search size={18} aria-hidden="true" />
               <input
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
@@ -258,7 +261,7 @@ export default function Home() {
                 height="54"
                 loading="lazy"
                 decoding="async"
-                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1168270&amp;theme=light&amp;t=1781255298179"
+                src="/producthunt-featured-light.svg"
               />
               <img
                 className="home-featured-image home-featured-image-dark"
@@ -267,7 +270,7 @@ export default function Home() {
                 height="54"
                 loading="lazy"
                 decoding="async"
-                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1168270&amp;theme=dark&amp;t=1781255298179"
+                src="/producthunt-featured-dark.svg"
               />
             </a>
 

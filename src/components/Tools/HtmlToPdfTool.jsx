@@ -4,7 +4,6 @@ import FileDropZone from '../Common/FileDropZone'
 import ProgressBar from '../Common/ProgressBar'
 import { useAppStore } from '../../store/appStore'
 import { readFileAsText } from '../../utils/fileHelpers'
-import { htmlPreviewToSelectablePdfBytes } from '../../utils/textPdf'
 import { downloadBlob } from '../../utils/download'
 
 export default function HtmlToPdfTool({ toolId, tool }) {
@@ -49,6 +48,7 @@ export default function HtmlToPdfTool({ toolId, tool }) {
       }
 
       setProgress(55)
+      const { htmlPreviewToSelectablePdfBytes } = await import('../../utils/textPdf')
       const pdfBytes = await htmlPreviewToSelectablePdfBytes(previewRef.current, fileName || 'HTML Document')
       setProgress(90)
       setProgressMsg('Downloading PDF...')

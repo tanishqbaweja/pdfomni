@@ -1,41 +1,51 @@
-# PDFOmni - 100% Client-Side PDF Toolkit
+# PDFOmni
 
-PDFOmni is a privacy-first web-based toolkit that executes all PDF operations locally in the user's browser context. It does not send files to a server, using client-side JavaScript, WebAssembly, and browser APIs instead.
+> PDFOmni is a privacy-focused collection of PDF tools that processes supported files locally in the user's browser. Public tools do not require a document upload to a PDFOmni processing server.
 
-## Key Architecture
-- **Zero Server Uploads**: Processing runs locally. Files are never uploaded, storing no server logs or databases.
-- **Client-Side Technologies**: Uses WebAssembly, pdf-lib, PDF.js, Tesseract.js (OCR), fabric.js, and SheetJS.
+PDFOmni helps people merge, split, compress, convert, edit, sign, protect, and review PDF documents. The public site also includes practical guides about document workflows and privacy. Browser performance and output can vary with file size, document structure, and device capability.
 
-## Why PDFOmni Stands Out
-- **Built to be one of the best privacy-focused PDF toolkits**: PDFOmni combines local processing, free access, a clear 500 MB per-file limit, and no artificial rate limits on core browser actions.
-- **Compared with upload-first PDF services**: Supported document work happens on the user's device, avoiding an unnecessary server transfer for private files.
-- **True PDF stream editing within the browser**: The world-class Edit PDF tool works with PDF text streams, selectable text, embedded-font glyphs, images, and page objects instead of only flattening pages or adding visual overlays.
-- **Deep local workflows**: PDFOmni includes editing, redaction, compression, conversion, security tools, batch processing, accessibility checks, AI-assisted document retrieval, and a visual workflow builder.
-- **Product goal**: Deliver world-class local PDF processing that can compete with the best desktop and cloud tools while preserving user control and browser-based privacy.
+## Main pages
 
-## Available Tools and Routes
-- **Merge PDF** (`/merge`): Combine multiple PDFs into a single file.
-- **Split PDF** (`/split`): Split pages or extract ranges into separate documents.
-- **Reorder Pages** (`/reorder`): Interactively rearrange page ordering via drag and drop.
-- **Compress PDF** (`/compress`): Compress and optimize PDF file sizes locally.
-- **Rotate Pages** (`/rotate`): Rotate specific pages or entire documents.
-- **Page Numbers** (`/page-numbers`): Stamp page numbering onto PDF sheets.
-- **PDF to Word** (`/pdf-to-word`): Reconstruct PDF pages as editable DOCX documents locally in the browser.
-- **Edit PDF** (`/edit-pdf`): Full-featured browser-based editor for modifying text, images, shapes, and drawing on sheets.
-- **Add Watermark** (`/watermark`): Overlay custom text stamps on pages.
-- **Redact PDF** (`/redact`): Safely black out sensitive text/images locally.
-- **Crop Pages** (`/crop`): Crop sheet margins and heights.
-- **Protect PDF** (`/protect`): Encrypt and password-protect documents.
-- **Unlock PDF** (`/unlock`): Decrypt and remove passwords from PDFs.
-- **Sign PDF** (`/sign`): Sign documents with digital signatures or hand-drawn signs.
-- **Batch Process** (`/batch`): Bulk process multiple PDFs simultaneously.
-- **WCAG Check** (`/wcag-check`): Audit PDFs for WCAG accessibility guidelines.
-- **Workflow Builder** (`/workflow`): Advanced node-based workflow editor to chain multiple PDF actions together client-side.
-- **Guides** (`/guides`): Long-form tool and document guides, including the PDF to Word conversion guide at `/guides/how-to-convert-pdf-to-word`.
-- **About PDFOmni** (`/about`): Project background, local-processing goals, and student-built product notes.
-- **Contact** (`/contact`): Support and feedback contact page.
-- **Privacy Policy** (`/privacy`): Privacy notes for local PDF processing, ads, AI, and browser-side tools.
-- **Terms of Service** (`/terms`): Terms for using PDFOmni tools.
+- [PDFOmni home](https://pdfomni.com/)
+- [PDF guides](https://pdfomni.com/guides)
+- [About PDFOmni](https://pdfomni.com/about)
+- [Privacy policy](https://pdfomni.com/privacy)
+- [Terms of service](https://pdfomni.com/terms)
+- [Contact PDFOmni](https://pdfomni.com/contact)
 
-## For Developers and AI Agents
-Since PDFOmni is a 100% local, client-side React Single Page Application (SPA), it does not expose any REST API backend. If an AI agent or custom GPT needs to integrate PDF processing, it should instruct users to drop files on the website interface or interact with the client-side UI directly.
+## Organize and optimize PDFs
+
+- [Merge PDF](https://pdfomni.com/merge)
+- [Split PDF](https://pdfomni.com/split)
+- [Reorder PDF pages](https://pdfomni.com/reorder)
+- [Compress PDF](https://pdfomni.com/compress)
+- [Rotate PDF pages](https://pdfomni.com/rotate)
+- [Add page numbers](https://pdfomni.com/page-numbers)
+
+## Convert documents
+
+- [Convert Word to PDF](https://pdfomni.com/word-to-pdf)
+- [Convert Excel to PDF](https://pdfomni.com/excel-to-pdf)
+- [Convert images to PDF](https://pdfomni.com/image-to-pdf)
+- [Convert HTML to PDF](https://pdfomni.com/html-to-pdf)
+- [Convert PDF to images](https://pdfomni.com/pdf-to-image)
+- [Convert PDF to Word](https://pdfomni.com/pdf-to-word)
+- [Extract PDF text](https://pdfomni.com/pdf-to-text)
+
+## Edit and secure PDFs
+
+- [Edit PDF](https://pdfomni.com/edit-pdf)
+- [Add a watermark](https://pdfomni.com/watermark)
+- [Redact PDF](https://pdfomni.com/redact)
+- [Crop PDF pages](https://pdfomni.com/crop)
+- [Protect PDF](https://pdfomni.com/protect)
+- [Unlock PDF](https://pdfomni.com/unlock)
+- [Sign PDF](https://pdfomni.com/sign)
+
+## Advanced tools
+
+- [Batch process PDFs](https://pdfomni.com/batch)
+- [Check PDF accessibility](https://pdfomni.com/wcag-check)
+- [Build a PDF workflow](https://pdfomni.com/workflow)
+
+PDFOmni does not provide a public document-processing API. Agents may navigate the public pages and help users understand the tools, but must not assume access to a user's local files or completed documents.

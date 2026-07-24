@@ -1,8 +1,16 @@
-import JSZip from 'jszip'
 import { normalizePdfForRewrite } from './qpdfNormalize'
 
 let activeDownloadPrompt = null
+let lastFocusedControl = null
 const KOFI_GOAL_URL = 'https://ko-fi.com/trebell/goal?g=15'
+
+if (typeof document !== 'undefined') {
+  document.addEventListener('focusin', (event) => {
+    if (event.target instanceof HTMLElement && !event.target.closest('.support-download-overlay')) {
+      lastFocusedControl = event.target
+    }
+  })
+}
 
 function ensureSupportPromptStyles() {
   if (typeof document === 'undefined' || document.getElementById('support-download-prompt-styles')) {
@@ -36,7 +44,7 @@ function ensureSupportPromptStyles() {
     }
     .support-download-kicker {
       margin-bottom: 10px;
-      color: #6366f1;
+      color: #4f46e5;
       font-size: 12px;
       font-weight: 800;
       letter-spacing: 0.08em;
@@ -177,15 +185,22 @@ export function promptSupportedDownload({ url, filename }) {
   ensureSupportPromptStyles()
 
   activeDownloadPrompt = new Promise((resolve) => {
+    const activeElement = document.activeElement
+    const previousFocus = activeElement instanceof HTMLElement && activeElement !== document.body
+      ? activeElement
+      : lastFocusedControl
     const overlay = document.createElement('div')
     overlay.className = 'support-download-overlay'
     overlay.setAttribute('role', 'dialog')
     overlay.setAttribute('aria-modal', 'true')
+    overlay.setAttribute('aria-labelledby', 'support-download-title')
+    overlay.setAttribute('aria-describedby', 'support-download-description')
+    overlay.tabIndex = -1
     overlay.innerHTML = `
       <div class="support-download-modal">
         <div class="support-download-kicker">Independent tools need real hardware</div>
-        <h2 class="support-download-title">Keep PDFOmni Free...</h2>
-        <p class="support-download-copy">
+        <h2 class="support-download-title" id="support-download-title">Keep PDFOmni Free...</h2>
+        <p class="support-download-copy" id="support-download-description">
           PDFOmni stays free because it is built independently. If this saved you time,
           <a href="${KOFI_GOAL_URL}" target="_blank" rel="noopener noreferrer">support me</a>
           on Ko-fi and help fund a new laptop for building the next project.
@@ -202,6 +217,7 @@ export function promptSupportedDownload({ url, filename }) {
     `
 
     const continueLink = overlay.querySelector('[data-support-continue]')
+    const cancelButton = overlay.querySelector('[data-support-cancel]')
     continueLink.textContent = 'Preparing PDF...'
     continueLink.setAttribute('aria-disabled', 'true')
     let settled = false
@@ -218,10 +234,13 @@ export function promptSupportedDownload({ url, filename }) {
       window.clearTimeout(readyTimer)
       overlay.remove()
       activeDownloadPrompt = null
+      window.setTimeout(() => previousFocus?.focus?.(), 0)
     }
 
-    overlay.querySelector('[data-support-cancel]').addEventListener('click', (event) => {
+    cancelButton.addEventListener('click', (event) => {
       event.stopImmediatePropagation()
+      if (settled) return
+      settled = true
       cleanup()
       resolve(false)
     })
@@ -237,7 +256,35 @@ export function promptSupportedDownload({ url, filename }) {
       resolve(true)
     })
 
+    overlay.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        cancelButton.click()
+        return
+      }
+      if (event.key !== 'Tab') return
+
+      const focusable = Array.from(overlay.querySelectorAll(
+        'button:not([disabled]), a[href]:not([aria-disabled="true"]), [tabindex]:not([tabindex="-1"])',
+      ))
+      if (focusable.length === 0) {
+        event.preventDefault()
+        overlay.focus()
+        return
+      }
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    })
+
     document.body.appendChild(overlay)
+    cancelButton.focus()
   })
 
   return activeDownloadPrompt
@@ -272,6 +319,7 @@ export function downloadImage(dataUrl, filename) {
 }
 
 export async function downloadMultipleAsZip(files, zipName = 'pdfomni-output.zip') {
+  const { default: JSZip } = await import('jszip')
   const zip = new JSZip()
   for (const { name, bytes } of files) {
     zip.file(name, await normalizePdfDownloadBytes(bytes, name, 'application/pdf'))

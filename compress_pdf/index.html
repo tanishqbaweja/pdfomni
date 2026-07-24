@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8" />
     <script>
       (function () {
         if (new URLSearchParams(window.location.search).get('embedded') === '1') {
@@ -27,18 +28,54 @@
         });
       })();
     </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5532127864022306"
-      crossorigin="anonymous"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TSWLYFYBM8"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-TSWLYFYBM8');
+
+      (function () {
+        if (new URLSearchParams(window.location.search).get('embedded') === '1') return;
+        var loaded = false;
+        function loadThirdPartyScripts() {
+          if (loaded) return;
+          loaded = true;
+          var analytics = document.createElement('script');
+          analytics.async = true;
+          analytics.src = 'https://www.googletagmanager.com/gtag/js?id=G-TSWLYFYBM8';
+          document.head.appendChild(analytics);
+          var adsense = document.createElement('script');
+          adsense.async = true;
+          adsense.crossOrigin = 'anonymous';
+          adsense.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5532127864022306';
+          document.head.appendChild(adsense);
+        }
+        function scheduleThirdPartyScripts() {
+          var interactionEvents = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
+          function loadFromInteraction() {
+            interactionEvents.forEach(function (eventName) {
+              window.removeEventListener(eventName, loadFromInteraction);
+            });
+            loadThirdPartyScripts();
+          }
+          interactionEvents.forEach(function (eventName) {
+            window.addEventListener(eventName, loadFromInteraction, { once: true, passive: true });
+          });
+          window.setTimeout(function () {
+            if ('requestIdleCallback' in window) {
+              window.requestIdleCallback(loadThirdPartyScripts, { timeout: 4000 });
+            } else {
+              loadThirdPartyScripts();
+            }
+          }, 8000);
+        }
+        if (document.readyState === 'complete') {
+          scheduleThirdPartyScripts();
+        } else {
+          window.addEventListener('load', scheduleThirdPartyScripts, { once: true });
+        }
+      })();
     </script>
-    <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 

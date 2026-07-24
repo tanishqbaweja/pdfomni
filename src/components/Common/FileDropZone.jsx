@@ -64,8 +64,14 @@ export default function FileDropZone({
       id={id}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => e.key === 'Enter' && handleClick()}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault()
+          handleClick()
+        }
+      }}
       aria-label={label}
+      aria-describedby={error ? `${id}-error` : undefined}
     >
       <input
         ref={inputRef}
@@ -75,16 +81,17 @@ export default function FileDropZone({
         onChange={handleChange}
         style={{ display: 'none' }}
         id={`${id}-input`}
+        aria-label={label}
       />
       <div className="dropzone-icon">
-        <Upload size={28} />
+        <Upload size={28} aria-hidden="true" />
       </div>
       <div className="dropzone-title">{label}</div>
       <div className="dropzone-subtitle">{sublabel}</div>
       <div className="dropzone-subtitle" style={{ fontSize: '0.75rem' }}>
         {accept === '.pdf' ? 'PDF files only' : `Accepted: ${accept}`} - Max {maxFiles} files - {maxFileSizeMb} MB each
       </div>
-      {error && <div className="dropzone-error">{error}</div>}
+      {error && <div className="dropzone-error" id={`${id}-error`} role="alert">{error}</div>}
     </div>
   )
 }

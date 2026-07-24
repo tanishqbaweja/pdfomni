@@ -28,6 +28,7 @@ service-account*.json
 # Build and deployment output
 dist/
 dist-ssr/
+analysis_dist/
 obfuscated_dist/
 compress_pdf/dist/
 *.zip

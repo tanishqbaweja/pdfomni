@@ -1,16 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5532127864022306"
-  crossorigin="anonymous"></script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TSWLYFYBM8"></script>
+<meta charset="UTF-8"/>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-TSWLYFYBM8');
+
+  (function () {
+    if (new URLSearchParams(window.location.search).get('embedded') === '1') return;
+    var loaded = false;
+    function loadThirdPartyScripts() {
+      if (loaded) return;
+      loaded = true;
+      var analytics = document.createElement('script');
+      analytics.async = true;
+      analytics.src = 'https://www.googletagmanager.com/gtag/js?id=G-TSWLYFYBM8';
+      document.head.appendChild(analytics);
+      var adsense = document.createElement('script');
+      adsense.async = true;
+      adsense.crossOrigin = 'anonymous';
+      adsense.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5532127864022306';
+      document.head.appendChild(adsense);
+    }
+    function scheduleThirdPartyScripts() {
+      var interactionEvents = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
+      function loadFromInteraction() {
+        interactionEvents.forEach(function (eventName) {
+          window.removeEventListener(eventName, loadFromInteraction);
+        });
+        loadThirdPartyScripts();
+      }
+      interactionEvents.forEach(function (eventName) {
+        window.addEventListener(eventName, loadFromInteraction, { once: true, passive: true });
+      });
+      window.setTimeout(function () {
+        if ('requestIdleCallback' in window) {
+          window.requestIdleCallback(loadThirdPartyScripts, { timeout: 4000 });
+        } else {
+          loadThirdPartyScripts();
+        }
+      }, 8000);
+    }
+    if (document.readyState === 'complete') {
+      scheduleThirdPartyScripts();
+    } else {
+      window.addEventListener('load', scheduleThirdPartyScripts, { once: true });
+    }
+  })();
 </script>
 <script>
   (function () {
@@ -54,7 +92,6 @@
     });
   })();
 </script>
-<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>World-Class Edit PDF Files Locally - Free Online PDF Editor | PDFOmni</title>
 <meta name="description" content="World-class Edit PDF with true PDF stream editing within your browser. Edit text, embedded fonts, images, shapes, and signatures locally without server uploads."/>
@@ -71,11 +108,11 @@
   --bg-hover: #f1f5f9;
   --bg-active: #e2e8f0;
   
-  --accent: #6366f1;
-  --accent-soft: #4f46e5;
+  --accent: #4f46e5;
+  --accent-soft: #4338ca;
   --accent-glow: rgba(99, 102, 241, 0.08);
   --accent2: #db2777;
-  --success: #16a34a;
+  --success: #065f46;
   --warn: #d97706;
   
   --text-primary: #0f172a;
@@ -166,6 +203,7 @@ html.embedded:not(.document-open) .sidebar-edge-toggle{display:none}
 .theme-toggle-edit:hover{background:var(--bg-hover);color:var(--accent-soft);transform:translateY(-1px)}
 .theme-toggle-edit svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .tb-page-input{width:50px;height:32px;padding:0 8px;border-radius:var(--r1);background:var(--bg-surface);color:var(--text-primary);border:1px solid var(--border);font-size:12px;font-weight:500;text-align:center;outline:none;transition:var(--tr)}
+.tb-page-label{font-size:12px;color:var(--text-secondary);font-weight:500}
 .tb-page-input:focus{border-color:var(--border-focus);background:var(--bg-hover)}
 .tb-page-input::-webkit-inner-spin-button,.tb-page-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 .tb-page-input[type=number]{-moz-appearance:textfield;appearance:textfield}
@@ -423,6 +461,7 @@ html.embedded:not(.document-open) .sidebar-edge-toggle{display:none}
   #sidebar-toggle-btn,
   #btn-undo,
   #btn-redo,
+  .tb-page-label,
   #page-input,
   #page-total,
   #page-count-badge,
@@ -634,7 +673,8 @@ html[data-theme="dark"] .color-rgb-input {
   </div>
   <div class="tb-sep"></div>
   <div class="tb-grp">
-    <input type="number" class="tb-page-input" id="page-input" min="1" value="1" title="Current page"/>
+    <label class="tb-page-label" for="page-input">Page</label>
+    <input type="number" class="tb-page-input" id="page-input" min="1" value="1"/>
     <span class="tb-page-total" id="page-total">/ 1</span>
   </div>
   <div class="tb-sep"></div>

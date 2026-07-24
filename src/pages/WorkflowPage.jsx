@@ -1265,6 +1265,7 @@ export default function WorkflowPage() {
             disabled={isExecuting || nodes.length === 0}
             id="wf-execute-btn"
             style={{ minWidth: 140 }}
+            aria-label={isExecuting ? 'Workflow is running' : 'Execute workflow'}
           >
             {isExecuting ? (
               <>
@@ -1506,7 +1507,7 @@ export default function WorkflowPage() {
 
       <div className="tool-seo-copy">
         <div>
-          <h3>Why Use This Workflow Builder?</h3>
+          <h2 className="tool-seo-subheading">Why Use This Workflow Builder?</h2>
           <p>
             Repeated PDF work can get tedious when every file needs the same sequence of steps. The workflow page turns those steps into a visual pipeline, while PDFOmni's local-first architecture keeps the core document processing in your browser.
           </p>
@@ -1515,7 +1516,7 @@ export default function WorkflowPage() {
           </p>
         </div>
         <div>
-          <h3>Advanced Capabilities</h3>
+          <h2 className="tool-seo-subheading">Advanced Capabilities</h2>
           <p>
             The builder connects multiple PDFOmni actions together, making it easier to move from raw documents to prepared output. You can save workflows for reuse, load previous pipelines, preview results, and combine automation with other tools like compression, editing, redaction, signing, or AI Copilot review.
           </p>
@@ -1526,7 +1527,7 @@ export default function WorkflowPage() {
       </div>
 
       <div className="tool-seo-use-cases">
-        <h3>Common Use Cases</h3>
+        <h2 className="tool-seo-subheading">Common Use Cases</h2>
         <ul>
           <li>Preparing batches of PDFs with the same page operations</li>
           <li>Creating reusable pipelines for reports, packets, or scans</li>
@@ -1536,7 +1537,7 @@ export default function WorkflowPage() {
 
       <div className="tool-seo-copy">
         <div>
-          <h3>Repeated PDF Tasks Without a Cloud Queue</h3>
+          <h2 className="tool-seo-subheading">Repeated PDF Tasks Without a Cloud Queue</h2>
           <p>
             Repeated work often includes the same few jobs: combine a group of files, rotate scanned pages, add a watermark, prepare a preview, and save the result. PDFOmni makes those steps visual. Supported operations run in the browser, and the finished output is prepared locally instead of waiting in a document-processing queue.
           </p>
@@ -1545,7 +1546,7 @@ export default function WorkflowPage() {
           </p>
         </div>
         <div>
-          <h3>When a Local Workflow Makes Sense</h3>
+          <h2 className="tool-seo-subheading">When a Local Workflow Makes Sense</h2>
           <p>
             A local workflow makes sense when the files should stay on the device and the required actions can run in a modern browser. A cloud service may be more suitable when a team needs shared storage, account approvals, server automation, or another feature that depends on remote infrastructure.
           </p>
@@ -1559,7 +1560,7 @@ export default function WorkflowPage() {
       </div>
 
       <div className="tool-seo-faq">
-        <h3>Frequently Asked Questions</h3>
+        <h2 className="tool-seo-subheading">Frequently Asked Questions</h2>
         <details><summary>Are workflow files uploaded to a server?</summary><p>No. PDFOmni is designed around client-side processing, so core PDF workflow operations happen in your browser.</p></details>
         <details><summary>Can I save and reuse workflows?</summary><p>Yes. You can save a workflow locally and load it again when you need to repeat the same PDF process.</p></details>
         <details><summary>Who is the workflow builder for?</summary><p>It is for people who repeatedly split, rotate, watermark, number, preview, or export PDFs and want one visual process instead of many manual steps.</p></details>

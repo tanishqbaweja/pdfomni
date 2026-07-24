@@ -4,8 +4,6 @@ import FileDropZone from '../Common/FileDropZone'
 import ProgressBar from '../Common/ProgressBar'
 import { useAppStore } from '../../store/appStore'
 import { readFileAsArrayBuffer, formatFileSize } from '../../utils/fileHelpers'
-import mammoth from 'mammoth'
-import { htmlToSelectablePdfBytes } from '../../utils/textPdf'
 import { downloadBlob } from '../../utils/download'
 
 export default function WordToPdfTool({ toolId, tool }) {
@@ -32,6 +30,7 @@ export default function WordToPdfTool({ toolId, tool }) {
       setProgress(40)
       setProgressMsg('Converting to HTML...')
 
+      const { default: mammoth } = await import('mammoth')
       const result = await mammoth.convertToHtml({ arrayBuffer: arrayBuffer.buffer })
       setHtmlContent(result.value)
       setFile(f)
@@ -56,6 +55,7 @@ export default function WordToPdfTool({ toolId, tool }) {
     setProgressMsg('Creating selectable PDF text...')
     try {
       setProgress(60)
+      const { htmlToSelectablePdfBytes } = await import('../../utils/textPdf')
       const pdfBytes = htmlToSelectablePdfBytes(htmlContent, file?.name?.replace(/\.docx$/i, '') || 'Document')
       setProgress(90)
       setProgressMsg('Downloading PDF...')

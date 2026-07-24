@@ -23,6 +23,7 @@ export default function Layout({ children }) {
       <main
         className={isEditPdfPage ? 'edit-pdf-main' : undefined}
         style={{ flex: 1, paddingTop: isEditPdfPage ? 0 : 'var(--header-height)' }}
+        aria-label="PDFOmni page content"
       >
         {children}
       </main>

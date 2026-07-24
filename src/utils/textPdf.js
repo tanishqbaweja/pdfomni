@@ -1,5 +1,4 @@
 import jsPDF from 'jspdf'
-import * as XLSX from 'xlsx'
 import html2canvas from 'html2canvas'
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
 
@@ -131,14 +130,14 @@ export function htmlToSelectablePdfBytes(html, title = 'Document') {
   return new Uint8Array(pdf.output('arraybuffer'))
 }
 
-export function workbookToSelectablePdfBytes(workbook, sheetNames) {
+export function workbookToSelectablePdfBytes(workbook, sheetNames, sheetToRows) {
   const pdf = new jsPDF({ orientation: 'l', unit: 'pt', format: 'a4', compress: true })
   const page = PAGE.landscape
   let firstSheet = true
 
   for (const sheetName of sheetNames) {
     const sheet = workbook.Sheets[sheetName]
-    const rows = sheet ? XLSX.utils.sheet_to_json(sheet, { header: 1, raw: false }) : []
+    const rows = sheet ? sheetToRows(sheet) : []
     if (!firstSheet) pdf.addPage()
     firstSheet = false
     const state = { y: MARGIN, page }

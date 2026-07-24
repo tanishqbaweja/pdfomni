@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8" />
     <script>document.documentElement.classList.add('js-enabled');</script>
     <style>
       .app-boot {
@@ -104,11 +105,24 @@
         }
 
         function scheduleThirdPartyScripts() {
-          if ('requestIdleCallback' in window) {
-            window.requestIdleCallback(loadThirdPartyScripts, { timeout: 2500 });
-          } else {
-            window.setTimeout(loadThirdPartyScripts, 1200);
+          var interactionEvents = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
+          function loadFromInteraction() {
+            interactionEvents.forEach(function (eventName) {
+              window.removeEventListener(eventName, loadFromInteraction);
+            });
+            loadThirdPartyScripts();
           }
+          interactionEvents.forEach(function (eventName) {
+            window.addEventListener(eventName, loadFromInteraction, { once: true, passive: true });
+          });
+
+          window.setTimeout(function () {
+            if ('requestIdleCallback' in window) {
+              window.requestIdleCallback(loadThirdPartyScripts, { timeout: 4000 });
+            } else {
+              loadThirdPartyScripts();
+            }
+          }, 8000);
         }
 
         if (document.readyState === 'complete') {
@@ -118,7 +132,6 @@
         }
       })();
     </script>
-    <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="PDFOmni is a free, private PDF toolkit for merging, splitting, compressing, editing, converting PDF to Word, and handling documents in your browser." />

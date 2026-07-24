@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 
 export default function ToolSeoSection({ tool, seo, headingLevel = 2 }) {
   const Heading = headingLevel === 1 ? 'h1' : 'h2'
+  const Subheading = headingLevel === 1 ? 'h2' : 'h3'
 
   return (
     <section className="tool-seo-section" aria-labelledby="tool-seo-heading">
@@ -20,14 +21,14 @@ export default function ToolSeoSection({ tool, seo, headingLevel = 2 }) {
 
       <div className="tool-seo-copy">
         <div>
-          <h3>When This Tool Is Useful</h3>
+          <Subheading className="tool-seo-subheading">When This Tool Is Useful</Subheading>
           <p>{seo.why}</p>
           <p>
             You do not need to create an account before starting. Choose the source file, make the change, and download a new copy. Keep the original until you have opened the export and checked that every important page still looks and works the way you expect.
           </p>
         </div>
         <div>
-          <h3>What Happens to Your File</h3>
+          <Subheading className="tool-seo-subheading">What Happens to Your File</Subheading>
           <p>
             The supported document work happens in the browser. Your device reads the file and prepares the output, so PDFOmni does not need to send the source to a document-processing server. Normal website resources, analytics, ads, and optional online features can still make internet requests, as explained in the <Link to="/privacy">Privacy Policy</Link>.
           </p>
@@ -38,7 +39,7 @@ export default function ToolSeoSection({ tool, seo, headingLevel = 2 }) {
       </div>
 
       <div className="tool-seo-use-cases">
-        <h3>Common Use Cases</h3>
+        <Subheading className="tool-seo-subheading">Common Use Cases</Subheading>
         <ul>
           {seo.useCases.map((useCase) => <li key={useCase}>{useCase}</li>)}
         </ul>
@@ -46,11 +47,11 @@ export default function ToolSeoSection({ tool, seo, headingLevel = 2 }) {
 
       <div className="tool-seo-copy tool-seo-expanded">
         <div>
-          <h3>Before You Start</h3>
+          <Subheading className="tool-seo-subheading">Before You Start</Subheading>
           {seo.notes.map((note) => <p key={note}>{note}</p>)}
         </div>
         <div>
-          <h3>Tips for a Reliable Export</h3>
+          <Subheading className="tool-seo-subheading">Tips for a Reliable Export</Subheading>
           <p>{seo.advanced}</p>
           <p>
             Save the result with a name that separates it from the source. Reopen the downloaded file, compare the page count, and inspect the parts that changed. If the PDF is being submitted for school, work, taxes, or an official form, compare it with the receiving instructions before uploading it.
@@ -70,7 +71,7 @@ export default function ToolSeoSection({ tool, seo, headingLevel = 2 }) {
       {seo.searchLanguage?.length > 0 && (
         <div className="tool-seo-copy tool-seo-search-language">
           <div>
-            <h3>Understanding PDF to Word Search Terms</h3>
+            <Subheading className="tool-seo-subheading">Understanding PDF to Word Search Terms</Subheading>
             {seo.searchLanguage.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
           </div>
         </div>
@@ -78,13 +79,13 @@ export default function ToolSeoSection({ tool, seo, headingLevel = 2 }) {
 
       <div className="tool-seo-copy">
         <div>
-          <h3>Choose the Right Source File</h3>
+          <Subheading className="tool-seo-subheading">Choose the Right Source File</Subheading>
           <p>
             Start from the clearest and most complete copy you have. Repeatedly converting or compressing an already processed PDF can lower image quality and make text harder to edit or extract. If the original came from Word, Excel, or another authoring program, keep that source because it is usually the easiest place to make large content changes.
           </p>
         </div>
         <div>
-          <h3>Keep Your Versions Clear</h3>
+          <Subheading className="tool-seo-subheading">Keep Your Versions Clear</Subheading>
           <p>
             Use names that explain the document status, such as report-original.pdf, report-review.pdf, and report-submitted.pdf. Avoid overwriting the only copy or filling a folder with names like final2 and final-new. A clear name makes it easier to reopen the exact output you checked and prevents an older version from being sent by mistake.
           </p>
@@ -92,7 +93,7 @@ export default function ToolSeoSection({ tool, seo, headingLevel = 2 }) {
       </div>
 
       <nav className="tool-seo-related" aria-labelledby="tool-related-heading">
-        <h3 id="tool-related-heading">Useful Next Steps</h3>
+        <Subheading className="tool-seo-subheading" id="tool-related-heading">Useful Next Steps</Subheading>
         <p>Continue only when the document needs another change. Each link opens a focused PDFOmni tool or guide.</p>
         <div>
           {seo.related.map((item) => <Link key={item.href} to={item.href}>{item.label}</Link>)}
@@ -100,7 +101,7 @@ export default function ToolSeoSection({ tool, seo, headingLevel = 2 }) {
       </nav>
 
       <div className="tool-seo-faq">
-        <h3>Frequently Asked Questions</h3>
+        <Subheading className="tool-seo-subheading">Frequently Asked Questions</Subheading>
         {seo.faqs.map((faq) => (
           <details key={faq.question}>
             <summary>{faq.question}</summary>

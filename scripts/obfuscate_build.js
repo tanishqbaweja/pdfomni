@@ -69,6 +69,12 @@ const vendorNamePatterns = [
   /\.min\.(?:js|mjs)$/i,
 ]
 
+// Guide article text is already public in prerendered HTML. Transforming the
+// generated data modules only inflates downloads without protecting app logic.
+const publicContentNamePatterns = [
+  /^assets\/(?:guideIndex|guideLoaders|guide-content-.+)-.+\.(?:js|mjs)$/i,
+]
+
 function walk(dir) {
   const out = []
   for (const item of fs.readdirSync(dir)) {
@@ -87,6 +93,7 @@ const digest = source => crypto.createHash('sha256').update(source).digest('hex'
 
 function classifyJs(filePath) {
   if (matches(protectedNamePatterns, filePath)) return 'protected'
+  if (matches(publicContentNamePatterns, filePath)) return 'public-content'
   if (matches(vendorNamePatterns, filePath)) return 'vendor'
   return 'unclassified'
 }
@@ -135,12 +142,14 @@ if (!fs.existsSync(targetDir)) {
 }
 
 const protectedFiles = []
+const publicContentFiles = []
 const vendorFiles = []
 const unclassifiedFiles = []
 for (const file of walk(targetDir)) {
   if (!isJavaScript(file)) continue
   const classification = classifyJs(file)
   if (classification === 'protected') protectedFiles.push(file)
+  else if (classification === 'public-content') publicContentFiles.push(file)
   else if (classification === 'vendor') vendorFiles.push(file)
   else unclassifiedFiles.push(file)
 }
@@ -162,11 +171,15 @@ const report = [
   'Skipped vendor/runtime files:',
   ...vendorFiles.map(file => `- ${relative(file)}`),
   '',
+  'Skipped generated public guide content:',
+  ...publicContentFiles.map(file => `- ${relative(file)}`),
+  '',
   'Unclassified shipped JavaScript (review when adding new entry points):',
   ...(unclassifiedFiles.length ? unclassifiedFiles.map(file => `- ${relative(file)}`) : ['- none']),
   '',
   'Notes:',
   '- The standalone PDF editor, React application chunks, AI embedding worker, compressor application/worker, PDF-to-Word application code, and Cloudflare functions are protected.',
+  '- Generated guide article data is already public in prerendered HTML and is not obfuscated.',
   '- PDF.js, DOCX, JSZip, qpdf, OCR, framework/runtime chunks, WASM loaders, and minified vendor libraries are intentionally skipped.',
   '- Every obfuscated JavaScript file is syntax-checked after transformation.',
   '- Obfuscation is a copying deterrent, not a security boundary.',

@@ -29,6 +29,7 @@ service-account*.json
 dist/
 dist-ssr/
 analysis_dist/
+src/generated/
 obfuscated_dist/
 compress_pdf/dist/
 *.zip

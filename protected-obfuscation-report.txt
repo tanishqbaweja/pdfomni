@@ -1,84 +1,83 @@
 PDFOmni protected build obfuscation report
 
 Obfuscated first-party files/chunks:
-- assets/AboutPage-B0TwmqfK.js (6022 bytes, bcf395770a35 -> bdcc37dc71ca)
-- assets/BatchTool-KYqpmrPV.js (9557 bytes, 079821274786 -> b810acdfe5a1)
-- assets/ChatSidebar-e5BoM10K.js (71965 bytes, 95d43a7cabab -> 8b224147358e)
-- assets/ContactPage-BPSehdRe.js (2743 bytes, 6b72d5a527d9 -> 501205bf08c7)
-- assets/CropTool-DfKCDqnz.js (8963 bytes, 9b9c17130466 -> 7f59931b2b8c)
-- assets/DecryptTool-CeftkvQe.js (4211 bytes, 2486da56aab1 -> f81f60c4adb1)
-- assets/download-B41bw-nP.js (9202 bytes, 15bfcf8ec19b -> 7dd87d1b7728)
-- assets/download-B873qh2S.js (220 bytes, fbf4d2c6d5bf -> f9ff6c51984e)
-- assets/editpdf-BdV6uLff.js (2252 bytes, b2e4a316858f -> 25212319d914)
-- assets/embeddingWorker-B_4ysqTv.js (806988 bytes, 1e9094e94b1b -> 866e11198d9d)
-- assets/EncryptTool-CvscX_yL.js (3547 bytes, ad74c51b9865 -> 69923c7dd085)
-- assets/ErrorPage-Xglfc_ZB.js (1885 bytes, cc5e28f1218a -> 531f8567dddb)
-- assets/ExcelToPdfTool-BKcxn0kS.js (6314 bytes, 487ff3dae5d5 -> b9c32ff11cc2)
-- assets/FileDropZone-C2o7WPye.js (1864 bytes, c95bf9258d16 -> 4e5c549472f8)
-- assets/fileHelpers-BrLJacDv.js (2065 bytes, 72075d7eb54e -> 18902e366879)
-- assets/GuidePage-Z5dh8q3J.js (2110 bytes, d9e66920d1e1 -> 1a271baf5770)
-- assets/guides-DN1oOkTm.js (118952 bytes, 197edccceb49 -> 0460c793aa47)
-- assets/GuidesPage-JkheOcyd.js (2313 bytes, ec39b51a71b4 -> 6b1cfbac3497)
-- assets/HtmlToPdfTool-B1P9A_ic.js (5111 bytes, f18ad2301d64 -> 1b6390881447)
-- assets/ImageToPdfTool-DetVi6KY.js (8995 bytes, cbb4f0432c37 -> 7af0ebf95826)
-- assets/main-Bcz7pRER.js (40172 bytes, 05431e024f03 -> f0d9eedd21cd)
-- assets/MergeTool-BLmYcfP1.js (5190 bytes, bf4b15344919 -> 53659bf45287)
-- assets/ocrEngine-CnERHGo2.js (18502 bytes, 4f9b733fa4af -> 8d9da1ee3167)
-- assets/PageNavigator-DsSCR11q.js (1070 bytes, ef343b76a279 -> 89c1c8155f30)
-- assets/PageNumberTool-UPaYNm4d.js (8021 bytes, ce4a90fa773e -> 8f69d18918e9)
-- assets/PageThumbnail-D4lr5E0f.js (1927 bytes, 944cfc6ac43c -> 26be84f67ca5)
-- assets/pdfEngine-BBg4efvF.js (18334 bytes, 0af815575398 -> 0909430c7a56)
-- assets/PdfPagePreview-DAWmTevC.js (886 bytes, 14e85f80864d -> ea9a76b2e147)
-- assets/pdfRenderer-DeuXdB5T.js (4053 bytes, ec9f4419e778 -> d40a3c5fd1fa)
-- assets/PdfToImageTool-BNS3T0mc.js (6397 bytes, aa8db2dcea13 -> dcd42566d462)
-- assets/PdfToTextTool-z7n1TVBc.js (4784 bytes, 4ec288a43883 -> 553d808a92c0)
-- assets/PdfToWordTool-BgYn_KOI.js (1137 bytes, 18df466b6037 -> 9cbeb22ece56)
-- assets/PrivacyPolicy-CACNeV8H.js (6582 bytes, ee1e8c0d7c50 -> 28f39ecc22f0)
-- assets/ProgressBar-zvM8BZUV.js (977 bytes, 9200974814ba -> 1bd380f07edf)
-- assets/RedactTool-CK978EHf.js (6263 bytes, 0cade0a379d8 -> 4d0c46ca30aa)
-- assets/ReorderTool-BVrswvlX.js (6439 bytes, 56fbada96fb6 -> d01de4b7f47d)
-- assets/RotateTool-DqxXsZt3.js (6646 bytes, 0e7272e52c96 -> 49cdd3b017ef)
-- assets/SignTool-YGC2zbM0.js (15114 bytes, a562ed1c9358 -> ea5bf85c143d)
-- assets/SplitTool-CriAaP3j.js (6849 bytes, 245148606b9e -> 9c89cd205953)
-- assets/TermsOfService-qoVBhSw6.js (6148 bytes, 45b0d5666f9d -> 23561f56a4e8)
-- assets/textPdf-Tp_mvqdD.js (5743 bytes, 884c4bcef253 -> ece567075675)
-- assets/ToolPage-Dtm3J1I-.js (56955 bytes, 40bf4f092d1b -> 36754b77fc4d)
-- assets/WatermarkTool-BHzU2tiF.js (8555 bytes, adcafe62c527 -> 57f4e0249a23)
-- assets/WcagTool-BOEMIDMr.js (10249 bytes, 9aa350751912 -> 7b98778733bb)
-- assets/WordToPdfTool-CeqFI_Cd.js (4656 bytes, f3d9040a31be -> 90c383461e32)
-- assets/WorkflowPage-0SomcChH.js (208815 bytes, d7f454f664d6 -> 725d0b11a587)
-- compress/app/assets/compressionWorker-MPMFb5sx.js (428513 bytes, 9b868008fec3 -> ed9d08430371)
-- compress/app/assets/index-D32TssMH.js (27712 bytes, ad06bca924ed -> d486032aabf8)
-- pdf-to-word/app/assets/index-31EPgdXS.js (294612 bytes, 7aa482353f28 -> b42c33170710)
-- editpdf.html inline editor script (327438 bytes, 50b49e1001de -> d1fa9daf12a1)
+- assets/AboutPage-CsM7jcZa.js (6022 bytes, 9b6c8d91c002 -> e9eade7220d8)
+- assets/BatchTool-CScmLpxy.js (9557 bytes, 3c052d02391c -> 3833d245fa33)
+- assets/ChatSidebar-BOOVS5se.js (71965 bytes, d9e631927333 -> 50179477ff67)
+- assets/ContactPage-BuxE8coj.js (2743 bytes, 3146d97e3656 -> 0f61c943e218)
+- assets/CropTool-B6DVx0DN.js (8963 bytes, 244d1c14142b -> 6fc24344c5cc)
+- assets/DecryptTool-TwCF3NCJ.js (4211 bytes, 1a7f7cdfec7e -> 000359a2d3b0)
+- assets/download-B41bw-nP.js (9202 bytes, 15bfcf8ec19b -> 34df42014688)
+- assets/download-DmgZ8ZDA.js (220 bytes, 6497aa5e599b -> 21c960a4467d)
+- assets/editpdf-BdV6uLff.js (2252 bytes, b2e4a316858f -> 9c2170f1e15d)
+- assets/embeddingWorker-B_4ysqTv.js (806988 bytes, 1e9094e94b1b -> 298adbe93ed6)
+- assets/EncryptTool-DHBcL7lu.js (3547 bytes, 9586ec8c52ef -> 8d114cbd3f2f)
+- assets/ErrorPage-JKtiWdLl.js (1885 bytes, 74a6b774203a -> ec53a47cda26)
+- assets/ExcelToPdfTool-CK3VGAyy.js (6314 bytes, 10e89026639c -> 26ba9fd7e312)
+- assets/FileDropZone-CZ1hWWOY.js (1864 bytes, bf0f91d63d7d -> c4f018b6c872)
+- assets/fileHelpers-DTtW4DPG.js (2065 bytes, 5b59880bfe46 -> 7a24b4d663fc)
+- assets/GuidePage-CPHge9BT.js (2577 bytes, 3b1f384ae0e4 -> 68215b3317b0)
+- assets/GuidesPage-DM_jMRnd.js (2723 bytes, 5c8d72b6c945 -> 85a0b7523f00)
+- assets/HtmlToPdfTool-pNZV_R5z.js (5111 bytes, e6698c29a7c3 -> 519ccba33182)
+- assets/ImageToPdfTool-BbCyz-q5.js (8995 bytes, e8cef9354927 -> a9a492f4e293)
+- assets/main-CKGsUMpn.js (40201 bytes, 0b9b298ace0c -> 587cdcd0e839)
+- assets/MergeTool-CTre1I50.js (5190 bytes, 19c5c33b1ac6 -> 376dfc3c630f)
+- assets/ocrEngine-CnERHGo2.js (18502 bytes, 4f9b733fa4af -> 4ee8f6a9cd16)
+- assets/PageNavigator-D5ETVe-6.js (1070 bytes, 34e41ab0eceb -> ffa2647dd536)
+- assets/PageNumberTool-B2urwH3o.js (8021 bytes, c81e5643225d -> 465d748e734e)
+- assets/PageThumbnail-D4lr5E0f.js (1927 bytes, 944cfc6ac43c -> 99d1a3c083a3)
+- assets/pdfEngine-BBg4efvF.js (18334 bytes, 0af815575398 -> a64bfd5e359b)
+- assets/PdfPagePreview-DAWmTevC.js (886 bytes, 14e85f80864d -> 72cdf7acc110)
+- assets/pdfRenderer-DeuXdB5T.js (4053 bytes, ec9f4419e778 -> d6b8463da3aa)
+- assets/PdfToImageTool-BZI9CzM-.js (6397 bytes, 6b5a83e89296 -> b5a08046990d)
+- assets/PdfToTextTool-BadPRfZk.js (4784 bytes, f54f880d22bf -> fd8316ab00ce)
+- assets/PdfToWordTool-BgYn_KOI.js (1137 bytes, 18df466b6037 -> bc7cd5de25f6)
+- assets/PrivacyPolicy-CPjg-NGj.js (6582 bytes, 578b5ed17f1d -> 78f3f5561e98)
+- assets/ProgressBar-zvM8BZUV.js (977 bytes, 9200974814ba -> c45cff6764a5)
+- assets/RedactTool-BEOyPNcd.js (6263 bytes, aed8572db1ab -> d486c74ed851)
+- assets/ReorderTool-C0tc9nk7.js (6439 bytes, f83131c9821a -> 26e8d3d4a6bc)
+- assets/RotateTool-BV7lcvxt.js (6646 bytes, 3d0cd824586a -> 61ddc872a3b6)
+- assets/SignTool-DkL3zBAg.js (15114 bytes, 9dfb27dd0dd2 -> eee92f7075b3)
+- assets/SplitTool-DlsW2k0w.js (6849 bytes, da07cf229530 -> 0e68bee072de)
+- assets/TermsOfService-fnyculIw.js (6148 bytes, d40105607e34 -> 941795681c0d)
+- assets/textPdf-Tp_mvqdD.js (5743 bytes, 884c4bcef253 -> f3adc4d42ac7)
+- assets/ToolPage-DGZbfAfF.js (56955 bytes, 858365b1f1de -> 3b3320428f10)
+- assets/WatermarkTool-D3pS_E7B.js (8555 bytes, f57a5ebd99a4 -> 332ee3ab627a)
+- assets/WcagTool-CBWhtAYF.js (10244 bytes, a6ad56d49c13 -> ec0145e4b23e)
+- assets/WordToPdfTool-DChhF0um.js (4656 bytes, 8a6c565bc11d -> 4c1e5baeb40a)
+- assets/WorkflowPage-DwMoWtC8.js (208820 bytes, 9f88ed25e884 -> 62fefb764af8)
+- compress/app/assets/compressionWorker-MPMFb5sx.js (428513 bytes, 9b868008fec3 -> 7e29d32c90c2)
+- compress/app/assets/index-D32TssMH.js (27712 bytes, ad06bca924ed -> 80ad135dab6b)
+- pdf-to-word/app/assets/index-8Lg3gR8h.js (294632 bytes, b85b00bf26ca -> bf93513648bf)
+- editpdf.html inline editor script (327438 bytes, 50b49e1001de -> 08b6de7932fe)
 
 Skipped vendor/runtime files:
-- assets/arrow-left-BHOzNHNQ.js
+- assets/arrow-left-BN20MuhM.js
 - assets/browserRunner-Tjcpq0Qh.js
-- assets/check-CYa1OwYr.js
-- assets/chevron-right-Bdw7oedd.js
-- assets/circle-check-SZogQjJA.js
-- assets/copy-BWyFkyJv.js
-- assets/eye-eR_NLJRD.js
-- assets/eye-off-D_7GIE53.js
+- assets/check-CEJ9_-zb.js
+- assets/chevron-right-BQ-YWAwF.js
+- assets/circle-check-DaanAp8u.js
+- assets/copy-CYjCsSxe.js
+- assets/eye-BmKyKlgU.js
+- assets/eye-off-CFa6Ar4b.js
 - assets/framework-DulLxH5d.js
-- assets/grip-vertical-D3gLwzV_.js
+- assets/grip-vertical-9f5jdWih.js
 - assets/html2canvas-BkBXKEmQ.js
 - assets/index.es-C-HHyRMR.js
 - assets/jspdf.es.min-CR61dbpc.js
 - assets/jszip.min-DskZzmo7.js
 - assets/lib-Dh5dIB_w.js
-- assets/loader-circle-CNTHUBQ4.js
+- assets/loader-circle-DvlB9Vji.js
 - assets/modulepreload-polyfill-DF9e3jHE.js
 - assets/pdf-BQICTX7K.js
 - assets/pdf.worker.min-Dr1KORA9.mjs
 - assets/purify.es-DuRL7t6i.js
 - assets/qpdf-Cz4tslog.js
-- assets/rotate-ccw-S4VWNeiw.js
+- assets/rotate-ccw-CQLvSTZB.js
 - assets/src-wr8gCRII.js
-- assets/trash-2-CSKKe0Zi.js
-- assets/triangle-alert-CoBIdYJ0.js
-- assets/undo-2-C3GDRMWu.js
+- assets/trash-2-Dm-vOlBq.js
+- assets/triangle-alert-D1xtShrS.js
+- assets/undo-2-De1D1wBK.js
 - assets/worker-DvPKoZue.js
 - assets/xlsx-Cl_0CZaL.js
 - compress/app/assets/browserRunner-CiRFPrNM.js
@@ -114,11 +113,48 @@ Skipped vendor/runtime files:
 - pdfjs-wasm/openjpeg_nowasm_fallback.js
 - pdfjs-wasm/quickjs-eval.js
 
+Skipped generated public guide content:
+- assets/guide-content-build-a-better-pdf-workflow-B0kgS4tb.js
+- assets/guide-content-compress-pdf-without-ruining-quality-DjXKmbK-.js
+- assets/guide-content-how-to-add-a-watermark-to-a-pdf-B59PCD8a.js
+- assets/guide-content-how-to-add-page-numbers-to-a-pdf-DLCQzP-h.js
+- assets/guide-content-how-to-batch-process-pdf-files-DJIXS1gf.js
+- assets/guide-content-how-to-check-pdf-accessibility-DKvGuvuj.js
+- assets/guide-content-how-to-compress-a-pdf-BXUxdPjK.js
+- assets/guide-content-how-to-convert-excel-to-pdf-CZIV_VW-.js
+- assets/guide-content-how-to-convert-html-to-pdf-CjpGMICn.js
+- assets/guide-content-how-to-convert-images-to-pdf-DSweq63N.js
+- assets/guide-content-how-to-convert-pdf-pages-to-images-BhY-bRtA.js
+- assets/guide-content-how-to-convert-pdf-to-word-D2uIOVk4.js
+- assets/guide-content-how-to-convert-word-to-pdf-DPcLa_Gy.js
+- assets/guide-content-how-to-crop-pdf-pages-CeFlnoxO.js
+- assets/guide-content-how-to-edit-a-pdf-BpExDTz-.js
+- assets/guide-content-how-to-extract-text-from-a-pdf-Dudw9vyJ.js
+- assets/guide-content-how-to-merge-pdf-files-BI_TvO_z.js
+- assets/guide-content-how-to-password-protect-a-pdf-DFnWuKAH.js
+- assets/guide-content-how-to-redact-a-pdf-C9BNw1Jm.js
+- assets/guide-content-how-to-reorder-pdf-pages-wX8PIJIB.js
+- assets/guide-content-how-to-rotate-pdf-pages-CAoTDwqj.js
+- assets/guide-content-how-to-sign-a-pdf-DwVgiKhq.js
+- assets/guide-content-how-to-split-a-pdf-by-page-range-D5yUPbvl.js
+- assets/guide-content-how-to-unlock-a-pdf-you-own-DtBDRvJF.js
+- assets/guide-content-make-pdfs-wcag-accessible-CuBVhkai.js
+- assets/guide-content-merge-and-reorder-pdf-pages-CNE3UPVB.js
+- assets/guide-content-organize-tax-documents-into-one-pdf-C1ptaHzZ.js
+- assets/guide-content-password-protect-and-share-pdfs-kSavD_D8.js
+- assets/guide-content-redact-a-pdf-safely-EU_IEQn7.js
+- assets/guide-content-risks-of-uploading-sensitive-pdfs-to-the-cloud-vCPmZ_tu.js
+- assets/guide-content-why-client-side-pdf-processing-matters-BlzbYRjx.js
+- assets/guide-content-work-with-scanned-pdfs-and-ocr-CORYebXl.js
+- assets/guideIndex-j_Ut2W3f.js
+- assets/guideLoaders-KIJ8t7gf.js
+
 Unclassified shipped JavaScript (review when adding new entry points):
 - none
 
 Notes:
 - The standalone PDF editor, React application chunks, AI embedding worker, compressor application/worker, PDF-to-Word application code, and Cloudflare functions are protected.
+- Generated guide article data is already public in prerendered HTML and is not obfuscated.
 - PDF.js, DOCX, JSZip, qpdf, OCR, framework/runtime chunks, WASM loaders, and minified vendor libraries are intentionally skipped.
 - Every obfuscated JavaScript file is syntax-checked after transformation.
 - Obfuscation is a copying deterrent, not a security boundary.

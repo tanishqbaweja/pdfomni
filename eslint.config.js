@@ -9,6 +9,7 @@ export default defineConfig([
     'dist/**',
     'analysis_dist/**',
     'obfuscated_dist/**',
+    'src/generated/**',
     'node_modules/**',
     'public/lib/**',
     'public/ocr/**',

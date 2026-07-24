@@ -1,16 +1,25 @@
 import { Link } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import Seo from '../components/Common/Seo'
-import { guides } from '../config/guides'
+import { guideIndex } from '../generated/guideIndex'
+
+function warmGuide(slug) {
+  import('../generated/guideLoaders').then(({ loadGuide }) => loadGuide(slug))
+}
 
 export default function GuidesPage() {
-  const toolGuides = guides.filter((guide) => guide.toolId)
-  const documentGuides = guides.filter((guide) => !guide.toolId)
+  const toolGuides = guideIndex.filter((guide) => guide.toolId)
+  const documentGuides = guideIndex.filter((guide) => !guide.toolId)
 
   const guideCards = (items) => (
     <div className="guide-card-grid">
       {items.map((guide) => (
-        <article className="guide-card" key={guide.slug}>
+        <article
+          className="guide-card"
+          key={guide.slug}
+          onPointerEnter={() => warmGuide(guide.slug)}
+          onFocus={() => warmGuide(guide.slug)}
+        >
           <div className="guide-card-meta">{guide.readTime}</div>
           <h2><Link to={`/guides/${guide.slug}`}>{guide.title}</Link></h2>
           <p>{guide.description}</p>

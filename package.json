@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "node scripts/generate_guide_modules.js && vite",
     "build": "npm run build:standard && npm run build:protected",
-    "build:analyze": "vite build --mode analyze",
-    "build:standard": "vite build && npm run build --prefix compress_pdf && npm run build --prefix pdf_to_word && node scripts/prerender_routes.js dist && node scripts/verify_prerender_routes.js dist && node generate_manifest.js",
-    "build:protected": "vite build --mode protected && npm run build:protected --prefix compress_pdf && npm run build:protected --prefix pdf_to_word && node scripts/obfuscate_build.js obfuscated_dist && node scripts/prerender_routes.js obfuscated_dist && node scripts/verify_prerender_routes.js obfuscated_dist && node generate_manifest.js obfuscated_dist Cloudflare.obfuscated.txt",
+    "build:analyze": "node scripts/generate_guide_modules.js && vite build --mode analyze",
+    "build:standard": "node scripts/generate_guide_modules.js && vite build && npm run build --prefix compress_pdf && npm run build --prefix pdf_to_word && node scripts/prerender_routes.js dist && node scripts/verify_prerender_routes.js dist && node generate_manifest.js",
+    "build:protected": "node scripts/generate_guide_modules.js && vite build --mode protected && npm run build:protected --prefix compress_pdf && npm run build:protected --prefix pdf_to_word && node scripts/obfuscate_build.js obfuscated_dist && node scripts/prerender_routes.js obfuscated_dist && node scripts/verify_prerender_routes.js obfuscated_dist && node generate_manifest.js obfuscated_dist Cloudflare.obfuscated.txt",
     "postinstall": "npm install --prefix compress_pdf && npm install --prefix pdf_to_word",
     "lint": "eslint .",
     "preview": "vite preview"

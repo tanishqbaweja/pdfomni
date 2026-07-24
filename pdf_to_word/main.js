@@ -13529,7 +13529,7 @@ const app = (() => {
     const dz = document.getElementById('drop-zone');
     dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('dragover'); });
     dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));
-    dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('dragover'); const f = e.dataTransfer.files[0]; if (f) loadFile(f); });
+    dz.addEventListener('drop', e => { e.preventDefault(); e.stopPropagation(); dz.classList.remove('dragover'); const f = e.dataTransfer.files[0]; if (f) loadFile(f); });
     document.addEventListener('dragover', e => e.preventDefault());
     document.addEventListener('drop', e => { e.preventDefault(); const f = e.dataTransfer.files[0]; if (f && (f.type === 'application/pdf' || f.name.endsWith('.pdf'))) loadFile(f); });
   }

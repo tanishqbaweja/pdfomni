@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import Seo from '../components/Common/Seo'
-import { getGuide } from '../config/guides'
+import { getGuideMetadata } from '../generated/guideIndex'
+import { loadGuide } from '../generated/guideLoaders'
 
 function GuideParagraph({ children }) {
   return <p dangerouslySetInnerHTML={{ __html: children }} />
@@ -9,9 +11,29 @@ function GuideParagraph({ children }) {
 
 export default function GuidePage() {
   const { guideSlug } = useParams()
-  const guide = getGuide(guideSlug)
+  const guideMetadata = getGuideMetadata(guideSlug)
+  const [loadedGuide, setLoadedGuide] = useState(null)
+  const [loadFailed, setLoadFailed] = useState(false)
 
-  if (!guide) return <Navigate to="/guides" replace />
+  useEffect(() => {
+    let active = true
+    setLoadFailed(false)
+    loadGuide(guideSlug)
+      .then((guide) => {
+        if (active) setLoadedGuide(guide)
+      })
+      .catch(() => {
+        if (active) setLoadFailed(true)
+      })
+    return () => {
+      active = false
+    }
+  }, [guideSlug])
+
+  if (!guideMetadata || loadFailed) return <Navigate to="/guides" replace />
+
+  const guide = loadedGuide?.slug === guideSlug ? loadedGuide : guideMetadata
+  const guideIsLoading = !guide.sections
 
   const articleSchema = {
     '@context': 'https://schema.org',
@@ -55,25 +77,31 @@ export default function GuidePage() {
           </div>
         </header>
 
-        <div className="guide-article-body">
-          {guide.sections.map((section) => (
-            <section key={section.title}>
-              <h2>{section.title}</h2>
-              {section.paragraphs.map((paragraph) => (
-                <GuideParagraph key={paragraph}>{paragraph}</GuideParagraph>
-              ))}
-            </section>
-          ))}
+        {guideIsLoading ? (
+          <div className="guide-article-body" role="status" aria-live="polite">
+            <p>Loading the guide...</p>
+          </div>
+        ) : (
+          <div className="guide-article-body">
+            {guide.sections.map((section) => (
+              <section key={section.title}>
+                <h2>{section.title}</h2>
+                {section.paragraphs.map((paragraph) => (
+                  <GuideParagraph key={paragraph}>{paragraph}</GuideParagraph>
+                ))}
+              </section>
+            ))}
 
-          <aside className="guide-related" aria-labelledby="guide-related-title">
-            <h2 id="guide-related-title">Related PDFOmni pages</h2>
-            <div>
-              {guide.related.map((item) => (
-                <Link key={item.href} to={item.href}>{item.label}</Link>
-              ))}
-            </div>
-          </aside>
-        </div>
+            <aside className="guide-related" aria-labelledby="guide-related-title">
+              <h2 id="guide-related-title">Related PDFOmni pages</h2>
+              <div>
+                {guide.related.map((item) => (
+                  <Link key={item.href} to={item.href}>{item.label}</Link>
+                ))}
+              </div>
+            </aside>
+          </div>
+        )}
       </article>
     </div>
   )

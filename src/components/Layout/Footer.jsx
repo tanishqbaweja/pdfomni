@@ -47,7 +47,7 @@ export default function Footer() {
               <span>Zero-Knowledge Architecture</span>
             </div>
             <span className="footer-text footer-signoff">
-              Made with <Heart size={14} aria-label="love" /> by a broke boy
+              Made with <Heart size={14} aria-label="love" /> by <a href="https://trebell.dev/">Trebell</a>
             </span>
           </div>
         </div>

@@ -41,7 +41,7 @@ export default function AboutPage() {
 
           <h2>How the Project Is Maintained</h2>
           <p>
-            PDFOmni is maintained independently by a college student. I work on it around classes and other responsibilities, test it with real documents, and pay close attention when users report that an export, font, image, or mobile layout behaves badly. A small project does not have a huge support department, but it does have a direct line between a real problem and the code that needs to improve.
+            PDFOmni is a project from <a href="https://trebell.dev/">Trebell</a> and is maintained independently by a college student. I work on it around classes and other responsibilities, test it with real documents, and pay close attention when users report that an export, font, image, or mobile layout behaves badly. A small project does not have a huge support department, but it does have a direct line between a real problem and the code that needs to improve.
           </p>
           <p>
             The tools are free, and local actions do not have artificial daily rate limits. The project may use advertising to help cover hosting and development costs. Ads do not change the local document-processing design. If that changes for a particular feature, the feature and privacy information should say so clearly before a user depends on it.

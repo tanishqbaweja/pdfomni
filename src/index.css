@@ -2428,6 +2428,17 @@ html:not([data-theme="dark"]) .tool-seo-use-cases li {
   color: #ef4444;
 }
 
+.footer-signoff a {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer-signoff a:hover {
+  color: var(--color-text-primary);
+}
+
 .footer-text {
   font-size: var(--text-sm);
   color: var(--color-text-muted);

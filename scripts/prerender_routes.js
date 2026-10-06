@@ -474,6 +474,9 @@ const routePages = [
           'The tools are free, and local actions do not have artificial daily limits. Advertising may help cover hosting and development costs, but it does not change the local document-processing design.',
           'Questions and bug reports can be sent to pdfomni@gmail.com. Include the tool, browser, device, file size, and steps that caused the problem, but do not send a private document unless sensitive content has been removed.',
         ],
+        links: [
+          { href: 'https://trebell.dev/', label: 'Trebell', description: 'PDFOmni is a project from Trebell.' },
+        ],
       },
       {
         title: 'How new features are chosen',
